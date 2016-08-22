@@ -8,21 +8,24 @@ namespace WinPrintr
 {
     static class Printers
     {
-        public static Printer[] get()
+        public static List<Printer> get()
         {
-            Printer[] list = null;
-            int i = 0;
+            List<Printer> list = new List<Printer>();
             foreach (string printer in System.Drawing.Printing.PrinterSettings.InstalledPrinters)
             {
-                list[i++] = new Printer { name = printer };
+                list.Add(new Printer(printer));
             }
-            return list;
+            return list; 
         }
     }
 
-    struct Printer
+    public struct Printer
     {
         public string name;
-        public string id;
+        //public string id;
+        public Printer(string n)
+        {
+            name = n;
+        }
     }
 }
