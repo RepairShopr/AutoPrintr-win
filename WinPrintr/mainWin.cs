@@ -12,28 +12,29 @@ namespace WinPrintr
 {
     public partial class mainWin : Form
     {
-        public enum PType : byte { fullSize, receipt, label }
-        
         public class pCheckBox : CheckBox
         {
             public PType pType;
             public Printer printer;
-            //public override void InitLayout()
-            //{
-            //    base.InitLayout();              
-            //}
             public pCheckBox(PType pt, Printer pr)
             {
                 pType = pt;
                 printer = pr;
+                Checked = printer.get(pType);
                 Margin = new Padding(5, 0, 5, 0);
                 Click += pCheckBox_Click;
             }
 
             void pCheckBox_Click(object sender, EventArgs e)
             {
-                //MessageBox.Show(pType.ToString());
-                //throw new NotImplementedException();
+                try
+                {
+                    printer.set(pType, Checked);
+                }
+                catch (Exception err)
+                {
+                    MessageBox.Show("Error while saving printers config. Error is:" + err.Message.ToString());
+                }
             }
         }
 
@@ -42,12 +43,32 @@ namespace WinPrintr
             InitializeComponent();
 
             printersTable.CellBorderStyle = TableLayoutPanelCellBorderStyle.Single;
+            try
+            {
+                Printers.get();
+            }
+            catch (Exception e1)
+            {
+                MessageBox.Show("Error while loading printers local config. Config will be wiped. Error is: " + e1.Message.ToString());
+                try
+                {
+                    Printers.save();
+                    Printers.get();
+                }
+                catch (Exception e2)
+                {
+                    MessageBox.Show("Great Scott! Unexpected error was expected and catched. Application will exit. Error is:" + e2.Message.ToString());
+                    Application.Exit();
+                }                
+            }
             
-            List<Printer> printers = Printers.get();
+            //List<Printer> printers = Printers.get();
             int row = 1;
             Label pName;
-            foreach (Printer p in printers)
+             //= Printers.list;
+            foreach (Printer p in Printers.list)
             {
+                //printer = p;
                 // Row creating
                 printersTable.RowCount++;
                 printersTable.RowStyles.Add(new RowStyle(SizeType.AutoSize));
