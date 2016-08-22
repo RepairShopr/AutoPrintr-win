@@ -1,0 +1,40 @@
+{
+  "user_token": "6c963075-5327-4d77-b070-ae923e683d1d",
+  "user_email": "voidvolker@gmail.com",
+  "user_name": "Oleg",
+  "user_id": 35861,
+  "admin": true,
+  "can_use_app": true,
+  "two_factor_required": false,
+  "subdomain": "vv",
+  "default_location": null,
+  "enable_multi_locations": null,
+  "locations_allowed": [],
+  "permissions": {
+    "customer": {
+      "read": true,
+      "write": true,
+      "delete": true
+    },
+    "ticket": {
+      "read": true,
+      "write": true,
+      "delete": true
+    },
+    "invoice": {
+      "read": true,
+      "write": true,
+      "delete": true
+    },
+    "payment": {
+      "read": true,
+      "write": true,
+      "delete": true
+    },
+    "worksheet": {
+      "add": true,
+      "manage": true,
+      "delete": true
+    }
+  }
+}
