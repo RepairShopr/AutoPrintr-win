@@ -4,19 +4,23 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace WinPrintr
+namespace AutoPrintr
 {
-    static class Program
+    public static class Program
     {
+        public static mainWin window;
+        public static Config config;
+
         /// <summary>
-        /// Главная точка входа для приложения.
+        /// Main entry point
         /// </summary>
         [STAThread]
         static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new mainWin());
+            Program.window = new mainWin();
+            Application.Run(Program.window);
         }
     }
 }

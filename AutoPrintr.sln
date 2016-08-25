@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinPrintr", "WinPrintr\WinPrintr.csproj", "{3BE80A7C-E89D-4F9B-A948-80F8AD075EAB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoPrintr", "AutoPrintr\AutoPrintr.csproj", "{3BE80A7C-E89D-4F9B-A948-80F8AD075EAB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
