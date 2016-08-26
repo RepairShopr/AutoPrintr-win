@@ -29,13 +29,13 @@ namespace AutoPrintr
             }
 
             //string xt = WinPrintr.Properties.Settings.Default.PucherKey;
-            string xt = Program.config.serverKey;
-            if(xt == null){
-                onError(new PusherException("Pusher key is empty.", ErrorCodes.Unkown));
-                return;
-            }
+            //string xt = Program.config.serverKey;
+            //if(xt == null){
+            //    onError(new PusherException("Pusher key is empty.", ErrorCodes.Unkown));
+            //    return;
+            //}
 
-            pusher = new Pusher(xt, new PusherOptions());
+            pusher = new Pusher(Credentials.SrvXT, new PusherOptions());
             pusher.ConnectionStateChanged += (object sender, ConnectionState state) =>
             {
                 Srv.state = state;

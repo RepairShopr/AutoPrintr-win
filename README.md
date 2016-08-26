@@ -37,3 +37,10 @@ Configuration example:
   ]
 }
 ```
+
+## Pusher API key
+
+Key is stored inside file `AutoPrintr/Credentials.cs`:
+```C#
+    public const string SrvXT = "YOUR_KEY_HERE";
+```
