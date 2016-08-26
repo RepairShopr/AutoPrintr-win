@@ -89,6 +89,7 @@
     <Compile Include="pCheckBox.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="RawPrint.cs" />
     <Compile Include="Srv.cs" />
     <Compile Include="LoginResponse.cs" />
     <Compile Include="mainWin.cs">
