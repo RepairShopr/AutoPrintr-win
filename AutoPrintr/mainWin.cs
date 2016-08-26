@@ -239,12 +239,18 @@ namespace AutoPrintr
         {
             if (login.Text.Length > 3 & password.Text.Length > 3)
             {
-                submit.Enabled = true;
+                if (!submit.Enabled)
+                {
+                    submit.Enabled = true;
+                }                
             }
             else
             {
-                settingsTab.Focus();
-                submit.Enabled = false;
+                if (submit.Enabled)
+                {
+                    settingsTab.Focus();
+                    submit.Enabled = false;
+                }                
             }
         }
 
