@@ -10,7 +10,8 @@ namespace AutoPrintr
 {
     public class Settings
     {
-        //public string serverKey = "";
+        public string channel = "";
+        public string login = "";
         public List<int> location = new List<int>();
         public List<Printer> printers = new List<Printer>();
     }
@@ -44,10 +45,10 @@ namespace AutoPrintr
                 {
                     string file = File.ReadAllText(configFile);
                     Settings config = JsonConvert.DeserializeObject<Settings>(file);
-                    //serverKey = config.serverKey;
+                    channel = config.channel;
+                    login = config.login;
                     location = config.location;
                     printers = config.printers;
-                    //MessageBox.Show("loaded" + c.t);
                 }
                 else
                 {
