@@ -134,12 +134,12 @@ namespace AutoPrintr
             if( t == null){ return l; }
 
 
-            if (Program.config.location.Count > 0) // Check for empty locations array
+            if (Program.config.location.Count > 0 & location != 0) // Check for empty locations array
             {
                 if ( !Program.config.location.Contains(location) ) { return l; } // If location not in array - return empty list
             }
             
-            // Search printer byt type
+            // Search printer by type
             foreach (Printer printer in Program.config.printers)
             {
                 if (printer.get(t.type))
