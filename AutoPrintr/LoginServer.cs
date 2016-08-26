@@ -39,7 +39,15 @@ namespace AutoPrintr
                     string url = string.Format(serverUrl, globalURl.Trim());
                     var responseArray = myWebClient.UploadValues(url, "POST", myNameValueCollection);
                     string jsonResult = Encoding.ASCII.GetString(responseArray);
-                    LoginResponse resp = JsonConvert.DeserializeObject<LoginResponse>(jsonResult);
+                    //LoginResponse resp = JsonConvert.DeserializeObject<LoginResponse>(jsonResult);
+                    LoginResponse resp = 
+                        JsonConvert.DeserializeObject<LoginResponse>(
+                            jsonResult, 
+                            new JsonSerializerSettings { 
+                                NullValueHandling = NullValueHandling.Ignore
+                            }
+                        );
+                    
                     if (resp != null)
                     {
                         //RepairShoprUtils.LogWriteLineinHTML("Successfully Login in RepairShopr", MessageSource.Login, "", messageType.Information);
