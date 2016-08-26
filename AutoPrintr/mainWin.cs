@@ -34,7 +34,19 @@ namespace AutoPrintr
         {
             //srvConnect();
             //JobsList.init();
+            if (Program.config.channel.Length > 0)
+            {
+                srvConnect(Program.config.channel);
+                statusLogin.Text = "logged in";
+            }
+
+            if (Program.config.login.Length > 0)
+            {
+                login.Text = Program.config.login;
+            }
+
         }
+
 
         // -------------------------------------------------------------------
         // Status bar code
@@ -309,18 +321,11 @@ namespace AutoPrintr
                         }
                     }                
                 }
+
+                Program.config.login = login.Text;
+                Program.config.channel = LoginServer.channel;
                 Program.config.save();
                 saveConfig.Enabled = false;
-                //try
-                //{
-                //    LoginServer.getChannel();
-                //}
-                //catch (Exception err2)
-                //{
-                //    MessageBox.Show("getChannel() error: " + err2.ToString());
-                //    //throw;
-                //}
-
                 srvConnect(LoginServer.channel);
             }
 
