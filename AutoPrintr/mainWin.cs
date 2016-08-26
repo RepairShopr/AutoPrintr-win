@@ -208,7 +208,10 @@ namespace AutoPrintr
 
         void config_TextChanged(object sender, EventArgs e)
         {
-            saveConfig.Enabled = true;
+            if (!saveConfig.Enabled)
+            {
+                saveConfig.Enabled = true;
+            }
             configSaveStatus.Text = "config changed";
         }
 
