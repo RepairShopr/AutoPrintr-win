@@ -44,6 +44,7 @@ Key is stored inside file `AutoPrintr/Credentials.cs`:
 ```C#
     public const string SrvXT = "YOUR_KEY_HERE";
 ```
+
 Then execute next command in gitshell:
 
 ```
@@ -51,4 +52,3 @@ git update-index --assume-unchanged AutoPrintr\Credentials.cs
 ```
 
 This command will prevent commiting this filw to repo, if it will change.
-
