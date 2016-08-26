@@ -2,16 +2,29 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Diagnostics;
 using System.Threading.Tasks;
+using System.IO;
 using PusherClient;
 using Newtonsoft.Json;
+using System.Net;
+//using System.Windows.Forms;
+using Microsoft.Win32;
 
 namespace AutoPrintr
 {
     static class Jobs
-    {        
+    {
+        static public List<Job> dnlist = new List<Job>();
+        static public List<Job> printlist = new List<Job>();
+        static public List<Job> donelist = new List<Job>();
+
         //static public Listener listener;
         static public string ev = "job";
+        static public event EventHandler<Job> jobAdded;
+        static public event EventHandler<Job> jobDownloaded;
+        static public event EventHandler<Job> jobPrinted;
+
         public static Listener init(string channel, Action<Exception, Job> onJob)
         {
             return new Listener(channel, ev, (dynamic msg) =>
@@ -20,12 +33,51 @@ namespace AutoPrintr
                 if (msg.type != null & msg.location != null & msg.file != null)
                 {
                     //Job j = new Job(msg.type, msg.location, msg.file);
-                    onJob(null, new Job(
+                    Job j = new Job(
                         (string)msg.type, 
                         (int)msg.location,
                         (string)msg.file,
                         (string)msg.document
-                    ));
+                    );
+
+                    List<string> printers = Printers.getPrinters(j.document, j.location);
+                    //MessageBox.Show("Printers for job: " + printers.ToString());
+                    if (printers.Count == 0) { 
+                        return;  
+                    }
+
+                    j.printers = printers;
+
+                    onJob(null, j);
+                    if (jobAdded != null) { jobAdded(null, j); }
+                    dnlist.Add(j);
+                    j.download((err1) =>
+                    {
+                        //MessageBox.Show("Downloaded");
+                        if (err1 == null)
+                        {
+                            dnlist.Remove(j);
+                            printlist.Add(j);
+                            if (jobDownloaded != null) { jobDownloaded(null, j); }
+                            j.print((err2) =>
+                            {
+                                if (err1 == null)
+                                {
+                                    printlist.Remove(j);
+                                    donelist.Add(j);
+                                    if (jobPrinted != null) { jobPrinted(null, j); }
+                                }
+                                else
+                                {
+                                    
+                                }
+                            });
+                        }
+                        else
+                        {
+
+                        }
+                    });
                 }
                 else
                 {
@@ -42,8 +94,23 @@ namespace AutoPrintr
                
             });
         }
+
+
+        //public class JobEvent : JobMsg
+        //{
+        //    public JobEvent(Job j)
+        //    {
+        //        this.type = j.type;
+        //    }
+        //}
+
     }
 
+
+
+    /// <summary>
+    /// Job msg class
+    /// </summary>
     public class JobMsg
     {
         public string type = "";
@@ -63,6 +130,93 @@ namespace AutoPrintr
     public class Job : JobMsg
     {
         public bool isPrinted = false;
+        public int progress = 0;
+        public long recived = 0;
+        public string localFile = "";
+        public List<string> printers;
+        //public Exception err;
+
+        public event EventHandler<Job> downloaded;
+        public event EventHandler<Job> printed;
+
+        public static string randName()
+        {
+            string path = Path.GetRandomFileName();
+            path = path.Replace(".", ""); // Remove period.
+            return path.Substring(0, 8);  // Return 8 character string
+        }
+
+        private void onDnProgress(object sender, DownloadProgressChangedEventArgs e)
+        {
+            progress = e.ProgressPercentage;
+            recived = e.TotalBytesToReceive;
+        }
+
+        //private void onDnCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+        //{
+        //    if (e.Cancelled)
+        //    {
+
+        //    }
+        //}
+
+        public void download(Action<Exception> cb)
+        {
+            progress = 0;
+            recived = 0;
+
+            Uri url = new Uri(file);
+            localFile = Path.Combine(Program.tempDnDir, randName() + "_" + Path.GetFileName(url.LocalPath));
+            try
+            {
+                using (WebClient wc = new WebClient())
+                {
+                    wc.DownloadProgressChanged += onDnProgress;
+                    wc.DownloadFileCompleted += (object sender, System.ComponentModel.AsyncCompletedEventArgs e) =>
+                    {
+                        if (e.Cancelled)
+                        {
+                            throw new Exception("Donwload was canceled");
+                        }
+
+                        if (e.Error != null)
+                        {
+                            throw e.Error;
+                        }
+
+                        cb(null);
+                    };
+                    wc.DownloadFileAsync(url, localFile);
+                }
+            }
+            catch (Exception err)
+            {
+                cb(err);
+            }
+            
+        }
+
+        public void print(Action<Exception> cb)
+        {            
+            try
+            {
+                foreach (string printer in printers)
+                {
+                    var p = Process.Start(
+                        Registry.LocalMachine.OpenSubKey(
+                            @"SOFTWARE\Microsoft\Windows\CurrentVersion" +
+                            @"\App Paths\AcroRd32.exe").GetValue("").ToString(),
+                            string.Format("/h /t \"{0}\" \"{1}\"", localFile, printer)
+                    );
+                    cb(null);
+                }
+            }
+            catch (Exception err)
+            {
+                cb(err);
+            }
+            
+        }
 
         public Job(string type, int location, string file, string document)
         {
@@ -84,5 +238,7 @@ namespace AutoPrintr
         {
             return base.ToString() + ", isPrinted: " + isPrinted.ToString();
         }
+
+
     }
 }
