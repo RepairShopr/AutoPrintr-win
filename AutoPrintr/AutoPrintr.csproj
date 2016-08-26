@@ -84,6 +84,7 @@
       <DependentUpon>CheckBoxList.cs</DependentUpon>
     </Compile>
     <Compile Include="Config.cs" />
+    <Compile Include="Credentials.cs" />
     <Compile Include="Jobs.cs" />
     <Compile Include="LoginServer.cs" />
     <Compile Include="pCheckBox.cs">
