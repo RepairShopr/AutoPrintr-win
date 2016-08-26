@@ -15,7 +15,7 @@ namespace AutoPrintr
     {
         //[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public List<CBListItem> Items = new List<CBListItem>();
-        public event EventHandler SelectedChanged;  
+        public event EventHandler SelectedChanged;
 
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public List<CBListItem> Selected
