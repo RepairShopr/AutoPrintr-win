@@ -34,10 +34,8 @@
             this.printersTable = new System.Windows.Forms.TableLayoutPanel();
             this.settingsTab = new System.Windows.Forms.TabPage();
             this.saveConfig = new System.Windows.Forms.Button();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.pusherKey = new System.Windows.Forms.TextBox();
-            this.pusherLabel = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.locationsList = new AutoPrintr.CheckBoxList();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.loginLabel = new System.Windows.Forms.Label();
             this.submit = new System.Windows.Forms.Button();
@@ -45,6 +43,8 @@
             this.passwordLabel = new System.Windows.Forms.Label();
             this.password = new System.Windows.Forms.MaskedTextBox();
             this.aboutTab = new System.Windows.Forms.TabPage();
+            this.button1 = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.licenseText = new System.Windows.Forms.RichTextBox();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
@@ -54,14 +54,10 @@
             this.statusLogin = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusSeparator2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.configSaveStatus = new System.Windows.Forms.ToolStripStatusLabel();
-            this.label1 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
-            this.locationsList = new AutoPrintr.CheckBoxList();
             this.checkBoxList1 = new AutoPrintr.CheckBoxList();
             this.tabs.SuspendLayout();
             this.printersTab.SuspendLayout();
             this.settingsTab.SuspendLayout();
-            this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.aboutTab.SuspendLayout();
@@ -93,7 +89,6 @@
             // settingsTab
             // 
             this.settingsTab.Controls.Add(this.saveConfig);
-            this.settingsTab.Controls.Add(this.groupBox2);
             this.settingsTab.Controls.Add(this.groupBox3);
             this.settingsTab.Controls.Add(this.groupBox1);
             resources.ApplyResources(this.settingsTab, "settingsTab");
@@ -106,30 +101,17 @@
             this.saveConfig.Name = "saveConfig";
             this.saveConfig.UseVisualStyleBackColor = true;
             // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.pusherKey);
-            this.groupBox2.Controls.Add(this.pusherLabel);
-            resources.ApplyResources(this.groupBox2, "groupBox2");
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.TabStop = false;
-            // 
-            // pusherKey
-            // 
-            resources.ApplyResources(this.pusherKey, "pusherKey");
-            this.pusherKey.Name = "pusherKey";
-            // 
-            // pusherLabel
-            // 
-            resources.ApplyResources(this.pusherLabel, "pusherLabel");
-            this.pusherLabel.Name = "pusherLabel";
-            // 
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.locationsList);
             resources.ApplyResources(this.groupBox3, "groupBox3");
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.TabStop = false;
+            // 
+            // locationsList
+            // 
+            resources.ApplyResources(this.locationsList, "locationsList");
+            this.locationsList.Name = "locationsList";
             // 
             // groupBox1
             // 
@@ -178,6 +160,17 @@
             resources.ApplyResources(this.aboutTab, "aboutTab");
             this.aboutTab.Name = "aboutTab";
             this.aboutTab.UseVisualStyleBackColor = true;
+            // 
+            // button1
+            // 
+            resources.ApplyResources(this.button1, "button1");
+            this.button1.Name = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // label1
+            // 
+            resources.ApplyResources(this.label1, "label1");
+            this.label1.Name = "label1";
             // 
             // groupBox4
             // 
@@ -235,22 +228,6 @@
             this.configSaveStatus.Name = "configSaveStatus";
             resources.ApplyResources(this.configSaveStatus, "configSaveStatus");
             // 
-            // label1
-            // 
-            resources.ApplyResources(this.label1, "label1");
-            this.label1.Name = "label1";
-            // 
-            // button1
-            // 
-            resources.ApplyResources(this.button1, "button1");
-            this.button1.Name = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            // 
-            // locationsList
-            // 
-            resources.ApplyResources(this.locationsList, "locationsList");
-            this.locationsList.Name = "locationsList";
-            // 
             // checkBoxList1
             // 
             resources.ApplyResources(this.checkBoxList1, "checkBoxList1");
@@ -267,8 +244,6 @@
             this.printersTab.ResumeLayout(false);
             this.printersTab.PerformLayout();
             this.settingsTab.ResumeLayout(false);
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
@@ -299,9 +274,6 @@
         private System.Windows.Forms.ToolStripStatusLabel statusLogin;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.ToolStripStatusLabel statusSeparator1;
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.TextBox pusherKey;
-        private System.Windows.Forms.Label pusherLabel;
         private System.Windows.Forms.Button saveConfig;
         private System.Windows.Forms.ToolStripStatusLabel statusSeparator2;
         private System.Windows.Forms.ToolStripStatusLabel configSaveStatus;

@@ -202,7 +202,7 @@
     <value>NoControl</value>
   </data>
   <data name="saveConfig.Location" type="System.Drawing.Point, System.Drawing">
-    <value>403, 188</value>
+    <value>403, 130</value>
   </data>
   <data name="saveConfig.Size" type="System.Drawing.Size, System.Drawing">
     <value>80, 23</value>
@@ -224,81 +224,6 @@
   </data>
   <data name="&gt;&gt;saveConfig.ZOrder" xml:space="preserve">
     <value>0</value>
-  </data>
-  <data name="pusherKey.Location" type="System.Drawing.Point, System.Drawing">
-    <value>72, 13</value>
-  </data>
-  <data name="pusherKey.Size" type="System.Drawing.Size, System.Drawing">
-    <value>185, 20</value>
-  </data>
-  <data name="pusherKey.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
-  </data>
-  <data name="&gt;&gt;pusherKey.Name" xml:space="preserve">
-    <value>pusherKey</value>
-  </data>
-  <data name="&gt;&gt;pusherKey.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;pusherKey.Parent" xml:space="preserve">
-    <value>groupBox2</value>
-  </data>
-  <data name="&gt;&gt;pusherKey.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="pusherLabel.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="pusherLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="pusherLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 16</value>
-  </data>
-  <data name="pusherLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>60, 13</value>
-  </data>
-  <data name="pusherLabel.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
-  </data>
-  <data name="pusherLabel.Text" xml:space="preserve">
-    <value>Pusher key</value>
-  </data>
-  <data name="&gt;&gt;pusherLabel.Name" xml:space="preserve">
-    <value>pusherLabel</value>
-  </data>
-  <data name="&gt;&gt;pusherLabel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;pusherLabel.Parent" xml:space="preserve">
-    <value>groupBox2</value>
-  </data>
-  <data name="&gt;&gt;pusherLabel.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="groupBox2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>7, 130</value>
-  </data>
-  <data name="groupBox2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>476, 52</value>
-  </data>
-  <data name="groupBox2.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
-  </data>
-  <data name="groupBox2.Text" xml:space="preserve">
-    <value>Other</value>
-  </data>
-  <data name="&gt;&gt;groupBox2.Name" xml:space="preserve">
-    <value>groupBox2</value>
-  </data>
-  <data name="&gt;&gt;groupBox2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;groupBox2.Parent" xml:space="preserve">
-    <value>settingsTab</value>
-  </data>
-  <data name="&gt;&gt;groupBox2.ZOrder" xml:space="preserve">
-    <value>1</value>
   </data>
   <data name="locationsList.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Bottom, Left, Right</value>
@@ -355,7 +280,7 @@
     <value>settingsTab</value>
   </data>
   <data name="&gt;&gt;groupBox3.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>1</value>
   </data>
   <data name="loginLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -419,6 +344,9 @@
   </data>
   <data name="login.Location" type="System.Drawing.Point, System.Drawing">
     <value>85, 19</value>
+  </data>
+  <data name="login.ScrollBars" type="System.Windows.Forms.ScrollBars, System.Windows.Forms">
+    <value>Horizontal</value>
   </data>
   <data name="login.Size" type="System.Drawing.Size, System.Drawing">
     <value>154, 20</value>
@@ -511,7 +439,7 @@
     <value>settingsTab</value>
   </data>
   <data name="&gt;&gt;groupBox1.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>2</value>
   </data>
   <data name="settingsTab.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 22</value>
@@ -586,7 +514,7 @@
     <value>1</value>
   </data>
   <data name="label1.Text" xml:space="preserve">
-    <value>RepairShopr AutoPrintr - build (Alfa 3)</value>
+    <value>RepairShopr AutoPrintr - build (Alfa 4)</value>
   </data>
   <data name="&gt;&gt;label1.Name" xml:space="preserve">
     <value>label1</value>
@@ -820,9 +748,6 @@ SOFTWARE.</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
     <value>500, 508</value>
-  </data>
-  <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>AutoPrintr</value>

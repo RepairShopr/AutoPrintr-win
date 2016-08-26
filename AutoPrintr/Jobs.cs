@@ -8,8 +8,8 @@ using System.IO;
 using PusherClient;
 using Newtonsoft.Json;
 using System.Net;
-//using System.Windows.Forms;
 using Microsoft.Win32;
+using System.Windows.Forms;
 
 namespace AutoPrintr
 {
@@ -20,7 +20,7 @@ namespace AutoPrintr
         static public List<Job> donelist = new List<Job>();
 
         //static public Listener listener;
-        static public string ev = "job";
+        static public string ev = "print-job";
         static public event EventHandler<Job> jobAdded;
         static public event EventHandler<Job> jobDownloaded;
         static public event EventHandler<Job> jobPrinted;
@@ -41,11 +41,15 @@ namespace AutoPrintr
                     );
 
                     List<string> printers = Printers.getPrinters(j.document, j.location);
-                    //MessageBox.Show("Printers for job: " + printers.ToString());
+                    //MessageBox.Show(
+                    //    "Printers for job: " + 
+                    //    "[" + printers.Count + "] " + 
+                    //    printers.ToArray().ToString()
+                    //);
                     if (printers.Count == 0) { 
                         return;  
                     }
-
+                    //MessageBox.Show("Job: " + printers.ToArray().ToString());
                     j.printers = printers;
 
                     onJob(null, j);
@@ -61,6 +65,7 @@ namespace AutoPrintr
                             if (jobDownloaded != null) { jobDownloaded(null, j); }
                             j.print((err2) =>
                             {
+                                //MessageBox.Show("Printed");
                                 if (err1 == null)
                                 {
                                     printlist.Remove(j);
@@ -133,6 +138,7 @@ namespace AutoPrintr
         public int progress = 0;
         public long recived = 0;
         public string localFile = "";
+        public string documentName = "";
         public List<string> printers;
         //public Exception err;
 
@@ -164,9 +170,9 @@ namespace AutoPrintr
         {
             progress = 0;
             recived = 0;
-
             Uri url = new Uri(file);
-            localFile = Path.Combine(Program.tempDnDir, randName() + "_" + Path.GetFileName(url.LocalPath));
+            documentName = Path.GetFileName(url.LocalPath);
+            localFile = Path.Combine(Program.tempDnDir, randName() + "_" + documentName);
             try
             {
                 using (WebClient wc = new WebClient())
@@ -202,14 +208,25 @@ namespace AutoPrintr
             {
                 foreach (string printer in printers)
                 {
-                    var p = Process.Start(
-                        Registry.LocalMachine.OpenSubKey(
-                            @"SOFTWARE\Microsoft\Windows\CurrentVersion" +
-                            @"\App Paths\AcroRd32.exe").GetValue("").ToString(),
-                            string.Format("/h /t \"{0}\" \"{1}\"", localFile, printer)
-                    );
-                    cb(null);
+                    //var p = Process.Start(
+                    //    Registry.LocalMachine.OpenSubKey(
+                    //        @"SOFTWARE\Microsoft\Windows\CurrentVersion" +
+                    //        @"\App Paths\AcroRd32.exe").GetValue("").ToString(),
+                    //        string.Format("/h /t \"{0}\" \"{1}\"", localFile, printer)
+                    //);
+
+                    //Process p = new Process();
+                    //p.StartInfo = new ProcessStartInfo()
+                    //{
+                    //    CreateNoWindow = true,
+                    //    Verb = "print",
+                    //    FileName = localFile //put the correct path here
+                    //};
+                    //p.Start();
+
+                    RawPrint.SendFileToPrinter(localFile, printer, documentName);                    
                 }
+                cb(null);
             }
             catch (Exception err)
             {

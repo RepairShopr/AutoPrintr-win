@@ -199,11 +199,11 @@ namespace AutoPrintr
             saveConfig.Click += saveConfig_Click;
             //locationList.Text = WinPrintr.Properties.Settings.Default.Location;
             //pusherKey.Text = WinPrintr.Properties.Settings.Default.PucherKey;
-            pusherKey.Text = Program.config.serverKey;
+            //pusherKey.Text = Program.config.serverKey;
             configSaveStatus.Text = "config loaded";
 
             locationsList.SelectedChanged += config_TextChanged;
-            pusherKey.TextChanged += config_TextChanged;
+            //pusherKey.TextChanged += config_TextChanged;
         }
 
         void config_TextChanged(object sender, EventArgs e)
@@ -226,7 +226,7 @@ namespace AutoPrintr
                 locationsList.Selected.Cast<CBListItem>().Select(
                     i => ((Location)i.userData).id
                 ).ToList();
-            Program.config.serverKey = pusherKey.Text;
+            //Program.config.serverKey = pusherKey.Text;
             Program.config.save();
             configSaveStatus.Text = "config saved";
             settingsTab.Focus();
@@ -259,6 +259,12 @@ namespace AutoPrintr
 
         private void submit_Click(object sender, EventArgs ev)
         {
+            if (Program.config.serverKey == null || Program.config.serverKey.Length == 0)
+            {
+                MessageBox.Show("Jobs server API key is empty - can't connect to jobs server.");
+                return;
+            }
+
             settingsTab.Focus();
             login.Enabled = false;
             password.Enabled = false;
@@ -281,23 +287,30 @@ namespace AutoPrintr
                 if (LoginServer.locationsArr != null)
                 {
                     locationsList.Items.Clear();
-                    bool selectDefault = Program.config.location.Count == 0;
+
+                    // Check for setting the default location
+                    bool checkForDedault = (LoginServer.defaultLocation != null) & (Program.config.location.Count == 0);
                     foreach (Location loc in LoginServer.locationsArr)
                     {
                         CBListItem item = locationsList.add(loc.name, loc);
-                        if (selectDefault & LoginServer.defaultLocation.id == loc.id)
+                        if (checkForDedault)
                         {
-                            item.Selected = true;
+                            if (LoginServer.defaultLocation.id == loc.id)
+                            {
+                                item.Selected = true;
+                            }                                                   
                         }
                         foreach (int n in Program.config.location)
                         {
                             if (n == loc.id) {
                                 item.Selected = true;
+
                             }
                         }
                     }                
                 }
-
+                Program.config.save();
+                saveConfig.Enabled = false;
                 //try
                 //{
                 //    LoginServer.getChannel();
