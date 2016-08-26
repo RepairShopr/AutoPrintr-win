@@ -44,3 +44,9 @@ Key is stored inside file `AutoPrintr/Credentials.cs`:
 ```C#
     public const string SrvXT = "YOUR_KEY_HERE";
 ```
+
+Once you modify that file locally, run this command so that you don't accidentally push it up to something like github:
+
+```
+git update-index --assume-unchanged AutoPrintr\Credentials.cs
+```
