@@ -175,7 +175,7 @@
     <value>3, 3, 3, 3</value>
   </data>
   <data name="printersTab.Size" type="System.Drawing.Size, System.Drawing">
-    <value>491, 458</value>
+    <value>976, 466</value>
   </data>
   <data name="printersTab.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -250,7 +250,7 @@
     <value>locationsList</value>
   </data>
   <data name="&gt;&gt;locationsList.Type" xml:space="preserve">
-    <value>AutoPrintr.CheckBoxList, AutoPrintr, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>AutoPrintr.CheckBoxList, AutoPrintr, Version=0.0.0.9, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;locationsList.Parent" xml:space="preserve">
     <value>groupBox3</value>
@@ -448,7 +448,7 @@
     <value>3, 3, 3, 3</value>
   </data>
   <data name="settingsTab.Size" type="System.Drawing.Size, System.Drawing">
-    <value>491, 458</value>
+    <value>976, 466</value>
   </data>
   <data name="settingsTab.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -600,7 +600,7 @@ SOFTWARE.</value>
     <value>4, 22</value>
   </data>
   <data name="aboutTab.Size" type="System.Drawing.Size, System.Drawing">
-    <value>491, 458</value>
+    <value>976, 466</value>
   </data>
   <data name="aboutTab.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -630,7 +630,7 @@ SOFTWARE.</value>
     <value>0, 0</value>
   </data>
   <data name="tabs.Size" type="System.Drawing.Size, System.Drawing">
-    <value>499, 484</value>
+    <value>984, 492</value>
   </data>
   <data name="tabs.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -684,10 +684,10 @@ SOFTWARE.</value>
     <value>0, 17</value>
   </data>
   <data name="statusStrip.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 486</value>
+    <value>0, 494</value>
   </data>
   <data name="statusStrip.Size" type="System.Drawing.Size, System.Drawing">
-    <value>500, 22</value>
+    <value>985, 22</value>
   </data>
   <data name="statusStrip.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -732,7 +732,7 @@ SOFTWARE.</value>
     <value>checkBoxList1</value>
   </data>
   <data name="&gt;&gt;checkBoxList1.Type" xml:space="preserve">
-    <value>AutoPrintr.CheckBoxList, AutoPrintr, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>AutoPrintr.CheckBoxList, AutoPrintr, Version=0.0.0.9, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -747,7 +747,10 @@ SOFTWARE.</value>
     <value>GrowAndShrink</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>500, 508</value>
+    <value>985, 516</value>
+  </data>
+  <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>AutoPrintr</value>
