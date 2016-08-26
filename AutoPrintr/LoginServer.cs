@@ -50,10 +50,10 @@ namespace AutoPrintr
                             locations = new Dictionary<string, int>();
                             foreach(Location l in resp.LocationsAllowed){
                                 if( l.id == id){
-                                    defaultLocation = l;
+                                    LoginServer.defaultLocation = l;
                                 }
-                                locations.Add(l.name, l.id);
-                                locationsID.Add(l.id, l.name);
+                                LoginServer.locations.Add(l.name, l.id);
+                                LoginServer.locationsID.Add(l.id, l.name);
                             }
                             locationsArr = resp.LocationsAllowed;
                         }
