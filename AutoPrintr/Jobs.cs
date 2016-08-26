@@ -29,21 +29,25 @@ namespace AutoPrintr
         {
             return new Listener(channel, ev, (dynamic msg) =>
             {
-                
-                if (msg.type != null & msg.location != null & msg.file != null)
+                if (msg.document != null & msg.file != null & msg.type != null)
                 {
                     //Job j = new Job(msg.type, msg.location, msg.file);
-                    Job j = new Job(
-                        (string)msg.type, 
-                        (int)msg.location,
+                    if (msg.location == null)
+                    {
+                        msg.location = 0;
+                    }
+
+                    Job j = new Job(                        
+                        (string)msg.document,
                         (string)msg.file,
-                        (string)msg.document
+                        (int)msg.location,
+                        (string)msg.type
                     );
 
                     List<string> printers = Printers.getPrinters(j.document, j.location);
                     //MessageBox.Show(
-                    //    "Printers for job: " + 
-                    //    "[" + printers.Count + "] " + 
+                    //    "Printers for job: " +
+                    //    "[" + printers.Count + "] " +
                     //    printers.ToArray().ToString()
                     //);
                     if (printers.Count == 0) { 
@@ -66,7 +70,7 @@ namespace AutoPrintr
                             j.print((err2) =>
                             {
                                 //MessageBox.Show("Printed");
-                                if (err1 == null)
+                                if (err2 == null)
                                 {
                                     printlist.Remove(j);
                                     donelist.Add(j);
@@ -74,13 +78,15 @@ namespace AutoPrintr
                                 }
                                 else
                                 {
-                                    
+                                    //MessageBox.Show("Printing error:" + err2.ToString());
+                                    j.err = err2;
                                 }
                             });
                         }
                         else
                         {
-
+                            //MessageBox.Show("Download error:" + err1.ToString());
+                            j.err = err1;
                         }
                     });
                 }
@@ -140,7 +146,7 @@ namespace AutoPrintr
         public string localFile = "";
         public string documentName = "";
         public List<string> printers;
-        //public Exception err;
+        public Exception err = null;
 
         public event EventHandler<Job> downloaded;
         public event EventHandler<Job> printed;
@@ -180,17 +186,19 @@ namespace AutoPrintr
                     wc.DownloadProgressChanged += onDnProgress;
                     wc.DownloadFileCompleted += (object sender, System.ComponentModel.AsyncCompletedEventArgs e) =>
                     {
-                        if (e.Cancelled)
-                        {
-                            throw new Exception("Donwload was canceled");
-                        }
+                        //if (e.Cancelled)
+                        //{
+                        //    cb( new Exception("Donwload was canceled") );
+                        //}
 
                         if (e.Error != null)
                         {
-                            throw e.Error;
+                            cb(e.Error); ;
                         }
-
-                        cb(null);
+                        else
+                        {
+                            cb(null);
+                        }
                     };
                     wc.DownloadFileAsync(url, localFile);
                 }
@@ -235,12 +243,12 @@ namespace AutoPrintr
             
         }
 
-        public Job(string type, int location, string file, string document)
+        public Job(string document, string file, int location, string type)
         {
+            this.document = document;
+            this.file = file;
             this.type = type;
             this.location = location;
-            this.file = file;
-            this.document = document;
         }
 
         public Job()
