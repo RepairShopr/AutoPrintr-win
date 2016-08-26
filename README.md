@@ -1,3 +1,3 @@
-# WinPrintr
+# AutoPrintr
 
 Readme file
