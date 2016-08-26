@@ -259,7 +259,7 @@ namespace AutoPrintr
 
         private void submit_Click(object sender, EventArgs ev)
         {
-            if (Program.config.serverKey == null || Program.config.serverKey.Length == 0)
+            if (Credentials.SrvXT == null || Credentials.SrvXT.Length == 0)
             {
                 MessageBox.Show("Jobs server API key is empty - can't connect to jobs server.");
                 return;
