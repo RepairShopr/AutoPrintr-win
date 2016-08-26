@@ -106,6 +106,9 @@
     <EmbeddedResource Include="CheckBoxList.resx">
       <DependentUpon>CheckBoxList.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="mainWin.en.resx">
+      <DependentUpon>mainWin.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="mainWin.resx">
       <DependentUpon>mainWin.cs</DependentUpon>
     </EmbeddedResource>

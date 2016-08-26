@@ -98,17 +98,46 @@ namespace AutoPrintr
         public static void init()
         {
             PrintTypes.list = new List<PrintType>() { 
-                new PrintType( PType.tickets, "Tickets" ),
-                new PrintType( PType.tickets_receipt, "Tickets Receipt" ),
-                new PrintType( PType.intake_forms, "Intake Forms" ),
-                new PrintType( PType.invoices, "Invoices" ),
-                new PrintType( PType.receipt, "Receipt" ),
-                new PrintType( PType.customer_labels, "Customer Labels" ),
-                new PrintType( PType.asset_labels, "Asset Labels" ),
-                new PrintType( PType.ticket_labels, "Ticket Labels" )
+                //new PrintType( PType.tickets, "Tickets" ),
+                //new PrintType( PType.tickets_receipt, "Tickets Receipt" ),
+                //new PrintType( PType.intake_forms, "Intake Forms" ),
+                //new PrintType( PType.invoices, "Invoices" ),
+                //new PrintType( PType.receipt, "Receipt" ),
+                //new PrintType( PType.customer_labels, "Customer Labels" ),
+                //new PrintType( PType.asset_labels, "Asset Labels" ),
+                //new PrintType( PType.ticket_labels, "Ticket Labels" )
+                new PrintType( PType.Invoice, "Invoice" ),
+                new PrintType( PType.Estimate, "Estimate" ),
+                new PrintType( PType.Ticket, "Ticket" ),
+                new PrintType( PType.IntakeForm, "Intake Form" ),
+                new PrintType( PType.Receipt, "Receipt" ),
+                new PrintType( PType.ZReport, "Z Report" ),
+                new PrintType( PType.TicketReceipt, "Ticket Receipt" ),
+                new PrintType( PType.PopDrawer, "Pop Drawer" ),
+                new PrintType( PType.Adjustment, "Adjustment" ),
+                new PrintType( PType.CustomerID, "Customer ID" ),
+                new PrintType( PType.Asset, "Asset" ),
+                new PrintType( PType.TicketLabel, "Ticket Label" )
             };
             //PrintTypes.list = (List<PrintType>)PrintTypes.list.OrderBy(item => item.name);
             PrintTypes.list.Sort( (a, b) => a.name.CompareTo(b.name) );
+        }
+
+        public static List<string> getPrinters(string type, int location)
+        {
+            List<string> l = new List<string>();
+            PrintType t = PrintTypes.ToPrintType(type);
+            if( t == null){ return l; }
+            if (!Program.config.location.Contains(location)) { return l; }
+            
+            foreach (Printer printer in Program.config.printers)
+            {
+                if (printer.get(t.type))
+                {
+                    l.Add(printer.name);
+                }
+            }
+            return l;
         }
     }
 
@@ -117,14 +146,27 @@ namespace AutoPrintr
     /// </summary>
     public enum PType : byte
     {
-        tickets,
-        tickets_receipt,
-        intake_forms,
-        invoices,
-        receipt,
-        customer_labels,
-        asset_labels,
-        ticket_labels
+        //tickets,
+        //tickets_receipt,
+        //intake_forms,
+        //invoices,
+        //receipt,
+        //customer_labels,
+        //asset_labels,
+        //ticket_labels
+
+        Invoice,
+        Estimate,
+        Ticket,
+        IntakeForm,
+        Receipt,
+        ZReport,
+        TicketReceipt,
+        PopDrawer,
+        Adjustment,
+        CustomerID,
+        Asset,
+        TicketLabel
     }
 
 
