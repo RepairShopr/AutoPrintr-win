@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 using PusherClient;
 using System.Threading;
 using NLog;
@@ -29,13 +30,14 @@ namespace AutoPrintr
             this.Shown += mainWin_Shown;
         }
 
-
-        // -------------------------------------------------------------------
-        // Status bar code
         void mainWin_Shown(object sender, EventArgs e)
         {
             //srvConnect();
+            //JobsList.init();
         }
+
+        // -------------------------------------------------------------------
+        // Status bar code
         public void setStatus(string str)
         {
             statusServer.Text = str;
@@ -72,52 +74,68 @@ namespace AutoPrintr
                 }
             }
 
-            
             // Printers table header
             // Adding first column header
-            printersTable.Controls.Add(new tabelLabel("Printer"), 0, 0);
-            // Clear column styles (in other case columns will have wrong widht)
+            printersTable.Controls.Add(new tabelLabel(), 0, 0);
+            // Clear column styles (in other case columns will have wrong width)
             printersTable.ColumnStyles.Clear();
 
-            // Adding rest columns and headers
             int column = 1;
-            foreach (PrintType type in PrintTypes.list)
-            {
-                // Add colmn
-                printersTable.ColumnCount++;
-                // Set column style
-                printersTable.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
-                // Add header label
-                printersTable.Controls.Add(new tabelLabel(type.title), column++, 0);
-            }
-
-            // Adding rows
-            int row = 1;
-            
-            //foreach (Printer p in Printers.list)
             foreach (Printer p in Program.config.printers)
             {
-                // Row creating
-                printersTable.RowCount++;
-                printersTable.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+                printersTable.ColumnCount++;
+                printersTable.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
                 // Printer label
-                printersTable.Controls.Add(new pLabel(p), 0, row);
-                // Prnter checkboxes
-                column = 1;
-                foreach (PrintType t in PrintTypes.list)
-                {
-                    printersTable.Controls.Add(new pCheckBox(t.type, p) { }, column, row);
-                }
-                row++; 
+                printersTable.Controls.Add(new pLabel(p), column++, 0);
             }
 
-            //itemsList.add("test 1");
-            //itemsList.add("test 2");
-            //itemsList.add("test 3");
-            //itemsList.add("test 4");
-            //itemsList.add("test 5");
-            //itemsList.add("test 6");
-            //itemsList.add("test 7");
+            int row = 0;
+            foreach (PrintType type in PrintTypes.list)
+            {
+                column = 0;
+                printersTable.RowCount++;
+                printersTable.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+                // Add header label
+                printersTable.Controls.Add(new tabelLabel(type.title), column++, ++row);
+                foreach (Printer p in Program.config.printers)
+                {
+                    printersTable.Controls.Add(new pCheckBox(type, p), column++, row);
+                }
+            }
+
+            // Adding rest columns and headers
+            //int column = 1;
+            //foreach (PrintType type in PrintTypes.list)
+            //{
+            //    // Add colmn
+            //    printersTable.ColumnCount++;
+            //    // Set column style
+            //    printersTable.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
+            //    // Add header label
+            //    printersTable.Controls.Add(new tabelLabel(type.title), column++, 0);
+            //}
+
+            //// Adding rows
+            //int row = 1;
+
+            //foreach (Printer p in Program.config.printers)
+            //{
+            //    // Row creating
+            //    printersTable.RowCount++;
+            //    printersTable.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+            //    // Printer label
+            //    printersTable.Controls.Add(new pLabel(p), 0, row);
+            //    // Prnter checkboxes
+            //    column = 1;
+            //    foreach (PrintType t in PrintTypes.list)
+            //    {
+            //        printersTable.Controls.Add(new pCheckBox(t.type, p) { }, column, row);
+            //    }
+            //    row++; 
+            //}
+            
+            //MessageBox.Show(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData));
+            //MessageBox.Show(Path.GetTempPath());
         }
 
 
@@ -126,16 +144,16 @@ namespace AutoPrintr
         /// <summary>
         /// Server connect
         /// </summary>
-        public void srvConnect()
+        public void srvConnect(string channel)
         {
             List<Listener> msgWrokers = new List<Listener> {
-                Jobs.init("test_channel",  (ex, job) =>
+                Jobs.init(channel,  (ex, job) =>
                 {
                     if (Program.config.location.Exists(i => i == job.location))
                     {
                         if (ex == null)
                         {
-                            MessageBox.Show("New job: " + job.ToString());
+                            //MessageBox.Show("New job: " + job.ToString());
                             Log.Info("New job: " + job.ToString());
                         }
                         else
@@ -245,7 +263,8 @@ namespace AutoPrintr
             {
                 //Log.Error("Login error: {0}", err.ToString());
                 MessageBox.Show("Login error: " + err.Message);
-            }           
+                //MessageBox.Show("Login error: " + err.ToString());
+            }
 
             if (resp != null)
             {
@@ -269,12 +288,23 @@ namespace AutoPrintr
                         }
                     }                
                 }
-                srvConnect();
+
+                //try
+                //{
+                //    LoginServer.getChannel();
+                //}
+                //catch (Exception err2)
+                //{
+                //    MessageBox.Show("getChannel() error: " + err2.ToString());
+                //    //throw;
+                //}
+
+                srvConnect(LoginServer.channel);
             }
 
             login.Enabled = true;
             password.Enabled = true;
             submit.Enabled = true;
-        }
+        }       
     }
 }
