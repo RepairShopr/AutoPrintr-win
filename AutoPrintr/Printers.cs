@@ -127,9 +127,19 @@ namespace AutoPrintr
         {
             List<string> l = new List<string>();
             PrintType t = PrintTypes.ToPrintType(type);
+            //MessageBox.Show(
+            //    type + " / " + location + "\n\n" +
+            //    Program.config.location.Contains(location).ToString()
+            //);
             if( t == null){ return l; }
-            if (!Program.config.location.Contains(location)) { return l; }
+
+
+            if (Program.config.location.Count > 0) // Check for empty locations array
+            {
+                if ( !Program.config.location.Contains(location) ) { return l; } // If location not in array - return empty list
+            }
             
+            // Search printer byt type
             foreach (Printer printer in Program.config.printers)
             {
                 if (printer.get(t.type))
