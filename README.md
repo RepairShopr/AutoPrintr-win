@@ -51,4 +51,4 @@ Then execute next command in gitshell:
 git update-index --assume-unchanged AutoPrintr\Credentials.cs
 ```
 
-This command will prevent commiting this filw to repo, if it will change.
+This command will prevent commiting this file to repo, if it changes.
