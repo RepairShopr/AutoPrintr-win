@@ -14,7 +14,7 @@ After first run programm will automatically create this file.
 
 Configuration example:
 
-```JSON
+```
 {
   "serverKey": "abcde-12345", 	// Jobs server API key (manual input)
   "location": [					// List of locations ID or one location
