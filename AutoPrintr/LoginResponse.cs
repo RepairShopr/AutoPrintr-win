@@ -52,11 +52,11 @@ namespace AutoPrintr
         [JsonProperty("user_id")]                   public int          UserId                  { get; set; }
         [JsonProperty("admin")]                     public bool         Admin                   { get; set; }
         [JsonProperty("can_use_app")]               public bool         CanUseApp               { get; set; }
-        [JsonProperty("Subdomain")]                 public string       Subdomain               { get; set; }
+        [JsonProperty("subdomain")]                 public string       Subdomain               { get; set; }
         [JsonProperty("default_location")]          public int          DefaulLocation          { get; set; }
         [JsonProperty("enable_multi_locations")]    public bool         EnableMultiLocations    { get; set; }
         [JsonProperty("locations_allowed")]         public Location[]   LocationsAllowed        { get; set; }
-        [JsonProperty("Permissions")]               public Permissions  Permissions             { get; set; }
+        [JsonProperty("permissions")]               public Permissions  Permissions             { get; set; }
     }
 
 }
