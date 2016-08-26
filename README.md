@@ -4,7 +4,7 @@ Allow to automatically print PDF files from http://www.repairshopr.com/
 
 ## Configuration
 
-Programm store global configuration in 
+AutoPrintr stores it's configuration in 
 
 ```
     <home_directory>/config.json
