@@ -10,13 +10,12 @@ Programm store global configuration in
     <home_directory>/config.json
 ```
 
-After first run programm will automatically create this file.
+After first run AutoPrintr will automatically create this file.
 
 Configuration example:
 
 ```
 {
-  "serverKey": "abcde-12345", 	// Jobs server API key (manual input)
   "location": [					// List of locations ID or one location
     1019
   ],
