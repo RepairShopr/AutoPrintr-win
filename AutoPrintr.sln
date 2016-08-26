@@ -6,6 +6,13 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoPrintr", "AutoPrintr\AutoPrintr.csproj", "{3BE80A7C-E89D-4F9B-A948-80F8AD075EAB}"
 EndProject
 Global
+	GlobalSection(AutomaticVersions) = postSolution
+		PrimaryVersionType = AssemblyVersionAttribute
+		UpdateAssemblyVersion = True
+		UpdateAssemblyFileVersion = False
+		UpdateAssemblyInfoVersion = False
+		AssemblyVersionSettings = None.None.None.Increment
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
