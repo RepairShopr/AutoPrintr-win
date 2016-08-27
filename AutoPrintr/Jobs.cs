@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Diagnostics;
-using System.Threading.Tasks;
+//using System.Linq;
+//using System.Text;
+//using System.Diagnostics;
+//using System.Threading.Tasks;
 using System.IO;
 using PusherClient;
 using Newtonsoft.Json;
 using System.Net;
-using Microsoft.Win32;
+//using Microsoft.Win32;
 using System.Windows.Forms;
 
 namespace AutoPrintr
@@ -44,7 +44,9 @@ namespace AutoPrintr
                         (string)msg.type
                     );
 
-                    List<string> printers = Printers.getPrinters(j.document, j.location);
+                    j.Processing();
+
+                    List<Printer> printers = Printers.getPrinters(j.document, j.location);
                     //MessageBox.Show(
                     //    "Printers for job: " +
                     //    "[" + printers.Count + "] " +
@@ -138,6 +140,17 @@ namespace AutoPrintr
         }
     }
 
+    public enum JobState : byte
+    {
+        New,
+        Processing,
+        Downloading,
+        Downloaded, 
+        Printing,
+        Printed,
+        Error
+    }
+
     public class Job : JobMsg
     {
         public bool isPrinted = false;
@@ -145,11 +158,11 @@ namespace AutoPrintr
         public long recived = 0;
         public string localFile = "";
         public string documentName = "";
-        public List<string> printers;
+        public string documentTitle = "";
+        public List<Printer> printers;
         public Exception err = null;
-
-        public event EventHandler<Job> downloaded;
-        public event EventHandler<Job> printed;
+        public JobState state = JobState.New;
+        public event EventHandler<Job> onChange;
 
         public static string randName()
         {
@@ -162,6 +175,7 @@ namespace AutoPrintr
         {
             progress = e.ProgressPercentage;
             recived = e.TotalBytesToReceive;
+            Downloading();
         }
 
         //private void onDnCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
@@ -174,10 +188,12 @@ namespace AutoPrintr
 
         public void download(Action<Exception> cb)
         {
+            Downloading();
+
             progress = 0;
             recived = 0;
             Uri url = new Uri(file);
-            documentName = Path.GetFileName(url.LocalPath);
+            //documentName = Path.GetFileName(url.LocalPath);
             localFile = Path.Combine(Program.tempDnDir, randName() + "_" + documentName);
             try
             {
@@ -201,46 +217,33 @@ namespace AutoPrintr
                         }
                     };
                     wc.DownloadFileAsync(url, localFile);
+                    Downloaded();
                 }
             }
             catch (Exception err)
             {
+                Error();
                 cb(err);
             }
             
         }
 
         public void print(Action<Exception> cb)
-        {            
+        {
+            Printing();
             try
             {
-                foreach (string printer in printers)
+                foreach (Printer printer in printers)
                 {
-                    //var p = Process.Start(
-                    //    Registry.LocalMachine.OpenSubKey(
-                    //        @"SOFTWARE\Microsoft\Windows\CurrentVersion" +
-                    //        @"\App Paths\AcroRd32.exe").GetValue("").ToString(),
-                    //        string.Format("/h /t \"{0}\" \"{1}\"", localFile, printer)
-                    //);
-
-                    //Process p = new Process();
-                    //p.StartInfo = new ProcessStartInfo()
-                    //{
-                    //    CreateNoWindow = true,
-                    //    Verb = "print",
-                    //    FileName = localFile //put the correct path here
-                    //};
-                    //p.Start();
-
-                    RawPrint.SendFileToPrinter(localFile, printer, documentName);                    
+                    printer.print(localFile, documentName);
                 }
                 cb(null);
+                Printed();
             }
             catch (Exception err)
             {
                 cb(err);
             }
-            
         }
 
         public Job(string document, string file, int location, string type)
@@ -249,6 +252,8 @@ namespace AutoPrintr
             this.file = file;
             this.type = type;
             this.location = location;
+            this.documentName = Path.GetFileName(new Uri(file).LocalPath);
+            this.documentTitle = PrintTypes.toTitle(document);
         }
 
         public Job()
@@ -265,5 +270,48 @@ namespace AutoPrintr
         }
 
 
+        public void Processing()
+	    { 
+		    state = JobState.Processing; 
+		    if( onChange != null ){
+                onChange(null, this);
+		    }
+	    }
+        public void Downloading()
+	    { 
+		    state = JobState.Downloading; 
+		    if( onChange != null ){
+                onChange(null, this);
+		    }
+	    }
+        public void Downloaded()
+        {
+            state = JobState.Downloaded;
+            if (onChange != null)
+            {
+                onChange(null, this);
+            }
+        }
+        public void Printing()
+	    { 
+		    state = JobState.Printing; 
+		    if( onChange != null ){
+                onChange(null, this);
+		    }
+	    }
+        public void Printed()
+	    { 
+		    state = JobState.Printed; 
+		    if( onChange != null ){
+                onChange(null, this);
+		    }
+	    }
+        public void Error()
+	    { 
+		    state = JobState.Error; 
+		    if( onChange != null ){
+                onChange(null, this);
+		    }
+	    }
     }
 }
