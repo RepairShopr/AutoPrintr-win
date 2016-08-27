@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using System.Windows.Forms;
 using Microsoft.Win32;
+//using Ghostscript.NET.Processor;
 
 namespace AutoPrintr
 {
@@ -246,7 +247,15 @@ namespace AutoPrintr
     //    public bool[] types;
     //}
 
-    public enum PrintEngine { Internal, AcrobatReader, DefaultPdfViwer };
+    public enum PrintEngine { 
+        Internal, 
+        AcrobatReader, 
+        DefaultPdfViwer,
+        //GhostScript,
+        SumatraPDF
+        //Xpdf
+    };
+
     static class PrintEngines
     {
         static public PrintEngine type(string str)
@@ -259,6 +268,12 @@ namespace AutoPrintr
                     return PrintEngine.AcrobatReader;
                 case ("DefaultPdfViwer"):
                     return PrintEngine.DefaultPdfViwer;
+                //case ("GhostScript"):
+                //    return PrintEngine.GhostScript;
+                case ("SumatraPDF"):
+                    return PrintEngine.SumatraPDF;
+                //case ("Xpdf"):
+                //    return PrintEngine.Xpdf;
                 default:
                     return PrintEngine.Internal;
             }
@@ -306,6 +321,7 @@ namespace AutoPrintr
                             string.Format("/h /t \"{0}\" \"{1}\"", filePath, name)
                     );
                     break;
+
                 case (PrintEngine.DefaultPdfViwer):
                     p = new Process();
                     p.StartInfo = new ProcessStartInfo()
@@ -318,9 +334,43 @@ namespace AutoPrintr
                     };
                     p.Start();
                     break;
+
                 case (PrintEngine.Internal):
                     RawPrint.SendFileToPrinter(filePath, name, documentName);
                     break;
+
+                //case (PrintEngine.GhostScript):
+                //    using (GhostscriptProcessor processor = new GhostscriptProcessor())
+                //    {
+                //        List<string> switches = new List<string>();
+                //        switches.Add("-empty");
+                //        switches.Add("-dPrinted");
+                //        switches.Add("-dBATCH");
+                //        switches.Add("-dNOPAUSE");
+                //        switches.Add("-dNOSAFER");
+                //        switches.Add("-dNumCopies=1");
+                //        switches.Add("-sDEVICE=mswinpr2");
+                //        switches.Add("-sOutputFile=%printer%" + name);
+                //        switches.Add("-f");
+                //        switches.Add(filePath);
+                //        processor.StartProcessing(switches.ToArray(), null);
+                //    }
+                //    break;
+
+                case (PrintEngine.SumatraPDF):
+                    p = Process.Start(
+                        "SumatraPDF.exe",
+                        string.Format("-exit-on-print -print-to \"{0}\" \"{1}\"", name, filePath)
+                    );
+                    break;
+
+                //case (PrintEngine.Xpdf):
+                //    p = Process.Start(
+                //        "pdftopng.exe",
+                //        string.Format("\"{0}\" \"{1}\"", filePath )
+                //    );
+                //    break;
+
             }
         }
 
