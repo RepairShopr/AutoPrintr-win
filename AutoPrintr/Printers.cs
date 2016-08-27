@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Diagnostics;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 using System.Windows.Forms;
+using Microsoft.Win32;
 
 namespace AutoPrintr
 {
@@ -123,9 +126,9 @@ namespace AutoPrintr
             PrintTypes.list.Sort( (a, b) => a.name.CompareTo(b.name) );
         }
 
-        public static List<string> getPrinters(string type, int location)
+        public static List<Printer> getPrinters(string type, int location)
         {
-            List<string> l = new List<string>();
+            List<Printer> l = new List<Printer>();
             PrintType t = PrintTypes.ToPrintType(type);
             //MessageBox.Show(
             //    type + " / " + location + "\n\n" +
@@ -144,7 +147,7 @@ namespace AutoPrintr
             {
                 if (printer.get(t.type))
                 {
-                    l.Add(printer.name);
+                    l.Add(printer);
                 }
             }
             return l;
@@ -210,6 +213,10 @@ namespace AutoPrintr
             }
         }
 
+        public static string toTitle(string str)
+        {
+            return PrintTypes.ToPrintType(str).title;
+        }
     }    
 
     public class PrintType
@@ -239,12 +246,31 @@ namespace AutoPrintr
     //    public bool[] types;
     //}
 
+    public enum PrintEngine { Internal, AcrobatReader, DefaultPdfViwer };
+    static class PrintEngines
+    {
+        static public PrintEngine type(string str)
+        {
+            switch (str)
+            {
+                //case("Internal"):
+                //    return PrintEngine.Internal;
+                case ("AcrobatReader"):
+                    return PrintEngine.AcrobatReader;
+                case ("DefaultPdfViwer"):
+                    return PrintEngine.DefaultPdfViwer;
+                default:
+                    return PrintEngine.Internal;
+            }
+        }
+    }
     /// <summary>
     /// Printer class. Automatically save changed property.
     /// </summary>
     public class Printer
     {
         public readonly string name;
+        public PrintEngine printEngine = PrintEngine.Internal;
         public List<PType>types = new List<PType>();
 
         /// <summary>
@@ -264,8 +290,38 @@ namespace AutoPrintr
             {
                 types.Remove(printingType);
             }
-            //Printers.save();
             Program.config.save();
+        }
+
+        public void print(string filePath, string documentName)
+        {
+            Process p;
+            switch (printEngine)
+            {
+                case(PrintEngine.AcrobatReader):
+                    p = Process.Start(
+                        Registry.LocalMachine.OpenSubKey(
+                            @"SOFTWARE\Microsoft\Windows\CurrentVersion" +
+                            @"\App Paths\AcroRd32.exe").GetValue("").ToString(),
+                            string.Format("/h /t \"{0}\" \"{1}\"", filePath, name)
+                    );
+                    break;
+                case (PrintEngine.DefaultPdfViwer):
+                    p = new Process();
+                    p.StartInfo = new ProcessStartInfo()
+                    {
+                        CreateNoWindow = true,
+                        Verb = "PrintTo",
+                        WindowStyle = ProcessWindowStyle.Hidden,
+                        FileName = filePath,
+                        Arguments = "\"" + name + "\""
+                    };
+                    p.Start();
+                    break;
+                case (PrintEngine.Internal):
+                    RawPrint.SendFileToPrinter(filePath, name, documentName);
+                    break;
+            }
         }
 
         /// <summary>
@@ -339,17 +395,14 @@ namespace AutoPrintr
         //    return name.GetHashCode();
         //}
 
-        ///// <summary>
-        ///// Debug function
-        ///// </summary>
-        ///// <returns></returns>
-        //public override string ToString()
-        //{
-        //    return
-        //        name + ": Fullsize = " + _fullsize +
-        //        " / Receipt = " + _receipt +
-        //        " / Label = " + _label;
-        //}
+        /// <summary>
+        /// Printer to string
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return name;
+        }
     }
 
 

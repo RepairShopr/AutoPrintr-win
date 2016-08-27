@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.IO;
 using PusherClient;
 using System.Threading;
+//using System.Reflection;
 using NLog;
 
 namespace AutoPrintr
@@ -28,6 +29,8 @@ namespace AutoPrintr
             configTabInit();
             createPrintersUI();
             this.Shown += mainWin_Shown;
+            string version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            versionLabel.Text = "RepairShopr AutoPrintr - v." + version;
         }
 
         void mainWin_Shown(object sender, EventArgs e)
@@ -45,6 +48,16 @@ namespace AutoPrintr
                 login.Text = Program.config.login;
             }
 
+            // Jobs list initialization
+            //jobsList.setColumns(new Dictionary<string, string>()
+            //{
+            //    {"documentName", "File"},
+            //    {"state", "State"},
+            //    {"progress", "Progress"},
+            //    {"recived", "Recived"},
+            //    {"type", "Type"},
+            //    {"document", "Document"}
+            //});            
         }
 
 
@@ -101,6 +114,7 @@ namespace AutoPrintr
                 printersTable.Controls.Add(new pLabel(p), column++, 0);
             }
 
+
             int row = 0;
             foreach (PrintType type in PrintTypes.list)
             {
@@ -113,6 +127,15 @@ namespace AutoPrintr
                 {
                     printersTable.Controls.Add(new pCheckBox(type, p), column++, row);
                 }
+            }
+
+            column = 0;
+            printersTable.RowCount++;
+            printersTable.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+            printersTable.Controls.Add(new tabelLabel("Print method"), column++, ++row);
+            foreach (Printer p in Program.config.printers)
+            {
+                printersTable.Controls.Add(new PrintEngineDD(p), column++, row);
             }
 
             // Adding rest columns and headers
@@ -161,19 +184,20 @@ namespace AutoPrintr
             List<Listener> msgWrokers = new List<Listener> {
                 Jobs.init(channel,  (ex, job) =>
                 {
-                    if (Program.config.location.Exists(i => i == job.location))
-                    {
-                        if (ex == null)
-                        {
-                            //MessageBox.Show("New job: " + job.ToString());
-                            Log.Info("New job: " + job.ToString());
-                        }
-                        else
-                        {
-                            MessageBox.Show("Job wrong format: " + job.ToString());
-                            Log.Error("Job wrong format: " + ex.ToString());
-                        }
-                    }
+                    jobsList.add(job);
+                    //if (Program.config.location.Exists(i => i == job.location))
+                    //{
+                    //    if (ex == null)
+                    //    {
+                    //        //MessageBox.Show("New job: " + job.ToString());
+                    //        Log.Info("New job: " + job.ToString());
+                    //    }
+                    //    else
+                    //    {
+                    //        MessageBox.Show("Job wrong format: " + job.ToString());
+                    //        Log.Error("Job wrong format: " + ex.ToString());
+                    //    }
+                    //}
                 })
             };
 
