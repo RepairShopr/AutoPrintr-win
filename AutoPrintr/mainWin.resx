@@ -250,7 +250,7 @@
     <value>locationsList</value>
   </data>
   <data name="&gt;&gt;locationsList.Type" xml:space="preserve">
-    <value>AutoPrintr.CheckBoxList, AutoPrintr, Version=0.0.0.9, Culture=neutral, PublicKeyToken=null</value>
+    <value>AutoPrintr.CheckBoxList, AutoPrintr, Version=0.0.0.105, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;locationsList.Parent" xml:space="preserve">
     <value>groupBox3</value>
@@ -468,11 +468,119 @@
   <data name="&gt;&gt;settingsTab.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
+  <data name="jobsTab.AutoScroll" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="jobsList.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left, Right</value>
+  </data>
+  <data name="jobsList.AutoScroll" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="jobsList.AutoSizeMode" type="System.Windows.Forms.AutoSizeMode, System.Windows.Forms">
+    <value>GrowAndShrink</value>
+  </data>
+  <data name="jobsList.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 4</value>
+  </data>
+  <data name="jobsList.Size" type="System.Drawing.Size, System.Drawing">
+    <value>969, 459</value>
+  </data>
+  <data name="jobsList.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;jobsList.Name" xml:space="preserve">
+    <value>jobsList</value>
+  </data>
+  <data name="&gt;&gt;jobsList.Type" xml:space="preserve">
+    <value>AutoPrintr.JobsList, AutoPrintr, Version=0.0.0.105, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;jobsList.Parent" xml:space="preserve">
+    <value>jobsTab</value>
+  </data>
+  <data name="&gt;&gt;jobsList.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="jobsTab.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 22</value>
+  </data>
+  <data name="jobsTab.Size" type="System.Drawing.Size, System.Drawing">
+    <value>976, 466</value>
+  </data>
+  <data name="jobsTab.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="jobsTab.Text" xml:space="preserve">
+    <value>Jobs</value>
+  </data>
+  <data name="&gt;&gt;jobsTab.Name" xml:space="preserve">
+    <value>jobsTab</value>
+  </data>
+  <data name="&gt;&gt;jobsTab.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;jobsTab.Parent" xml:space="preserve">
+    <value>tabs</value>
+  </data>
+  <data name="&gt;&gt;jobsTab.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="richTextBox1.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="richTextBox1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 3</value>
+  </data>
+  <data name="richTextBox1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>973, 460</value>
+  </data>
+  <data name="richTextBox1.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="richTextBox1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="&gt;&gt;richTextBox1.Name" xml:space="preserve">
+    <value>richTextBox1</value>
+  </data>
+  <data name="&gt;&gt;richTextBox1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RichTextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;richTextBox1.Parent" xml:space="preserve">
+    <value>logTab</value>
+  </data>
+  <data name="&gt;&gt;richTextBox1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="logTab.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 22</value>
+  </data>
+  <data name="logTab.Size" type="System.Drawing.Size, System.Drawing">
+    <value>976, 466</value>
+  </data>
+  <data name="logTab.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="logTab.Text" xml:space="preserve">
+    <value>Log</value>
+  </data>
+  <data name="&gt;&gt;logTab.Name" xml:space="preserve">
+    <value>logTab</value>
+  </data>
+  <data name="&gt;&gt;logTab.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;logTab.Parent" xml:space="preserve">
+    <value>tabs</value>
+  </data>
+  <data name="&gt;&gt;logTab.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
   <data name="button1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
   <data name="button1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>443, 10</value>
+    <value>928, 7</value>
   </data>
   <data name="button1.Size" type="System.Drawing.Size, System.Drawing">
     <value>40, 23</value>
@@ -495,70 +603,61 @@
   <data name="&gt;&gt;button1.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="label1.AutoSize" type="System.Boolean, mscorlib">
+  <data name="versionLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="label1.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 10pt</value>
+  <data name="versionLabel.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
   </data>
-  <data name="label1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+  <data name="versionLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>11, 13</value>
+  <data name="versionLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>7, 7</value>
   </data>
-  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>248, 17</value>
+  <data name="versionLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>174, 20</value>
   </data>
-  <data name="label1.TabIndex" type="System.Int32, mscorlib">
+  <data name="versionLabel.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
-  <data name="label1.Text" xml:space="preserve">
-    <value>RepairShopr AutoPrintr - build (Alfa 4)</value>
+  <data name="versionLabel.Text" xml:space="preserve">
+    <value>RepairShopr AutoPrintr</value>
   </data>
-  <data name="&gt;&gt;label1.Name" xml:space="preserve">
-    <value>label1</value>
+  <data name="&gt;&gt;versionLabel.Name" xml:space="preserve">
+    <value>versionLabel</value>
   </data>
-  <data name="&gt;&gt;label1.Type" xml:space="preserve">
+  <data name="&gt;&gt;versionLabel.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;label1.Parent" xml:space="preserve">
+  <data name="&gt;&gt;versionLabel.Parent" xml:space="preserve">
     <value>aboutTab</value>
   </data>
-  <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;versionLabel.ZOrder" xml:space="preserve">
     <value>1</value>
+  </data>
+  <data name="licenseText.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
   </data>
   <data name="licenseText.Location" type="System.Drawing.Point, System.Drawing">
     <value>6, 19</value>
   </data>
   <data name="licenseText.Size" type="System.Drawing.Size, System.Drawing">
-    <value>462, 338</value>
+    <value>948, 405</value>
   </data>
   <data name="licenseText.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
   <data name="licenseText.Text" xml:space="preserve">
-    <value>The MIT License (MIT)
+    <value>The MIT License (MIT) 
 
-Copyright (c) 2015 RepairShopr
+Copyright (c) 2015 RepairShopr 
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions: 
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. 
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.</value>
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</value>
   </data>
   <data name="&gt;&gt;licenseText.Name" xml:space="preserve">
     <value>licenseText</value>
@@ -576,7 +675,7 @@ SOFTWARE.</value>
     <value>8, 33</value>
   </data>
   <data name="groupBox4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>475, 363</value>
+    <value>960, 430</value>
   </data>
   <data name="groupBox4.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -618,7 +717,7 @@ SOFTWARE.</value>
     <value>tabs</value>
   </data>
   <data name="&gt;&gt;aboutTab.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>4</value>
   </data>
   <data name="tabs.Location" type="System.Drawing.Point, System.Drawing">
     <value>1, 1</value>
@@ -732,7 +831,7 @@ SOFTWARE.</value>
     <value>checkBoxList1</value>
   </data>
   <data name="&gt;&gt;checkBoxList1.Type" xml:space="preserve">
-    <value>AutoPrintr.CheckBoxList, AutoPrintr, Version=0.0.0.9, Culture=neutral, PublicKeyToken=null</value>
+    <value>AutoPrintr.CheckBoxList, AutoPrintr, Version=0.0.0.105, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>

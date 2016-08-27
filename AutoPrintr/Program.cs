@@ -21,7 +21,7 @@ namespace AutoPrintr
         {
             Directory.CreateDirectory(tempDir);
             Directory.CreateDirectory(tempDnDir);
-
+            
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Program.window = new mainWin();
