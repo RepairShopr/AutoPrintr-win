@@ -22,7 +22,7 @@ namespace AutoPrintr
         public static Location defaultLocation;
         public static Dictionary<string, int> locations = new Dictionary<string, int>();
         public static Dictionary<int, string> locationsID = new Dictionary<int, string>();
-        static bool isLogged = false;
+        //static bool isLogged = false;
 
         public static LoginResponse login(string login, string password)
         {
@@ -65,7 +65,7 @@ namespace AutoPrintr
                             }
                             locationsArr = resp.LocationsAllowed;
                         }
-                        LoginServer.isLogged = true;
+                        //LoginServer.isLogged = true;
                         LoginServer.isMultiLocations = resp.EnableMultiLocations;
                         LoginServer.domain = resp.Subdomain;
                         LoginServer.channel = getChannel(domain, globalURl, UserToken);
@@ -99,7 +99,10 @@ namespace AutoPrintr
             string response = "";
             getChannelResp ch;
             response = GET(url);
-            ch = JsonConvert.DeserializeObject<getChannelResp>(response);
+            ch = JsonConvert.DeserializeObject<getChannelResp>(
+                response, 
+                new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore}
+            );
             
             if (ch.messaging_channel != null)
             {
