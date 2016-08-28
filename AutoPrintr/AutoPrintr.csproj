@@ -33,7 +33,7 @@
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <AssemblyVersion>0.0.0.119</AssemblyVersion>
+    <AssemblyVersion>0.0.0.175</AssemblyVersion>
     <AssemblyFileVersionSettings>
     </AssemblyFileVersionSettings>
     <AssemblyInfoVersionSettings>
@@ -110,6 +110,7 @@
     <Compile Include="PrintEngineDD.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="PrintEngines.cs" />
     <Compile Include="RawPrint.cs" />
     <Compile Include="Srv.cs" />
     <Compile Include="LoginResponse.cs" />
@@ -125,7 +126,7 @@
     <Compile Include="tabelLabel.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Util.cs" />
+    <Compile Include="tools.cs" />
     <EmbeddedResource Include="CheckBoxList.resx">
       <DependentUpon>CheckBoxList.cs</DependentUpon>
     </EmbeddedResource>

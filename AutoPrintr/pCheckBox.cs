@@ -2,15 +2,22 @@
 using System.Windows.Forms;
 namespace AutoPrintr
 {
+    /// <summary>
+    /// Printer document type checkbox
+    /// </summary>
     public class pCheckBox : CheckBox
     {
-        public PType pType;
+        private static NLog.Logger log = NLog.LogManager.GetCurrentClassLogger();
+        /// <summary>
+        /// Document type
+        /// </summary>
+        public DocType docType;
         public Printer printer;
-        public pCheckBox(PrintType pt, Printer pr)
+        public pCheckBox(DocumentType type, Printer printer)
         {
-            pType = pt.type;
-            printer = pr;
-            Checked = printer.get(pType);
+            this.docType = type.type;
+            this.printer = printer;
+            Checked = printer.get(docType);
             Margin = new Padding(5, 0, 5, 0);
             Click += pCheckBox_Click;
 
@@ -22,18 +29,22 @@ namespace AutoPrintr
             tt.ReshowDelay = 500;
             // Force the ToolTip text to be displayed whether or not the form is active.
             tt.ShowAlways = true;
-            tt.SetToolTip(this, pt.title);
+            tt.SetToolTip(this, type.title);
         }
-
+        /// <summary>
+        /// Checkbox change event handler
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void pCheckBox_Click(object sender, EventArgs e)
         {
             try
             {
-                printer.set(pType, Checked);
+                printer.set(docType, Checked);
             }
             catch (Exception err)
             {
-                MessageBox.Show("Error while saving printers config. Error is:" + err.Message.ToString());
+                log.Error("Error while saving printers config. Error is: {0}", err);
             }
         }
     }
