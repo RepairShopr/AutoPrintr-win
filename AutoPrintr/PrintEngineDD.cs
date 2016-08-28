@@ -1,30 +1,46 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace AutoPrintr
 {
+    /// <summary>
+    /// Custom combo box for selecting print engine for printer
+    /// </summary>
     class PrintEngineDD : ComboBox
     {
+        /// <summary>
+        /// Printer for this combo box
+        /// </summary>
         public Printer printer;
+        /// <summary>
+        /// Create new combo box for selected printer
+        /// </summary>
+        /// <param name="printer"></param>
         public PrintEngineDD(Printer printer)
         {
             this.printer = printer;
             DropDownStyle = ComboBoxStyle.DropDownList;
-            foreach (var engine in Enum.GetValues(typeof(PrintEngine)))
+            // Get list of engines
+            foreach (var kv in PrintEngines.list)
             { 
-                Items.Add(engine.ToString());
+                Items.Add(kv.Key);
             }
+            // Setting handler for change event
             this.SelectedIndexChanged += PrintEngineDD_TextChanged;
-            this.Text = printer.printEngine.ToString();
+            // Set current value as printer engine name
+            this.Text = printer.printEngine.name;
         }
 
+        /// <summary>
+        /// Print engine combo box change event handler
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void PrintEngineDD_TextChanged(object sender, EventArgs e)
         {
-            printer.printEngine = PrintEngines.type(Text);
+            // Change print engine to selected
+            printer.printEngine = PrintEngines.find(Text);
+            // Config save (no one like alerts and message boxes)
             Program.config.save();
         }
     }

@@ -11,13 +11,13 @@ using System.IO;
 using PusherClient;
 using System.Threading;
 //using System.Reflection;
-using NLog;
+//using NLog;
 
 namespace AutoPrintr
 {
     public partial class mainWin : Form
     {
-        public static Logger Log = LogManager.GetLogger("WinPrintr"); 
+        //public static Logger Log = LogManager.GetLogger("WinPrintr"); 
         
         public mainWin()
         {
@@ -116,7 +116,7 @@ namespace AutoPrintr
 
 
             int row = 0;
-            foreach (PrintType type in PrintTypes.list)
+            foreach (DocumentType type in DocumentTypes.list)
             {
                 column = 0;
                 printersTable.RowCount++;
@@ -216,7 +216,7 @@ namespace AutoPrintr
                 //log.Text += "Server change state: " + state + "\r\n";
             };
 
-            Srv.connect(msgWrokers, onError, onStateChanged);
+            JobsServer.connect(msgWrokers, onError, onStateChanged);
         }
 
 
@@ -258,8 +258,8 @@ namespace AutoPrintr
             //Program.config.location = locationsList.SelectedItems.Cast<ListViewItem>(
                 //).Select( i => LoginServer.locations[i.Text] ).ToList();
 
-            Program.config.location = 
-                locationsList.Selected.Cast<CBListItem>().Select(
+            Program.config.locations = 
+                locationsList.Selected.Cast<CheckBoxListItem>().Select(
                     i => ((Location)i.userData).id
                 ).ToList();
             //Program.config.serverKey = pusherKey.Text;
@@ -325,10 +325,10 @@ namespace AutoPrintr
                     locationsList.Items.Clear();
 
                     // Check for setting the default location
-                    bool checkForDedault = (LoginServer.defaultLocation != null) & (Program.config.location.Count == 0);
+                    bool checkForDedault = (LoginServer.defaultLocation != null) & (Program.config.locations.Count == 0);
                     foreach (Location loc in LoginServer.locationsArr)
                     {
-                        CBListItem item = locationsList.add(loc.name, loc);
+                        CheckBoxListItem item = locationsList.add(loc.name, loc);
                         if (checkForDedault)
                         {
                             if (LoginServer.defaultLocation.id == loc.id)
@@ -336,7 +336,7 @@ namespace AutoPrintr
                                 item.Selected = true;
                             }                                                   
                         }
-                        foreach (int n in Program.config.location)
+                        foreach (int n in Program.config.locations)
                         {
                             if (n == loc.id) {
                                 item.Selected = true;

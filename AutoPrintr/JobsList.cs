@@ -10,69 +10,102 @@ using System.Windows.Forms;
 
 namespace AutoPrintr
 {
+    /// <summary>
+    /// Jobs list UI control
+    /// </summary>
     public partial class JobsList : UserControl
     {
-        public Dictionary<int, JLJob> items = new Dictionary<int, JLJob>();
-
-        void update(JLJob ji, Job j)
+        /// <summary>
+        /// JobsList job list
+        /// </summary>
+        public Dictionary<int, UIJob> items = new Dictionary<int, UIJob>();
+        /// <summary>
+        /// Update job in UI
+        /// </summary>
+        /// <param name="uiJob"></param>
+        /// <param name="j"></param>
+        void update(UIJob uiJob, Job job)
         {
-            ji.update(j);
+            uiJob.update(job);
         }
-        delegate void updateCb(JLJob ji, Job j);
+        /// <summary>
+        /// Delegate for updating job in UI
+        /// </summary>
+        /// <param name="uiJob"></param>
+        /// <param name="job"></param>
+        delegate void updateCb(UIJob uiJob, Job job);
 
-
-        void addJobControls(JLJob ji)
+        /// <summary>
+        /// Add controls for job
+        /// </summary>
+        /// <param name="uiJob"></param>
+        void addJobControls(UIJob uiJob)
         {
             table.RowCount++;
             table.RowStyles.Add(new RowStyle(SizeType.AutoSize));
-            table.Controls.Add(ji.lIndex, 0, ji.row);
-            table.Controls.Add(ji.lFile, 1, ji.row);
-            table.Controls.Add(ji.lState, 2, ji.row);
-            table.Controls.Add(ji.lProgress, 3, ji.row);
-            table.Controls.Add(ji.lRecived, 4, ji.row);
-            table.Controls.Add(ji.lType, 5, ji.row);
-            table.Controls.Add(ji.lDocument, 6, ji.row);
-            table.Controls.Add(ji.lPrinters, 7, ji.row);
-            table.Controls.Add(ji.lUrl, 8, ji.row);
+            table.Controls.Add(uiJob.lIndex, 0, uiJob.row);
+            table.Controls.Add(uiJob.lFile, 1, uiJob.row);
+            table.Controls.Add(uiJob.lState, 2, uiJob.row);
+            table.Controls.Add(uiJob.lProgress, 3, uiJob.row);
+            table.Controls.Add(uiJob.lRecived, 4, uiJob.row);
+            table.Controls.Add(uiJob.lType, 5, uiJob.row);
+            table.Controls.Add(uiJob.lDocument, 6, uiJob.row);
+            table.Controls.Add(uiJob.lPrinters, 7, uiJob.row);
+            table.Controls.Add(uiJob.lUrl, 8, uiJob.row);
         }
-        public delegate void addJobControlsCb(JLJob ji);
-
-        public void add(Job j)
+        /// <summary>
+        /// Delegate for adding controls for job in UI
+        /// </summary>
+        /// <param name="uiJob"></param>
+        public delegate void addJobControlsCb(UIJob uiJob);
+        /// <summary>
+        /// Add job to UI
+        /// </summary>
+        /// <param name="job"></param>
+        public void add(Job job)
         {
+            // Get row number
             int row = table.RowCount;
-            JLJob ji = new JLJob(j, row, items.Count);
+            // Creating new UI Job
+            UIJob uiJob = new UIJob(job, row, items.Count);
 
             if (InvokeRequired)
             {
-                Invoke(new addJobControlsCb(this.addJobControls), new object[] { ji });
+                Invoke(new addJobControlsCb(this.addJobControls), new object[] { uiJob });
             }
             else
             {
-                addJobControls(ji);
+                addJobControls(uiJob);
             }
 
-            j.onChange += (object sender, Job job) =>
+            job.onChange += (object sender, Job evJob) =>
             {
                 if (InvokeRequired)
                 {
-                    Invoke(new updateCb(this.update), new object[] { ji, j });
+                    Invoke(new updateCb(this.update), new object[] { uiJob, evJob });
                 }
                 else
                 {
-                    update(ji, j);
+                    update(uiJob, evJob);
                 }
             };
 
-            items.Add(row, ji);
+            items.Add(row, uiJob);
         }
-
-        void addColumn(string text)
+        /// <summary>
+        /// Add column with selected name
+        /// </summary>
+        /// <param name="name"></param>
+        void addColumn(string name)
         {
             table.ColumnCount++;
             table.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
-            table.Controls.Add(new JLHeaderLabel(text), table.ColumnCount-1, 0);
+            table.Controls.Add(new JLHeaderLabel(name), table.ColumnCount-1, 0);
         }
 
+        /// <summary>
+        /// Create new jobs list
+        /// </summary>
         public JobsList()
         {
             InitializeComponent();
@@ -88,53 +121,68 @@ namespace AutoPrintr
             addColumn("Url");
         }
 
-        public class JLJob : Job
+        /// <summary>
+        /// UI job class
+        /// </summary>
+        public class UIJob
         {
             public Job job;
             public int row;
             public int index;
-            public JLLabel lIndex;
-            public JLLabel lFile;
-            public JLLabel lState;
-            public JLLabel lProgress;
-            public JLLabel lRecived;
-            public JLLabel lType;
-            public JLLabel lDocument;
-            public JLLabel lPrinters;
-            public JLLabel lUrl;
+            public JobsListLabel lIndex;
+            public JobsListLabel lFile;
+            public JobsListLabel lState;
+            public JobsListLabel lProgress;
+            public JobsListLabel lRecived;
+            public JobsListLabel lType;
+            public JobsListLabel lDocument;
+            public JobsListLabel lPrinters;
+            public JobsListLabel lUrl;
 
-            public JLJob(Job j, int row, int index)
+            /// <summary>
+            /// Create new UI job instance
+            /// </summary>
+            /// <param name="job"></param>
+            /// <param name="row"></param>
+            /// <param name="index"></param>
+            public UIJob(Job job, int row, int index)
             {
-                job = j;
+                this.job = job;
                 this.row = row;
                 this.index = index;
-                lIndex = new JLLabel(index.ToString());
-                lFile = new JLLabel(j.documentName);
-                lState = new JLLabel(j.state.ToString());
-                lProgress = new JLLabel(j.progress.ToString()+"%");
-                lRecived = new JLLabel(Util.BytesToString(j.recived));
-                lType = new JLLabel(j.type);
-                lDocument = new JLLabel(j.documentTitle);
-                lPrinters = new JLLabel(string.Join<Printer>(",", j.printers.ToArray()));
-                lUrl = new JLLabel(j.file);
+                lIndex = new JobsListLabel(index.ToString());
+                lFile = new JobsListLabel(job.fileName);
+                lState = new JobsListLabel(job.state.ToString());
+                lProgress = new JobsListLabel(job.progress.ToString()+"%");
+                lRecived = new JobsListLabel(tools.BytesToString(job.recived));
+                lType = new JobsListLabel(job.type);
+                lDocument = new JobsListLabel(job.documentTitle);
+                lPrinters = new JobsListLabel(string.Join<Printer>(",", job.printers.ToArray()));
+                lUrl = new JobsListLabel(job.file);
             }
-
-            public void update(Job j)
+            /// <summary>
+            /// Update job in UI
+            /// </summary>
+            /// <param name="job"></param>
+            public void update(Job job)
             {
-                //lFile.Text = j.documentName.ToString();
-                lState.Text = j.state.ToString();
-                lProgress.Text = j.progress.ToString() + "%";
-                lRecived.Text = Util.BytesToString(j.recived);
+                lState.Text = job.state.ToString();
+                lProgress.Text = job.progress.ToString() + "%";
+                lRecived.Text = tools.BytesToString(job.recived);
             }
 
         }
 
-
-        public class JLLabel : Label
+        /// <summary>
+        /// Label in JobsList
+        /// </summary>
+        public class JobsListLabel : Label
         {
-            //public Job job;
-            //public JLLabel(string text, Job j)
-            public JLLabel(string text)
+            /// <summary>
+            /// Create new label for jobs list
+            /// </summary>
+            /// <param name="text"></param>
+            public JobsListLabel(string text)
             {
                 AutoEllipsis = true;
                 Text = text;
@@ -154,9 +202,15 @@ namespace AutoPrintr
 
             }
         }
-
+        /// <summary>
+        /// Label for JobsList header
+        /// </summary>
         public class JLHeaderLabel : Label
         {
+            /// <summary>
+            /// Create new label for JobsList header
+            /// </summary>
+            /// <param name="text"></param>
             public JLHeaderLabel(string text)
             {
                 Text = text;
