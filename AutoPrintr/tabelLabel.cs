@@ -3,6 +3,9 @@ using System.Windows.Forms;
 
 namespace AutoPrintr
 {
+    /// <summary>
+    /// Label for porinters table 
+    /// </summary>
     public class tabelLabel : Label
     {
         public tabelLabel(string text)
@@ -18,6 +21,9 @@ namespace AutoPrintr
         }
     }
 
+    /// <summary>
+    /// Printer label
+    /// </summary>
     public class pLabel : tabelLabel
     {
         public Printer printer;

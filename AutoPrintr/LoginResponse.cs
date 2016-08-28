@@ -44,6 +44,9 @@ namespace AutoPrintr
         public int      id      { get; set; }
     }
 
+    /// <summary>
+    /// Login server response class for parsing JSON
+    /// </summary>
     public class LoginResponse
     {
         [JsonProperty("user_token")]                public string       UserToken               { get; set; }

@@ -43,6 +43,7 @@
             this.password = new System.Windows.Forms.MaskedTextBox();
             this.jobsTab = new System.Windows.Forms.TabPage();
             this.logTab = new System.Windows.Forms.TabPage();
+            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.aboutTab = new System.Windows.Forms.TabPage();
             this.button1 = new System.Windows.Forms.Button();
             this.versionLabel = new System.Windows.Forms.Label();
@@ -55,7 +56,6 @@
             this.statusLogin = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusSeparator2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.configSaveStatus = new System.Windows.Forms.ToolStripStatusLabel();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.locationsList = new AutoPrintr.CheckBoxList();
             this.jobsList = new AutoPrintr.JobsList();
             this.checkBoxList1 = new AutoPrintr.CheckBoxList();
@@ -164,10 +164,16 @@
             // 
             // logTab
             // 
-            this.logTab.Controls.Add(this.richTextBox1);
             resources.ApplyResources(this.logTab, "logTab");
+            this.logTab.Controls.Add(this.richTextBox1);
             this.logTab.Name = "logTab";
             this.logTab.UseVisualStyleBackColor = true;
+            // 
+            // richTextBox1
+            // 
+            resources.ApplyResources(this.richTextBox1, "richTextBox1");
+            this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.ReadOnly = true;
             // 
             // aboutTab
             // 
@@ -191,8 +197,8 @@
             // 
             // groupBox4
             // 
-            this.groupBox4.Controls.Add(this.licenseText);
             resources.ApplyResources(this.groupBox4, "groupBox4");
+            this.groupBox4.Controls.Add(this.licenseText);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.TabStop = false;
             // 
@@ -213,7 +219,6 @@
             this.configSaveStatus});
             resources.ApplyResources(this.statusStrip, "statusStrip");
             this.statusStrip.Name = "statusStrip";
-            this.statusStrip.SizingGrip = false;
             // 
             // statusLabel
             // 
@@ -244,12 +249,6 @@
             // 
             this.configSaveStatus.Name = "configSaveStatus";
             resources.ApplyResources(this.configSaveStatus, "configSaveStatus");
-            // 
-            // richTextBox1
-            // 
-            resources.ApplyResources(this.richTextBox1, "richTextBox1");
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.ReadOnly = true;
             // 
             // locationsList
             // 
