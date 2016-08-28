@@ -1,42 +1,62 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
 using Newtonsoft.Json;
-using System.Windows.Forms;
+//using System.Windows.Forms;
 
 namespace AutoPrintr
 {
+    /// <summary>
+    /// Application settings structure
+    /// </summary>
     public class Settings
     {
+        /// <summary>
+        /// User's channel ID
+        /// </summary>
         public string channel = "";
+        /// <summary>
+        /// User's login
+        /// </summary>
         public string login = "";
-        public List<int> location = new List<int>();
+        /// <summary>
+        /// Selected locations
+        /// </summary>
+        public List<int> locations = new List<int>();
+        /// <summary>
+        /// Printers configurations
+        /// </summary>
         public List<Printer> printers = new List<Printer>();
     }
 
+    /// <summary>
+    /// Application config manager class - read, write config, load, save setting to file
+    /// </summary>
     public class Config : Settings
     {
-        //public string serverKey = "";
-        //public List<int> location = new List<int>();
-        //public List<Printer> printers = new List<Printer>();
-
         private const string configFile = "config.json";
-        private Action<Exception> onError;
-
+        //private Action<Exception> onError;
+        private static NLog.Logger log = NLog.LogManager.GetCurrentClassLogger();
+        
+        /// <summary>
+        /// Save current configuration
+        /// </summary>
         public void save()
         {
             try
             {
-                File.WriteAllText(configFile, JsonConvert.SerializeObject(this));
+                File.WriteAllText(configFile, JsonConvert.SerializeObject(this, Formatting.Indented));
             }
             catch (Exception err)
             {
-                onError(err);
+                //onError(err);
+                log.Error("Can't save configuration. Details:\n{0}", err);
             }            
         }
 
+        /// <summary>
+        /// Load configuration
+        /// </summary>
         public void load()
         {
             try
@@ -47,25 +67,31 @@ namespace AutoPrintr
                     Settings config = JsonConvert.DeserializeObject<Settings>(file);
                     channel = config.channel;
                     login = config.login;
-                    location = config.location;
+                    locations = config.locations;
                     printers = config.printers;
                 }
                 else
                 {
                     save();
-                }                
+                }
             }
             catch (Exception err)
             {
                 //onError(err);
-                MessageBox.Show(err.ToString());
+                //System.Windows.Forms.MessageBox.Show(
+                //    "config error: " + err.ToString()
+                //);
+                log.Error("Can't load configuration. Details:\n{0}", err);
             }
-            
         }
 
+        /// <summary>
+        /// New config instance
+        /// </summary>
+        /// <param name="onError"></param>
         public Config(Action<Exception> onError)
         {
-            this.onError = onError;
+            //this.onError = onError;
             load();
         }
     } 
