@@ -10,15 +10,18 @@ using System.Windows.Forms;
 
 namespace AutoPrintr
 {
+    /// <summary>
+    /// Checkboxes list UI control
+    /// </summary>
     [Serializable]
     public partial class CheckBoxList : UserControl
     {
         //[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public List<CBListItem> Items = new List<CBListItem>();
+        public List<CheckBoxListItem> Items = new List<CheckBoxListItem>();
         public event EventHandler SelectedChanged;
 
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public List<CBListItem> Selected
+        public List<CheckBoxListItem> Selected
         {
             get { return Items.FindAll(item => item.Checked); }
             set { }
@@ -29,30 +32,29 @@ namespace AutoPrintr
             SelectedChanged(this, e);
         }
 
-        public CBListItem add()
+        public CheckBoxListItem add()
         {
-            CBListItem item = new CBListItem(Items.Count);
+            CheckBoxListItem item = new CheckBoxListItem(Items.Count);
             item.CheckedChanged += item_CheckedChanged;
             return addItem(item);
         }
 
-        public CBListItem add(string name)
+        public CheckBoxListItem add(string name)
         {
-            CBListItem item = new CBListItem(Items.Count, name);
+            CheckBoxListItem item = new CheckBoxListItem(Items.Count, name);
             item.CheckedChanged += item_CheckedChanged;
             return addItem(item);
         }
 
-        public CBListItem add(string name, object userData)
+        public CheckBoxListItem add(string name, object userData)
         {
-            CBListItem item = new CBListItem(Items.Count, name, userData);
+            CheckBoxListItem item = new CheckBoxListItem(Items.Count, name, userData);
             item.CheckedChanged += item_CheckedChanged;
             return addItem(item);
         }
 
-        private CBListItem addItem(CBListItem item)
+        private CheckBoxListItem addItem(CheckBoxListItem item)
         {
-            //tableLayout.ColumnStyles.Clear();
             tableLayout.RowStyles.Clear();
             tableLayout.RowStyles.Add(new RowStyle(SizeType.AutoSize));
             tableLayout.Controls.Add(item, 0, tableLayout.RowCount++);
@@ -72,9 +74,11 @@ namespace AutoPrintr
 
         
     }
-
+    /// <summary>
+    /// CheckBox list item
+    /// </summary>
     [Serializable]
-    public class CBListItem : CheckBox
+    public class CheckBoxListItem : CheckBox
     {
         public object userData;
         public int id;
@@ -97,24 +101,24 @@ namespace AutoPrintr
             this.id = id;
         }
 
-        public CBListItem(int id)
+        public CheckBoxListItem(int id)
         {
             baseInit(id);
         }
 
-        public CBListItem(int id, string name)
+        public CheckBoxListItem(int id, string name)
         {
             baseInit(id);
             this.name = name;
         }
 
-        public CBListItem(int id, object userData)
+        public CheckBoxListItem(int id, object userData)
         {
             baseInit(id);
             this.userData = userData;
         }
 
-        public CBListItem(int id, string name, object userData)
+        public CheckBoxListItem(int id, string name, object userData)
         {
             baseInit(id);
             this.name = name;

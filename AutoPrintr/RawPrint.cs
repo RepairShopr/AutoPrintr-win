@@ -1,14 +1,16 @@
 ﻿using System;
 using System.IO;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Drawing.Printing; //For PrintDocument
 using System.Runtime.InteropServices; //For RawPrinterHelper, DllImport
 
 namespace AutoPrintr
 {
+    /// <summary>
+    /// Printing files via Windows API
+    /// Source is taked from: https://vishalsbsinha.wordpress.com/2014/05/06/how-to-programmatically-c-net-print-a-pdf-file-directly-to-the-printer/
+    /// Added few features - like document name
+    /// </summary>
     public class RawPrint
     {
         // Structure and API declarions:
@@ -153,26 +155,4 @@ namespace AutoPrintr
         }
         #endregion Methods
     }
-
-//Testing above code
-
-//class Program
-//{
-
-//    static void Main(string[] args)
-//    {
-
-//        try
-//        {
-//            RawPrinterHelper.SendFileToPrinter(@"E:\XYZDocs\XYZ.pdf");
-//        }
-
-//        catch (Exception ex)
-//        {
-
-//            Console.WriteLine(ex.Message);
-
-//        }
-
-//    }
 }
