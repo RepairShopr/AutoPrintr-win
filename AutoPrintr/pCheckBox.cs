@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Windows.Forms;
+
 namespace AutoPrintr
 {
     /// <summary>
     /// Printer document type checkbox
     /// </summary>
-    public class pCheckBox : CheckBox
+    public class pCheckBox : CheckBoxSlider
     {
         private static NLog.Logger log = NLog.LogManager.GetCurrentClassLogger();
         /// <summary>
@@ -18,7 +19,7 @@ namespace AutoPrintr
             this.docType = type.type;
             this.printer = printer;
             Checked = printer.get(docType);
-            Margin = new Padding(5, 0, 5, 0);
+            Margin = new Padding(5, 5, 5, 5);
             Click += pCheckBox_Click;
 
             // Create the ToolTip and associate with the Form container.
@@ -29,7 +30,7 @@ namespace AutoPrintr
             tt.ReshowDelay = 500;
             // Force the ToolTip text to be displayed whether or not the form is active.
             tt.ShowAlways = true;
-            tt.SetToolTip(this, type.title);
+            SetToolTip(tt, type.title);
         }
         /// <summary>
         /// Checkbox change event handler
