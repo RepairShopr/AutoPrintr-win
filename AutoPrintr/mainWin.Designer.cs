@@ -45,7 +45,7 @@
             this.logTab = new System.Windows.Forms.TabPage();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.aboutTab = new System.Windows.Forms.TabPage();
-            this.button1 = new System.Windows.Forms.Button();
+            this.helpButton = new System.Windows.Forms.Button();
             this.versionLabel = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.licenseText = new System.Windows.Forms.RichTextBox();
@@ -56,6 +56,7 @@
             this.statusLogin = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusSeparator2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.configSaveStatus = new System.Windows.Forms.ToolStripStatusLabel();
+            this.checkBoxSlider1 = new AutoPrintr.CheckBoxSlider();
             this.locationsList = new AutoPrintr.CheckBoxList();
             this.jobsList = new AutoPrintr.JobsList();
             this.checkBoxList1 = new AutoPrintr.CheckBoxList();
@@ -96,6 +97,7 @@
             // 
             // settingsTab
             // 
+            this.settingsTab.Controls.Add(this.checkBoxSlider1);
             this.settingsTab.Controls.Add(this.saveConfig);
             this.settingsTab.Controls.Add(this.groupBox3);
             this.settingsTab.Controls.Add(this.groupBox1);
@@ -172,23 +174,25 @@
             // richTextBox1
             // 
             resources.ApplyResources(this.richTextBox1, "richTextBox1");
+            this.richTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.richTextBox1.Name = "richTextBox1";
             this.richTextBox1.ReadOnly = true;
             // 
             // aboutTab
             // 
-            this.aboutTab.Controls.Add(this.button1);
+            this.aboutTab.Controls.Add(this.helpButton);
             this.aboutTab.Controls.Add(this.versionLabel);
             this.aboutTab.Controls.Add(this.groupBox4);
             resources.ApplyResources(this.aboutTab, "aboutTab");
             this.aboutTab.Name = "aboutTab";
             this.aboutTab.UseVisualStyleBackColor = true;
             // 
-            // button1
+            // helpButton
             // 
-            resources.ApplyResources(this.button1, "button1");
-            this.button1.Name = "button1";
-            this.button1.UseVisualStyleBackColor = true;
+            resources.ApplyResources(this.helpButton, "helpButton");
+            this.helpButton.Name = "helpButton";
+            this.helpButton.UseVisualStyleBackColor = true;
+            this.helpButton.Click += new System.EventHandler(this.helpButton_Click);
             // 
             // versionLabel
             // 
@@ -250,6 +254,13 @@
             this.configSaveStatus.Name = "configSaveStatus";
             resources.ApplyResources(this.configSaveStatus, "configSaveStatus");
             // 
+            // checkBoxSlider1
+            // 
+            this.checkBoxSlider1.BackColor = System.Drawing.Color.Transparent;
+            this.checkBoxSlider1.Cursor = System.Windows.Forms.Cursors.Hand;
+            resources.ApplyResources(this.checkBoxSlider1, "checkBoxSlider1");
+            this.checkBoxSlider1.Name = "checkBoxSlider1";
+            // 
             // locationsList
             // 
             resources.ApplyResources(this.locationsList, "locationsList");
@@ -269,6 +280,7 @@
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.Control;
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.tabs);
             this.Name = "mainWin";
@@ -301,7 +313,6 @@
         private System.Windows.Forms.TextBox login;
         private System.Windows.Forms.Button submit;
         private System.Windows.Forms.TabPage printersTab;
-        private System.Windows.Forms.TableLayoutPanel printersTable;
         private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.ToolStripStatusLabel statusLabel;
         private System.Windows.Forms.ToolStripStatusLabel statusServer;
@@ -318,11 +329,13 @@
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.RichTextBox licenseText;
         private System.Windows.Forms.Label versionLabel;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button helpButton;
         private System.Windows.Forms.TabPage jobsTab;
         private System.Windows.Forms.TabPage logTab;
         private JobsList jobsList;
         private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.TableLayoutPanel printersTable;
+        private CheckBoxSlider checkBoxSlider1;
     }
 }
 

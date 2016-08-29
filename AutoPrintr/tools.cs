@@ -33,7 +33,10 @@ namespace AutoPrintr
             return (Math.Sign(byteCount) * num).ToString() + suf[place];            
         }
 
-
+        /// <summary>
+        /// Generate random file name
+        /// </summary>
+        /// <returns></returns>
         public static string randomFileName()
         {
             string path = Path.GetRandomFileName();

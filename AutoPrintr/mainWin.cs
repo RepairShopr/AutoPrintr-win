@@ -10,15 +10,19 @@ using System.Windows.Forms;
 using System.IO;
 using PusherClient;
 using System.Threading;
-//using System.Reflection;
-//using NLog;
+using System.Reflection;
+using NLog;
+using System.Diagnostics;
 
 namespace AutoPrintr
 {
     public partial class mainWin : Form
-    {
-        //public static Logger Log = LogManager.GetLogger("WinPrintr"); 
-        
+    {        
+        static Logger log = LogManager.GetLogger("WinPrintr"); 
+        const string mailto = "help@repairshopr.com";
+        const string subject = "Support request from AutoPrintr";
+        const string body = "last 100 lines from log and full configuration dump";
+            
         public mainWin()
         {
             InitializeComponent();
@@ -31,6 +35,8 @@ namespace AutoPrintr
             this.Shown += mainWin_Shown;
             string version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
             versionLabel.Text = "RepairShopr AutoPrintr - v." + version;
+
+            //System.Windows.
         }
 
         void mainWin_Shown(object sender, EventArgs e)
@@ -356,6 +362,18 @@ namespace AutoPrintr
             login.Enabled = true;
             password.Enabled = true;
             submit.Enabled = true;
+        }
+
+        private void helpButton_Click(object sender, EventArgs e)
+        {            
+            Process.Start(
+                String.Format(
+                    "mailto:{0}?subject={1}&body={2}",
+                    mailto,
+                    subject,
+                    body
+                )
+            );
         }       
     }
 }
