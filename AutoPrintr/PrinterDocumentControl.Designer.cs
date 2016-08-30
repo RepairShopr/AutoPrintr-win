@@ -1,6 +1,6 @@
 ﻿namespace AutoPrintr
 {
-    partial class JobsList
+    partial class PrinterDocumentControl
     {
         /// <summary> 
         /// Требуется переменная конструктора.
@@ -28,40 +28,24 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.table = new System.Windows.Forms.TableLayoutPanel();
             this.SuspendLayout();
             // 
-            // table
-            // 
-            this.table.AutoSize = true;
-            this.table.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.table.BackColor = System.Drawing.Color.Transparent;
-            this.table.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
-            this.table.ColumnCount = 1;
-            this.table.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.table.Location = new System.Drawing.Point(0, 0);
-            this.table.Name = "table";
-            this.table.RowCount = 1;
-            this.table.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.table.Size = new System.Drawing.Size(2, 2);
-            this.table.TabIndex = 0;
-            // 
-            // JobsList
+            // PrinterDocumentControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.Controls.Add(this.table);
-            this.Name = "JobsList";
-            this.Size = new System.Drawing.Size(245, 142);
+            this.BackColor = System.Drawing.SystemColors.Control;
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.Margin = new System.Windows.Forms.Padding(0);
+            this.Name = "PrinterDocumentControl";
+            this.Padding = new System.Windows.Forms.Padding(3);
+            this.Size = new System.Drawing.Size(120, 28);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
-        public System.Windows.Forms.TableLayoutPanel table;
 
     }
 }

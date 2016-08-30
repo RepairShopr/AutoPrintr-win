@@ -1,5 +1,10 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
+using System.Collections;
+using System.Collections.Generic;
+using System.Windows.Forms;
+using System.Drawing;
 
 namespace AutoPrintr
 {
@@ -43,6 +48,43 @@ namespace AutoPrintr
             path = path.Replace(".", ""); // Remove period.
             return path.Substring(0, 8);  // Return 8 character string
         }
-    }
 
+        /// <summary>
+        /// Get all UI controls
+        /// </summary>
+        /// <param name="container"></param>
+        /// <returns></returns>
+        public static IEnumerable<Control> GetAllControls(Control container)
+        {
+            List<Control> controlList = new List<Control>();
+            foreach (Control c in container.Controls)
+            {
+                controlList.AddRange(GetAllControls(c));
+                controlList.Add(c); 
+            }
+            return controlList;
+        }
+
+        /// <summary>
+        /// Convert RGB string to color
+        /// </summary>
+        /// <param name="s">Hex string color</param>
+        /// <returns>Color</returns>
+        public static Color RGB2Color(string s){
+            uint color = Convert.ToUInt32(s, 16);
+            //byte A = (byte)((color >> 24) & 0xFF);
+            byte R = (byte)((color >> 16) & 0xFF);
+            byte G = (byte)((color >> 8) & 0xFF);
+            byte B = (byte)((color) & 0xFF);
+            return Color.FromArgb(R, G, B);
+        }
+        /// <summary>
+        /// Convert color to RGB string
+        /// </summary>
+        /// <param name="c">Color</param> 
+        /// <returns>Hex string color</returns>
+        public static string Color2RGB(Color c){
+            return (c.ToArgb() & 0xFFFFFF).ToString("X6");
+        }
+    }
 }

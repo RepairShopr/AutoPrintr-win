@@ -19,6 +19,11 @@
     <UpdateAssemblyFileVersion>False</UpdateAssemblyFileVersion>
     <UpdateAssemblyInfoVersion>False</UpdateAssemblyInfoVersion>
     <AssemblyVersionSettings>None.None.None.Increment</AssemblyVersionSettings>
+    <AssemblyVersion>0.0.0.371</AssemblyVersion>
+    <AssemblyFileVersionSettings>
+    </AssemblyFileVersionSettings>
+    <AssemblyInfoVersionSettings>
+    </AssemblyInfoVersionSettings>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -33,11 +38,6 @@
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <AssemblyVersion>0.0.0.233</AssemblyVersion>
-    <AssemblyFileVersionSettings>
-    </AssemblyFileVersionSettings>
-    <AssemblyInfoVersionSettings>
-    </AssemblyInfoVersionSettings>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -57,6 +57,9 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Printer_icon_256.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -86,10 +89,6 @@
       <HintPath>..\packages\WebSocket4Net.0.13.1\lib\net45\WebSocket4Net.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="WinFormAnimation, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\WinFormAnimation.1.3.0.0\lib\net35-Client\WinFormAnimation.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CheckBoxList.cs">
@@ -113,14 +112,24 @@
     <Compile Include="JobsList.Designer.cs">
       <DependentUpon>JobsList.cs</DependentUpon>
     </Compile>
+    <Compile Include="LogWatcher.cs" />
     <Compile Include="LoginServer.cs" />
     <Compile Include="pCheckBox.cs">
       <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="pCount.cs">
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="PrintEngineDD.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="PrintEngines.cs" />
+    <Compile Include="PrinterDocumentControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PrinterDocumentControl.Designer.cs">
+      <DependentUpon>PrinterDocumentControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="RawPrint.cs" />
     <Compile Include="Skin.cs" />
     <Compile Include="Srv.cs" />
@@ -138,8 +147,10 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="tools.cs" />
+    <Content Include="Printer_icon_256.ico" />
     <EmbeddedResource Include="CheckBoxList.resx">
       <DependentUpon>CheckBoxList.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="CheckBoxSlider.resx">
       <DependentUpon>CheckBoxSlider.cs</DependentUpon>
@@ -152,6 +163,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="mainWin.resx">
       <DependentUpon>mainWin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="pCheckBox.resx">
+      <DependentUpon>pCheckBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PrinterDocumentControl.resx">
+      <DependentUpon>PrinterDocumentControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -201,6 +218,16 @@
     </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent>echo "Copying NLog.config"
+DEL NLog.config
+copy /B /Y "%25CD%25/../NLog.config" NLog.config
+</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

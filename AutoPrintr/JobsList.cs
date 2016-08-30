@@ -184,12 +184,14 @@ namespace AutoPrintr
             /// <param name="text"></param>
             public JobsListLabel(string text)
             {
-                AutoEllipsis = true;
+                //AutoEllipsis = true;
                 Text = text;
-                Padding = new Padding(3, 5, 3, 0);
+                Padding = new Padding(5, 5, 5, 5);
                 Margin = new Padding(0, 0, 0, 0);
-                Dock = DockStyle.Fill;
-
+                //Dock = DockStyle.Fill;
+                AutoSize = true;
+                Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top;
+                TextAlign = ContentAlignment.MiddleLeft;
                 // Create the ToolTip and associate with the Form container.
                 ToolTip tt = new ToolTip();
                 // Set up the delays for the ToolTip.

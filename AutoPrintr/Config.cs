@@ -27,7 +27,30 @@ namespace AutoPrintr
         /// Printers configurations
         /// </summary>
         public List<Printer> printers = new List<Printer>();
+        /// <summary>
+        /// 
+        /// Log levels:
+        ///  - None
+        ///  - Fatal
+        ///  - Error
+        ///  - Warn
+        ///  - Info
+        ///  - Debug
+        ///  - Trace
+        /// </summary>
+        //public logLevels logLevel = logLevels.Info;
     }
+
+    //public enum logLevels : byte
+    //{
+    //      None,
+    //      Fatal,
+    //      Error,
+    //      Warn,
+    //      Info,
+    //      Debug,
+    //      Trace
+    //}
 
     /// <summary>
     /// Application config manager class - read, write config, load, save setting to file
@@ -50,7 +73,7 @@ namespace AutoPrintr
             catch (Exception err)
             {
                 //onError(err);
-                log.Error("Can't save configuration. Details:\n{0}", err);
+                log.Error(err, "Can't save configuration.");
             }            
         }
 
@@ -81,7 +104,7 @@ namespace AutoPrintr
                 //System.Windows.Forms.MessageBox.Show(
                 //    "config error: " + err.ToString()
                 //);
-                log.Error("Can't load configuration. Details:\n{0}", err);
+                log.Error(err, "Can't load configuration.");
             }
         }
 
