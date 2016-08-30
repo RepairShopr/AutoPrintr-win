@@ -222,6 +222,8 @@ namespace AutoPrintr
     {
         [JsonProperty]
         public readonly string name;
+        [JsonProperty]
+        public int quantity;
         [JsonProperty,JsonConverter(typeof(PrintEngines.Converter))]
         public PrintEngine printEngine = PrintEngines.SumatraPDF;
         [JsonProperty]
@@ -249,7 +251,11 @@ namespace AutoPrintr
 
         public void print(string filePath, string documentName)
         {
-            printEngine.print(name, filePath, documentName);            
+            int cnt = quantity;
+            while (cnt-- > 0)
+            {
+                printEngine.print(name, filePath, documentName);
+            }                       
         }
 
         /// <summary>

@@ -29,6 +29,8 @@ namespace AutoPrintr
             this.SelectedIndexChanged += PrintEngineDD_TextChanged;
             // Set current value as printer engine name
             this.Text = printer.printEngine.name;
+            AutoSize = true;
+            Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top;
         }
 
         /// <summary>

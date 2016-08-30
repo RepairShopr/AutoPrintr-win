@@ -8,7 +8,7 @@ using System.Drawing.Drawing2D;
 //using System.Text;
 //using System.Threading.Tasks;
 using System.Windows.Forms;
-using WinFormAnimation;
+//using WinFormAnimation;
 
 namespace AutoPrintr
 {
@@ -20,71 +20,82 @@ namespace AutoPrintr
         /// <summary>
         /// Click event
         /// </summary>
-        public EventHandler Click;
+        public new EventHandler Click;
 
-        public string onText = "On";
-        public string offText = "Off";
+        /// <summary>
+        /// State change event
+        /// </summary>
+        public EventHandler Changed;
 
-        public int onTopColor = 0x51a351;
-        public int onBottomColor = 0x62c462;
-        public int onTextColor = 0xFFFFFF;
-        public int onBorderColor = 0xDDDDDD;
+        public static string onText = "On";
+        public static string offText = "Off";
 
-        public int middleTopColor = 0xFFFFFF;
-        public int middleBottomColor = 0xe6e6e6;
-        public int middleTextColor = 0xFFFFFF;
-        public int middleBorderColor = 0xDDDDDD;
+        public static int onTopColor = 0x51a351;
+        public static int onBottomColor = 0x62c462;
+        public static int onTextColor = 0xFFFFFF;
+        public static int onBorderColor = 0xDDDDDD;
 
-        public int offTopColor = 0xe6e6e6;
-        public int offBottomColor = 0xFFFFFF;
-        public int offTextColor = 0x000000;
-        public int offBorderColor = 0xDDDDDD;
+        public static int middleTopColor = 0xFFFFFF;
+        public static int middleBottomColor = 0xe6e6e6;
+        public static int middleTextColor = 0xFFFFFF;
+        public static int middleBorderColor = 0xDDDDDD;
 
-        public GradientLabel leftLabel;
-        public GradientLabel middleLabel;
-        public GradientLabel rightLabel;
+        public static int offTopColor = 0xe6e6e6;
+        public static int offBottomColor = 0xFFFFFF;
+        public static int offTextColor = 0x000000;
+        public static int offBorderColor = 0xDDDDDD;
+
+        public GradientLabel labelOn;
+        public GradientLabel labelMiddle;
+        public GradientLabel labelOff;
 
         /// <summary>
         /// Time of animation in ms
         /// </summary>
-        private ulong animationtime = 500; 
+        //private ulong animationtime = 200; 
 
         bool _checked = false;
 
         int h = 0;
         int w = 0;
-        /// <summary>
-        /// Left offscreen point (hidden)
-        /// </summary>
-        Float2D p1;
-        /// <summary>
-        /// Left point (start)
-        /// </summary>
-        Float2D p2;
-        /// <summary>
-        /// Middle point
-        /// </summary>
-        Float2D p3;
-        /// <summary>
-        /// Right offscreen point (hidden)
-        /// </summary>
-        Float2D p4;
+        ///// <summary>
+        ///// Left offscreen point (hidden)
+        ///// </summary>
+        //Float2D p1;
+        ///// <summary>
+        ///// Left point (start)
+        ///// </summary>
+        //Float2D p2;
+        ///// <summary>
+        ///// Middle point
+        ///// </summary>
+        //Float2D p3;
+        ///// <summary>
+        ///// Right offscreen point (hidden)
+        ///// </summary>
+        //Float2D p4;
 
-        Animator2D animLeftOff;
-        Animator2D animMiddleOff;
-        Animator2D animRightOff;
-        Animator2D animLeftOn;
-        Animator2D animMiddleOn;
-        Animator2D animRightOn;
+        //Animator2D animLeftOff;
+        //Animator2D animMiddleOff;
+        //Animator2D animRightOff;
+        //Animator2D animLeftOn;
+        //Animator2D animMiddleOn;
+        //Animator2D animRightOn;
 
-        DateTime lastClick;
+        //DateTime lastClick;
+        //SafeInvoker animDone;
 
+        Point p1;
+        Point p2;
+        Point p3;
+        Point p4;
         public bool Checked
         {
             get { return _checked; }
             set {
                 _checked = value;
-                if (value) { setOn(); } else { setOff(); } 
+                if (value) { setOn(); } else { setOff(); }
+                if (Changed != null) { Changed(this, new EventArgs()); }
             }
         }
 
@@ -92,14 +103,18 @@ namespace AutoPrintr
         {
             h = Height;
             w = Width / 2;
-            p1 = new Float2D(-w, 0);
-            p2 = new Float2D(0, 0);
-            p3 = new Float2D(w - 1, 0);
-            p4 = new Float2D(w * 2, 0);
+            p1 = new Point(-w, 0);
+            p2 = new Point(0, 0);
+            p3 = new Point(w - 1, 0);
+            p4 = new Point(w * 2, 0);
+            //p1 = new Float2D(-w, 0);
+            //p2 = new Float2D(0, 0);
+            //p3 = new Float2D(w-1, 0);
+            //p4 = new Float2D(w * 2, 0);
 
             Margin = new Padding(3);
 
-            leftLabel = new cbsLabel(
+            labelOn = new cbsLabel(
                 color(onTopColor),
                 color(onBottomColor),
                 color(onTextColor),
@@ -107,20 +122,20 @@ namespace AutoPrintr
                 h, w, onText
             );
 
-            middleLabel = new cbsLabel(
+            labelMiddle = new cbsLabel(
                 color(middleTopColor),
                 color(middleBottomColor),
                 color(middleTextColor),
                 color(middleBorderColor),
-                h, w
+                Height, Width
             );
 
-            rightLabel = new cbsLabel(
+            labelOff = new cbsLabel(
                 color(offTopColor),
                 color(offBottomColor),
                 color(offTextColor),
                 color(offBorderColor),
-                h, w, offText
+                h, w+1, offText
             );
 
             if (state)
@@ -133,22 +148,37 @@ namespace AutoPrintr
             }
             _checked = state;
 
-            Controls.Add(leftLabel);
-            Controls.Add(middleLabel);
-            Controls.Add(rightLabel);
+            Controls.Add(labelOn);
+            Controls.Add(labelOff);
+            // Middle will be as background if we add it last
+            Controls.Add(labelMiddle);
 
-            leftLabel.Click += onClick;
-            middleLabel.Click += onClick;
-            rightLabel.Click += onClick;
+            labelOn.Click += onClick;
+            labelMiddle.Click += onClick;
+            labelOff.Click += onClick;
 
-            animLeftOff = new Animator2D(new Path2D(p2, p1, animationtime));
-            animMiddleOff = new Animator2D(new Path2D(p3, p2, animationtime));
-            animRightOff = new Animator2D(new Path2D(p4, p3, animationtime));
+            //animLeftOff = new Animator2D(new Path2D(p2, p1, animationtime));
+            //animMiddleOff = new Animator2D(new Path2D(p3, p2, animationtime));
+            //animRightOff = new Animator2D(new Path2D(p4, p3, animationtime));
 
-            animLeftOn = new Animator2D(new Path2D(p1, p2, animationtime));
-            animMiddleOn = new Animator2D(new Path2D(p2, p3, animationtime));
-            animRightOn = new Animator2D(new Path2D(p3, p4, animationtime));            
+            //animLeftOn = new Animator2D(new Path2D(p1, p2, animationtime));
+            //animMiddleOn = new Animator2D(new Path2D(p2, p3, animationtime));
+            //animRightOn = new Animator2D(new Path2D(p3, p4, animationtime));
+
+            //animDone = new SafeInvoker(onAnimDone);
         }
+
+        //void onAnimDone()
+        //{
+        //    if (_checked)
+        //    {
+        //        setOn();
+        //    }
+        //    else
+        //    {
+        //        setOff();
+        //    }
+        //}
 
         public CheckBoxSlider()
         {
@@ -169,86 +199,97 @@ namespace AutoPrintr
         /// <param name="text"></param>
         public void SetToolTip(ToolTip tt, string text)
         {
-            tt.SetToolTip(leftLabel, text);
-            tt.SetToolTip(middleLabel, text);
-            tt.SetToolTip(rightLabel, text);
+            tt.SetToolTip(labelOn, text);
+            tt.SetToolTip(labelMiddle, text);
+            tt.SetToolTip(labelOff, text);
         }
 
 
-        void animOff()
-        {
-            animLeftOff.Play(leftLabel, Animator2D.KnownProperties.Location);
-            animMiddleOff.Play(middleLabel, Animator2D.KnownProperties.Location);
-            animRightOff.Play(rightLabel, Animator2D.KnownProperties.Location);
-        }
+        //void animOff()
+        //{
+        //    animLeftOff.Play(leftLabel, Animator2D.KnownProperties.Location);
+        //    animMiddleOff.Play(middleLabel, Animator2D.KnownProperties.Location);
+        //    animRightOff.Play(rightLabel, Animator2D.KnownProperties.Location);
+        //}
 
-        void animOn()
-        {
-            animLeftOn.Play(leftLabel, Animator2D.KnownProperties.Location);
-            animMiddleOn.Play(middleLabel, Animator2D.KnownProperties.Location);
-            animRightOn.Play(rightLabel, Animator2D.KnownProperties.Location);
-        }
+        //void animOn()
+        //{
+        //    animLeftOn.Play(leftLabel, Animator2D.KnownProperties.Location);
+        //    animMiddleOn.Play(middleLabel, Animator2D.KnownProperties.Location);
+        //    animRightOn.Play(rightLabel, Animator2D.KnownProperties.Location);
+        //}
 
         void setOn()
         {
-            leftLabel.Left = (int)p2.X;
-            middleLabel.Left = (int)p3.X;
-            rightLabel.Left = (int)p4.X;
+            labelOn.Left = p2.X;
+            //middleLabel.Left = p3.X;
+            labelOff.Left = p4.X;
         }
 
         void setOff()
         {
-            leftLabel.Left = (int)p1.X;
-            middleLabel.Left = (int)p2.X;
-            rightLabel.Left = (int)p3.X;
+            labelOn.Left = p1.X;
+            //middleLabel.Left = p2.X;
+            labelOff.Left = p3.X;
         }
 
-        void animate()
-        {
-            if (_checked)
-            {
-                animOff();
-            }
-            else
-            {
-                animOn();                    
-            }
-            _checked = !_checked;
-        }
+        //void animate()
+        //{
+        //    if (_checked)
+        //    {
+        //        setOff();
+        //    }
+        //    else
+        //    {
+        //        setOn();                    
+        //    }
+        //    _checked = !_checked;
+        //}
 
-        void animate(bool flag)
-        {
-            if (flag)
-            {
-                animOff();
-            }
-            else
-            {
-                animOn();
-            }
-            _checked = !flag;
-        }
+        //void animate(bool flag)
+        //{
+        //    if (flag)
+        //    {
+        //        animOff();
+        //    }
+        //    else
+        //    {
+        //        animOn();
+        //    }
+        //    _checked = !flag;
+        //}
 
         void onClick(object sender, System.EventArgs e)
         {
-            if (lastClick == null)
+            if (_checked)
             {
-                animate();
-                lastClick = DateTime.Now;
-                if (Click != null)
-                {
-                    Click(this, new EventArgs());
-                }
+                setOff();
             }
-            else if ((DateTime.Now - lastClick).TotalMilliseconds > animationtime)
+            else
             {
-                animate();
-                lastClick = DateTime.Now;
-                if (Click != null)
-                {
-                    Click(this, new EventArgs());
-                }
-            }                       
+                setOn();
+            }
+            _checked = !_checked;
+            if (Changed != null) { Changed(this, new EventArgs()); }
+            if (Click != null) { Click(this, new EventArgs()); }
+            //if (lastClick == null)
+            //{
+            //    animate();
+            //    lastClick = DateTime.Now;
+            //    if (Click != null)
+            //    {
+            //        Click(this, new EventArgs());
+            //    }
+            //}
+            //else if ((DateTime.Now - lastClick).TotalMilliseconds > animationtime)
+            //{
+            //    animate();
+            //    lastClick = DateTime.Now;
+            //    if (Click != null)
+            //    {
+            //        Click(this, new EventArgs());
+            //    }
+            //}                       
         }
 
         static Color color(int color)
@@ -279,6 +320,7 @@ namespace AutoPrintr
                 Width = w;
                 Height = h;
                 Padding = new Padding(2);
+                TextAlign = ContentAlignment.MiddleCenter;
             }
             
         }
