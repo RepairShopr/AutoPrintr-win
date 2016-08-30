@@ -14,35 +14,69 @@ using System.Reflection;
 using NLog;
 using System.Diagnostics;
 
+ //Log levels:
+ // - Fatal
+ // - Error
+ // - Warn
+ // - Info
+ // - Debug
+ // - Trace
+
 namespace AutoPrintr
 {
     public partial class mainWin : Form
-    {        
-        static Logger log = LogManager.GetLogger("WinPrintr"); 
+    {
+        private static NLog.Logger log = NLog.LogManager.GetCurrentClassLogger();
         const string mailto = "help@repairshopr.com";
         const string subject = "Support request from AutoPrintr";
-        const string body = "last 100 lines from log and full configuration dump";
+        const int lastLinesOfLog = 100;
+        const string userMessageTemplate = "Hi!%0D%0A%0D%0AI'm user of AutoPrintr and need help.%0D%0A<My problem is...>%0D%0A%0D%0AHere the last 100 lines of AutoPrintr log file:%0D%0A%0D%0A";
             
         public mainWin()
         {
+            log.Info("GUI Initialization start...");
             InitializeComponent();
+
+            log.Info("Loading config start...");
             Program.config = new Config(err =>
             {
-                MessageBox.Show(err.ToString());
+                log.Error(err, "Config loading error.");
             });
+            
+            log.Info("Login tab initialization start...");
             configTabInit();
+
+            log.Info("Priters tab initialization start...");
             createPrintersUI();
-            this.Shown += mainWin_Shown;
+            
+            log.Info("Setting application version in UI...");
             string version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
             versionLabel.Text = "RepairShopr AutoPrintr - v." + version;
 
-            //System.Windows.
+            log.Info("Cheking config for saved credentials...");
+            if (Program.config.channel.Length == 0)
+            {
+                tabs.SelectTab("loginTab");
+            }
+
+            this.Shown += mainWin_Shown;
+        }
+
+        void onLogChange(object o, EventArgs e)
+        {
+            this.Invoke((Action)(() =>
+            {
+                logTextBox.Text = LogWatcher.text;
+            }));
         }
 
         void mainWin_Shown(object sender, EventArgs e)
         {
-            //srvConnect();
-            //JobsList.init();
+            log.Info("LogWatcher starting...");
+            LogWatcher.onChange = onLogChange;
+            LogWatcher.init();
+
+            log.Info("Cheking config for saved credentials...");
             if (Program.config.channel.Length > 0)
             {
                 srvConnect(Program.config.channel);
@@ -54,16 +88,9 @@ namespace AutoPrintr
                 login.Text = Program.config.login;
             }
 
-            // Jobs list initialization
-            //jobsList.setColumns(new Dictionary<string, string>()
-            //{
-            //    {"documentName", "File"},
-            //    {"state", "State"},
-            //    {"progress", "Progress"},
-            //    {"recived", "Recived"},
-            //    {"type", "Type"},
-            //    {"document", "Document"}
-            //});            
+            log.Info("Skin initialization...");
+            Skins.load();
+            log.Info("Application started...");
         }
 
 
@@ -105,11 +132,11 @@ namespace AutoPrintr
                 }
             }
 
+            // Clear column styles (in other case columns will have wrong width)
+            printersTable.ColumnStyles.Clear();
             // Printers table header
             // Adding first column header
             printersTable.Controls.Add(new tabelLabel(), 0, 0);
-            // Clear column styles (in other case columns will have wrong width)
-            printersTable.ColumnStyles.Clear();
 
             int column = 1;
             foreach (Printer p in Program.config.printers)
@@ -118,9 +145,14 @@ namespace AutoPrintr
                 printersTable.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
                 // Printer label
                 printersTable.Controls.Add(new pLabel(p), column++, 0);
+
+                // Printer qty
+                //printersTable.ColumnCount++;
+                //printersTable.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
+                //column++;
             }
 
-
+            printersTable.RowStyles.Clear();
             int row = 0;
             foreach (DocumentType type in DocumentTypes.list)
             {
@@ -131,7 +163,10 @@ namespace AutoPrintr
                 printersTable.Controls.Add(new tabelLabel(type.title), column++, ++row);
                 foreach (Printer p in Program.config.printers)
                 {
-                    printersTable.Controls.Add(new pCheckBox(type, p), column++, row);
+                    //printersTable.Controls.Add(new pCheckBox(type, p), column, row);
+                    //printersTable.Controls.Add(new pCount(type, p), column, row);
+                    printersTable.Controls.Add(new PrinterDocumentControl(type, p), column, row);
+                    column++;
                 }
             }
 
@@ -187,39 +222,29 @@ namespace AutoPrintr
         /// </summary>
         public void srvConnect(string channel)
         {
+            log.Info("Connecting to jobs server...");
             List<Listener> msgWrokers = new List<Listener> {
                 Jobs.init(channel,  (ex, job) =>
                 {
-                    jobsList.add(job);
-                    //if (Program.config.location.Exists(i => i == job.location))
-                    //{
-                    //    if (ex == null)
-                    //    {
-                    //        //MessageBox.Show("New job: " + job.ToString());
-                    //        Log.Info("New job: " + job.ToString());
-                    //    }
-                    //    else
-                    //    {
-                    //        MessageBox.Show("Job wrong format: " + job.ToString());
-                    //        Log.Error("Job wrong format: " + ex.ToString());
-                    //    }
-                    //}
+                    log.Info("New print job event. Job is: {0}", job);
+                    jobsTable.add(job);
                 })
             };
 
             Action<PusherException> onError = (err) =>
             {
-                MessageBox.Show(err.ToString());
-                //Log.Info("Server error: " + err.ToString());
-                //log.Text += "Server error: " + err.ToString() + "\r\n";
+                log.Error("Pusher error: {0}", err);
             };
 
             Action<String> onStateChanged = (state) =>
             {
-                //statusText.Text = state;
                 Invoke(new setStatusCb(this.setStatus), new object[] { state });
-                //Log.Info("Server change state: " + state);
-                //log.Text += "Server change state: " + state + "\r\n";
+                log.Info("Pusher state changed to: {0}", state);
+                if (state == "unavailable")
+                {
+                    Thread.Sleep(10000);
+                    srvConnect(channel);
+                }                
             };
 
             JobsServer.connect(msgWrokers, onError, onStateChanged);
@@ -238,7 +263,7 @@ namespace AutoPrintr
             password.TextChanged += loginPass_TextChanged;
 
             // Other section
-            saveConfig.Click += saveConfig_Click;
+            configSave.Click += saveConfig_Click;
             //locationList.Text = WinPrintr.Properties.Settings.Default.Location;
             //pusherKey.Text = WinPrintr.Properties.Settings.Default.PucherKey;
             //pusherKey.Text = Program.config.serverKey;
@@ -250,9 +275,9 @@ namespace AutoPrintr
 
         void config_TextChanged(object sender, EventArgs e)
         {
-            if (!saveConfig.Enabled)
+            if (!configSave.Enabled)
             {
-                saveConfig.Enabled = true;
+                configSave.Enabled = true;
             }
             configSaveStatus.Text = "config changed";
         }
@@ -271,8 +296,8 @@ namespace AutoPrintr
             //Program.config.serverKey = pusherKey.Text;
             Program.config.save();
             configSaveStatus.Text = "config saved";
-            settingsTab.Focus();
-            saveConfig.Enabled = false;
+            loginTab.Focus();
+            configSave.Enabled = false;
         }
 
         void loginPass_TextChanged(object sender, EventArgs e)
@@ -293,7 +318,7 @@ namespace AutoPrintr
             {
                 if (submit.Enabled)
                 {
-                    settingsTab.Focus();
+                    loginTab.Focus();
                     submit.Enabled = false;
                 }                
             }
@@ -301,26 +326,27 @@ namespace AutoPrintr
 
         private void submit_Click(object sender, EventArgs ev)
         {
+            log.Info("Submit click event");
             if (Credentials.SrvXT == null || Credentials.SrvXT.Length == 0)
             {
                 MessageBox.Show("Jobs server API key is empty - can't connect to jobs server.");
                 return;
             }
 
-            settingsTab.Focus();
+            loginTab.Focus();
             login.Enabled = false;
             password.Enabled = false;
             submit.Enabled = false;
             LoginResponse resp = null;
+
+            log.Info("Connecting to login server...");
             try
             {
                 resp = LoginServer.login(login.Text, password.Text);
             }
             catch (Exception err)
             {
-                //Log.Error("Login error: {0}", err.ToString());
-                MessageBox.Show("Login error: " + err.Message);
-                //MessageBox.Show("Login error: " + err.ToString());
+                log.Error(err, "Login error.");
             }
 
             if (resp != null)
@@ -346,7 +372,6 @@ namespace AutoPrintr
                         {
                             if (n == loc.id) {
                                 item.Selected = true;
-
                             }
                         }
                     }                
@@ -355,8 +380,12 @@ namespace AutoPrintr
                 Program.config.login = login.Text;
                 Program.config.channel = LoginServer.channel;
                 Program.config.save();
-                saveConfig.Enabled = false;
+                configSave.Enabled = false;
                 srvConnect(LoginServer.channel);
+            }
+            else
+            {
+                log.Error("Login error: empty response");
             }
 
             login.Enabled = true;
@@ -365,7 +394,15 @@ namespace AutoPrintr
         }
 
         private void helpButton_Click(object sender, EventArgs e)
-        {            
+        {
+            log.Info("Help button pressed. Processing help request");
+            var body =
+                userMessageTemplate + string.Join(
+                    "%0D%0A",
+                    LogWatcher.text.Split('\n').Reverse().Take(lastLinesOfLog).ToArray()
+                )
+            ;
+            
             Process.Start(
                 String.Format(
                     "mailto:{0}?subject={1}&body={2}",
