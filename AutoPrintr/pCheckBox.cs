@@ -14,14 +14,18 @@ namespace AutoPrintr
         /// </summary>
         public DocType docType;
         public Printer printer;
-        public pCheckBox(DocumentType type, Printer printer)
+
+        public pCheckBox()
+        {
+            Margin = new Padding(5, 5, 5, 5);
+            Click += pCheckBox_Click;
+        }
+
+        public void init(DocumentType type, Printer printer)
         {
             this.docType = type.type;
             this.printer = printer;
             Checked = printer.get(docType);
-            Margin = new Padding(5, 5, 5, 5);
-            Click += pCheckBox_Click;
-
             // Create the ToolTip and associate with the Form container.
             ToolTip tt = new ToolTip();
             // Set up the delays for the ToolTip.
@@ -32,6 +36,12 @@ namespace AutoPrintr
             tt.ShowAlways = true;
             SetToolTip(tt, type.title);
         }
+
+        public pCheckBox(DocumentType type, Printer printer) : this()
+        {
+            init(type, printer);
+        }
+
         /// <summary>
         /// Checkbox change event handler
         /// </summary>
@@ -45,8 +55,20 @@ namespace AutoPrintr
             }
             catch (Exception err)
             {
-                log.Error("Error while saving printers config. Error is: {0}", err);
+                log.Error(err, "Error while saving printers config.");
             }
+        }
+
+        private void InitializeComponent()
+        {
+            this.SuspendLayout();
+            // 
+            // pCheckBox
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.Name = "pCheckBox";
+            this.Size = new System.Drawing.Size(56, 18);
+            this.ResumeLayout(false);
         }
     }
 }
