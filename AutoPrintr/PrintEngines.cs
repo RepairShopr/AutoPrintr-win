@@ -73,15 +73,22 @@ namespace AutoPrintr
                 p.Start();
             })){};
 
-        /// <summary>
-        /// Direct PDF printing via Windows API (no any external reader used, works not with all printers - reason is unknown).
-        /// </summary>
-        public static PrintEngine Internal = new PrintEngine("Internal",
-            ((printerName, filePath, documentName) =>
-            {
-                RawPrint.SendFileToPrinter(filePath, printerName, documentName);
-            })){};
+        ///// <summary>
+        ///// Direct PDF printing via Windows API (no any external reader used, works not with all printers - reason is unknown).
+        ///// </summary>
+        //public static PrintEngine Internal = new PrintEngine("Internal",
+        //    ((printerName, filePath, documentName) =>
+        //    {
+        //        RawPrint.SendFileToPrinter(filePath, printerName, documentName);
+        //    })){};
 
+
+
+        /// <summary>
+        /// Find print engine by name
+        /// </summary>
+        /// <param name="engineName"></param>
+        /// <returns></returns>
         public static PrintEngine find(string engineName)
         {
             PrintEngine engine;
@@ -95,6 +102,9 @@ namespace AutoPrintr
                 return engine;
             }
         }
+
+
+
         /// <summary>
         /// PrintEngine JSON converter
         /// </summary>
