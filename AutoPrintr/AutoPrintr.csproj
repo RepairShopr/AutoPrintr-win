@@ -19,7 +19,7 @@
     <UpdateAssemblyFileVersion>False</UpdateAssemblyFileVersion>
     <UpdateAssemblyInfoVersion>False</UpdateAssemblyInfoVersion>
     <AssemblyVersionSettings>None.None.None.Increment</AssemblyVersionSettings>
-    <AssemblyVersion>0.0.0.371</AssemblyVersion>
+    <AssemblyVersion>0.0.0.403</AssemblyVersion>
     <AssemblyFileVersionSettings>
     </AssemblyFileVersionSettings>
     <AssemblyInfoVersionSettings>
@@ -112,6 +112,7 @@
     <Compile Include="JobsList.Designer.cs">
       <DependentUpon>JobsList.cs</DependentUpon>
     </Compile>
+    <Compile Include="LogConfig.cs" />
     <Compile Include="LogWatcher.cs" />
     <Compile Include="LoginServer.cs" />
     <Compile Include="pCheckBox.cs">
@@ -163,6 +164,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="mainWin.resx">
       <DependentUpon>mainWin.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="pCheckBox.resx">
       <DependentUpon>pCheckBox.cs</DependentUpon>

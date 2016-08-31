@@ -27,11 +27,13 @@ namespace AutoPrintr
     public partial class mainWin : Form
     {
         private static NLog.Logger log = NLog.LogManager.GetCurrentClassLogger();
+       
         const string mailto = "help@repairshopr.com";
         const string subject = "Support request from AutoPrintr";
+        const string userMessageTemplate = "Hi!{0}{0}I'm user of AutoPrintr and need help.{0}<My problem is...>{0}{0}Here the last 100 lines of AutoPrintr log file:{0}{0}";
         const int lastLinesOfLog = 100;
-        const string userMessageTemplate = "Hi!%0D%0A%0D%0AI'm user of AutoPrintr and need help.%0D%0A<My problem is...>%0D%0A%0D%0AHere the last 100 lines of AutoPrintr log file:%0D%0A%0D%0A";
-            
+        const int pusherReconnectDelay = 20000;
+
         public mainWin()
         {
             log.Info("GUI Initialization start...");
@@ -48,7 +50,10 @@ namespace AutoPrintr
 
             log.Info("Priters tab initialization start...");
             createPrintersUI();
-            
+
+            log.Info("Log tab initialization start...");
+            logTabInit();
+
             log.Info("Setting application version in UI...");
             string version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
             versionLabel.Text = "RepairShopr AutoPrintr - v." + version;
@@ -58,6 +63,7 @@ namespace AutoPrintr
             {
                 tabs.SelectTab("loginTab");
             }
+
 
             this.Shown += mainWin_Shown;
         }
@@ -240,13 +246,20 @@ namespace AutoPrintr
             {
                 Invoke(new setStatusCb(this.setStatus), new object[] { state });
                 log.Info("Pusher state changed to: {0}", state);
-                if (state == "unavailable")
+                switch (state)
                 {
-                    Thread.Sleep(10000);
-                    srvConnect(channel);
-                }                
+                    case "disconnected":
+                        log.Warn("Pusher state is disconnected");
+                        break;
+                    case "unavailable":
+                        Thread.Sleep(pusherReconnectDelay);
+                        srvConnect(channel);
+                        log.Warn("Pusher state is unavailable. Reconnecting in {0} seconds.", pusherReconnectDelay / 1000);
+                        break;
+                    default:
+                        break;
+                }
             };
-
             JobsServer.connect(msgWrokers, onError, onStateChanged);
         }
 
@@ -324,6 +337,11 @@ namespace AutoPrintr
             }
         }
 
+        /// <summary>
+        /// Login button handler
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="ev"></param>
         private void submit_Click(object sender, EventArgs ev)
         {
             log.Info("Submit click event");
@@ -393,14 +411,19 @@ namespace AutoPrintr
             submit.Enabled = true;
         }
 
+        /// <summary>
+        /// Help button handler
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void helpButton_Click(object sender, EventArgs e)
         {
             log.Info("Help button pressed. Processing help request");
             var body =
-                userMessageTemplate + string.Join(
-                    "%0D%0A",
+               String.Format( userMessageTemplate, "%0D%0A") +
+               string.Join( "%0D%0A",
                     LogWatcher.text.Split('\n').Reverse().Take(lastLinesOfLog).ToArray()
-                )
+               )
             ;
             
             Process.Start(
@@ -411,6 +434,22 @@ namespace AutoPrintr
                     body
                 )
             );
-        }       
+        }
+
+        void logTabInit()
+        {
+            foreach (string logLevel in LogConfig.LogLevels)
+            {
+                logLevelSelect.Items.Add(logLevel);
+            }
+            //MessageBox.Show("Log level:" + LogConfig.logLevel());
+            logLevelSelect.Text = LogConfig.logLevel();
+            logLevelSelect.SelectedValueChanged += logLevelSelect_SelectedValueChanged;
+        }
+
+        void logLevelSelect_SelectedValueChanged(object sender, EventArgs e)
+        {
+            LogConfig.logLevel(logLevelSelect.Text);
+        }
     }
 }
