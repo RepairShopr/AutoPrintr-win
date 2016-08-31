@@ -55,8 +55,10 @@
             this.statusLogin = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusSeparator2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.configSaveStatus = new System.Windows.Forms.ToolStripStatusLabel();
-            this.locationsList = new AutoPrintr.CheckBoxList();
+            this.logLevelSelect = new System.Windows.Forms.ComboBox();
+            this.logLevelLabel = new System.Windows.Forms.Label();
             this.jobsTable = new AutoPrintr.JobsList();
+            this.locationsList = new AutoPrintr.CheckBoxList();
             this.checkBoxList1 = new AutoPrintr.CheckBoxList();
             this.tabs.SuspendLayout();
             this.printersTab.SuspendLayout();
@@ -163,6 +165,8 @@
             // logTab
             // 
             resources.ApplyResources(this.logTab, "logTab");
+            this.logTab.Controls.Add(this.logLevelLabel);
+            this.logTab.Controls.Add(this.logLevelSelect);
             this.logTab.Controls.Add(this.logTextBox);
             this.logTab.Name = "logTab";
             this.logTab.UseVisualStyleBackColor = true;
@@ -242,16 +246,28 @@
             this.configSaveStatus.Name = "configSaveStatus";
             resources.ApplyResources(this.configSaveStatus, "configSaveStatus");
             // 
-            // locationsList
+            // logLevelSelect
             // 
-            resources.ApplyResources(this.locationsList, "locationsList");
-            this.locationsList.Name = "locationsList";
+            this.logLevelSelect.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.logLevelSelect.FormattingEnabled = true;
+            resources.ApplyResources(this.logLevelSelect, "logLevelSelect");
+            this.logLevelSelect.Name = "logLevelSelect";
+            // 
+            // logLevelLabel
+            // 
+            resources.ApplyResources(this.logLevelLabel, "logLevelLabel");
+            this.logLevelLabel.Name = "logLevelLabel";
             // 
             // jobsTable
             // 
             resources.ApplyResources(this.jobsTable, "jobsTable");
             this.jobsTable.BackColor = System.Drawing.Color.Transparent;
             this.jobsTable.Name = "jobsTable";
+            // 
+            // locationsList
+            // 
+            resources.ApplyResources(this.locationsList, "locationsList");
+            this.locationsList.Name = "locationsList";
             // 
             // checkBoxList1
             // 
@@ -275,6 +291,7 @@
             this.loginGroupBox.PerformLayout();
             this.jobsTab.ResumeLayout(false);
             this.logTab.ResumeLayout(false);
+            this.logTab.PerformLayout();
             this.aboutTab.ResumeLayout(false);
             this.aboutTab.PerformLayout();
             this.statusStrip.ResumeLayout(false);
@@ -315,6 +332,8 @@
         private System.Windows.Forms.RichTextBox logTextBox;
         private System.Windows.Forms.TableLayoutPanel printersTable;
         private System.Windows.Forms.RichTextBox licenseText;
+        private System.Windows.Forms.Label logLevelLabel;
+        private System.Windows.Forms.ComboBox logLevelSelect;
     }
 }
 
