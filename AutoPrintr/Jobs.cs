@@ -228,6 +228,10 @@ namespace AutoPrintr
         /// </summary>
         public string localFilePath = "";
         /// <summary>
+        /// Local file name
+        /// </summary>
+        public string localFileName = "";
+        /// <summary>
         /// Only file name
         /// </summary>
         public string fileName = "";
@@ -257,6 +261,11 @@ namespace AutoPrintr
         public event EventHandler<Job> onChange;
 
         /// <summary>
+        /// Qauntity
+        /// </summary>
+        public int qty = 1;
+
+        /// <summary>
         /// Job download progress event
         /// </summary>
         /// <param name="sender"></param>
@@ -266,7 +275,6 @@ namespace AutoPrintr
             progress = e.ProgressPercentage;
             recived = e.TotalBytesToReceive;
         }
-
 
         /// <summary>
         /// Job file download method
@@ -278,8 +286,6 @@ namespace AutoPrintr
             // Set progress variables to 0
             progress = 0;
             recived = 0;
-            // Generate local file path with partial random name
-            localFilePath = Path.Combine(Program.tempDnDir, tools.randomFileName() + "_" + fileName);
             try
             {
                 using (WebClient wc = new WebClient())
@@ -331,7 +337,10 @@ namespace AutoPrintr
                 foreach (Printer printer in printers)
                 {
                     // Print job file
-                    printer.print(localFilePath, fileName);
+                    printer.print(localFilePath, fileName, (n, qty) =>
+                    {
+                        qty = 1;
+                    });
                 }
                 cb(null);
                 Printed();
@@ -358,6 +367,10 @@ namespace AutoPrintr
             this.url = new Uri(file);
             this.fileName = Path.GetFileName(this.url.LocalPath);
             this.documentTitle = DocumentTypes.toTitle(document);
+
+            // Generate local file path with partial random name
+            this.localFileName = tools.randomFileName() + "_" + fileName;
+            this.localFilePath = Path.Combine(Program.tempDnDir, this.localFileName);
         }
         /// <summary>
         /// Converting job to string

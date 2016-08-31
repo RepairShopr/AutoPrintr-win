@@ -19,7 +19,7 @@
     <UpdateAssemblyFileVersion>False</UpdateAssemblyFileVersion>
     <UpdateAssemblyInfoVersion>False</UpdateAssemblyInfoVersion>
     <AssemblyVersionSettings>None.None.None.Increment</AssemblyVersionSettings>
-    <AssemblyVersion>0.0.0.403</AssemblyVersion>
+    <AssemblyVersion>0.0.0.435</AssemblyVersion>
     <AssemblyFileVersionSettings>
     </AssemblyFileVersionSettings>
     <AssemblyInfoVersionSettings>
@@ -131,7 +131,6 @@
     <Compile Include="PrinterDocumentControl.Designer.cs">
       <DependentUpon>PrinterDocumentControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="RawPrint.cs" />
     <Compile Include="Skin.cs" />
     <Compile Include="Srv.cs" />
     <Compile Include="LoginResponse.cs" />
