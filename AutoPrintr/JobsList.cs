@@ -19,6 +19,7 @@ namespace AutoPrintr
         /// JobsList job list
         /// </summary>
         public Dictionary<int, UIJob> items = new Dictionary<int, UIJob>();
+
         /// <summary>
         /// Update job in UI
         /// </summary>
@@ -27,7 +28,9 @@ namespace AutoPrintr
         void update(UIJob uiJob, Job job)
         {
             uiJob.update(job);
+            updateTableWidth();
         }
+
         /// <summary>
         /// Delegate for updating job in UI
         /// </summary>
@@ -36,11 +39,18 @@ namespace AutoPrintr
         delegate void updateCb(UIJob uiJob, Job job);
 
         /// <summary>
+        /// List of jobs table header items
+        /// </summary>
+        public List<JLHeaderLabel> headerItems = new List<JLHeaderLabel>(){};
+
+        /// <summary>
         /// Add controls for job
         /// </summary>
         /// <param name="uiJob"></param>
         void addJobControls(UIJob uiJob)
         {
+            
+
             table.RowCount++;
             table.RowStyles.Add(new RowStyle(SizeType.AutoSize));
             table.Controls.Add(uiJob.lIndex, 0, uiJob.row);
@@ -52,12 +62,16 @@ namespace AutoPrintr
             table.Controls.Add(uiJob.lDocument, 6, uiJob.row);
             table.Controls.Add(uiJob.lPrinters, 7, uiJob.row);
             table.Controls.Add(uiJob.lUrl, 8, uiJob.row);
+
+            updateTableWidth();
         }
+
         /// <summary>
         /// Delegate for adding controls for job in UI
         /// </summary>
         /// <param name="uiJob"></param>
         public delegate void addJobControlsCb(UIJob uiJob);
+
         /// <summary>
         /// Add job to UI
         /// </summary>
@@ -90,18 +104,52 @@ namespace AutoPrintr
                 }
             };
 
-            items.Add(row, uiJob);
+            items.Add(row, uiJob);            
         }
+
         /// <summary>
         /// Add column with selected name
         /// </summary>
         /// <param name="name"></param>
         void addColumn(string name)
         {
+            JLHeaderLabel control = new JLHeaderLabel(name);
             table.ColumnCount++;
             table.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
-            table.Controls.Add(new JLHeaderLabel(name), table.ColumnCount-1, 0);
+            table.Controls.Add(control, table.ColumnCount - 1, 0);
+            control.Parent = table;
+            headerItems.Add(control);
         }
+
+        void updateTableWidth()
+        {
+            // Recalculate table items width
+            int columns = table.ColumnCount
+                , column = 0
+                , w
+            ;
+
+            // Array for columns width
+            int[] colw = Enumerable.Repeat(0, columns).ToArray();
+
+            // For each control in table find most wide item
+            foreach (Control control in table.Controls)
+            {
+                if (column == columns) { column = 0; }
+                colw[column] = Math.Max(control.Width, colw[column]);
+                column++;
+            }
+
+            // And set each item width to same value
+            foreach (Control control in table.Controls)
+            {
+                if (column == columns) { column = 0; }
+                w = colw[column];
+                if (control.Width != w) { control.Width = w; }
+                column++;
+            }
+        }
+
 
         /// <summary>
         /// Create new jobs list
@@ -120,6 +168,8 @@ namespace AutoPrintr
             addColumn("Printers");
             addColumn("Url");
         }
+
+        
 
         /// <summary>
         /// UI job class
@@ -151,7 +201,7 @@ namespace AutoPrintr
                 this.row = row;
                 this.index = index;
                 lIndex = new JobsListLabel(index.ToString());
-                lFile = new JobsListLabel(job.fileName);
+                lFile = new JobsListLabel(job.localFileName);
                 lState = new JobsListLabel(job.state.ToString());
                 lProgress = new JobsListLabel(job.progress.ToString()+"%");
                 lRecived = new JobsListLabel(tools.BytesToString(job.recived));
@@ -170,7 +220,6 @@ namespace AutoPrintr
                 lProgress.Text = job.progress.ToString() + "%";
                 lRecived.Text = tools.BytesToString(job.recived);
             }
-
         }
 
         /// <summary>
@@ -188,10 +237,16 @@ namespace AutoPrintr
                 Text = text;
                 Padding = new Padding(5, 5, 5, 5);
                 Margin = new Padding(0, 0, 0, 0);
+
+                //AutoSize = true;
+                //Anchor = AnchorStyles.None;
+                //TextAlign = ContentAlignment.MiddleLeft;
                 //Dock = DockStyle.Fill;
+
                 AutoSize = true;
                 Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top;
                 TextAlign = ContentAlignment.MiddleLeft;
+
                 // Create the ToolTip and associate with the Form container.
                 ToolTip tt = new ToolTip();
                 // Set up the delays for the ToolTip.
@@ -201,7 +256,6 @@ namespace AutoPrintr
                 // Force the ToolTip text to be displayed whether or not the form is active.
                 tt.ShowAlways = true;
                 tt.SetToolTip(this, text);
-
             }
         }
         /// <summary>
