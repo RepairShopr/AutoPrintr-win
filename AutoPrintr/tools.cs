@@ -86,5 +86,14 @@ namespace AutoPrintr
         public static string Color2RGB(Color c){
             return (c.ToArgb() & 0xFFFFFF).ToString("X6");
         }
+
+        /// <summary>
+        /// Update items sizes
+        /// </summary>
+        /// <param name="?"></param>
+        public static void TableLayoutPanelUpdateItemsSizes(TableLayoutPanel p)
+        {
+
+        }
     }
 }

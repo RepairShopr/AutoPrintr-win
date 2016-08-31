@@ -451,5 +451,22 @@ namespace AutoPrintr
         {
             LogConfig.logLevel(logLevelSelect.Text);
         }
+
+        //protected override void OnSizeChanged(EventArgs e)
+        //{
+
+        //    if (this.Handle != null)
+        //    {
+
+        //        this.BeginInvoke((MethodInvoker)delegate
+        //        {
+
+        //            base.OnSizeChanged(e);
+
+        //        });
+
+        //    }
+
+        //}
     }
 }
