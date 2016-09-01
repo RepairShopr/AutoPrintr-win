@@ -19,7 +19,7 @@
     <UpdateAssemblyFileVersion>False</UpdateAssemblyFileVersion>
     <UpdateAssemblyInfoVersion>False</UpdateAssemblyInfoVersion>
     <AssemblyVersionSettings>None.None.None.Increment</AssemblyVersionSettings>
-    <AssemblyVersion>0.0.0.482</AssemblyVersion>
+    <AssemblyVersion>0.0.0.515</AssemblyVersion>
     <AssemblyFileVersionSettings>
     </AssemblyFileVersionSettings>
     <AssemblyInfoVersionSettings>
@@ -115,10 +115,10 @@
     <Compile Include="LogConfig.cs" />
     <Compile Include="LogWatcher.cs" />
     <Compile Include="LoginServer.cs" />
-    <Compile Include="pCheckBox.cs">
+    <Compile Include="DocTypeCheckBox.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="pCount.cs">
+    <Compile Include="DocQuantity.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="PrintEngineDD.cs">
@@ -147,6 +147,9 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="tools.cs" />
+    <Compile Include="TriggerCheckBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="WinAutoSize.cs" />
     <Content Include="Printer_icon_256.ico" />
     <EmbeddedResource Include="CheckBoxList.resx">
@@ -166,8 +169,8 @@
       <DependentUpon>mainWin.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="pCheckBox.resx">
-      <DependentUpon>pCheckBox.cs</DependentUpon>
+    <EmbeddedResource Include="DocTypeCheckBox.resx">
+      <DependentUpon>DocTypeCheckBox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PrinterDocumentControl.resx">
       <DependentUpon>PrinterDocumentControl.cs</DependentUpon>

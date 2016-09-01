@@ -66,7 +66,7 @@ namespace AutoPrintr
         public static List<Printer> findPrinters(string type, int location)
         {
             List<Printer> l = new List<Printer>();
-            DocumentType t = DocumentTypes.ToPrintType(type);
+            DocumentType t = DocumentTypes.ToDocumentType(type);
             if( t == null){ return l; }
 
             // Check for empty locations array and empty location (0)
@@ -79,7 +79,7 @@ namespace AutoPrintr
             // Search printer by type
             foreach (Printer printer in Program.config.printers)
             {
-                if (printer.get(t.type))
+                if (printer.typeGet(t.type))
                 {
                     l.Add(printer);
                 }
@@ -123,7 +123,7 @@ namespace AutoPrintr
         /// </summary>
         /// <param name="str"></param>
         /// <returns></returns>
-        public static DocumentType ToPrintType(string str)
+        public static DocumentType ToDocumentType(string str)
         {
             DocumentType t = list.Find(x => x.name == str);
             if (t == null)
@@ -145,7 +145,7 @@ namespace AutoPrintr
         /// <returns></returns>
         public static string toTitle(string str)
         {
-            DocumentType t = DocumentTypes.ToPrintType(str);
+            DocumentType t = DocumentTypes.ToDocumentType(str);
             if( t != null ){
                 return t.title;
             } else {
@@ -223,20 +223,21 @@ namespace AutoPrintr
         [JsonProperty]
         public readonly string name;
         [JsonProperty]
-        public int quantity;
+        public Dictionary<string, int> quantity = new Dictionary<string, int>() { };
         [JsonProperty,JsonConverter(typeof(PrintEngines.Converter))]
         public PrintEngine printEngine = PrintEngines.SumatraPDF;
         [JsonProperty]
-        public List<DocType>types = new List<DocType>();
+        public List<DocType> types = new List<DocType>();
+        [JsonProperty]
+        public List<DocType> triggers = new List<DocType>();
 
         /// <summary>
-        /// Set printing type value
+        /// Set printing type state
         /// </summary>
         /// <param name="type">Document type</param>
         /// <param name="val">Value</param>
-        public void set(DocType type, bool val)
+        public void typeSet(DocType type, bool val)
         {
-            //types[(int)printingType] = val;
             bool exists = types.Exists(v => v == type);
             if (val & !exists)
             {
@@ -249,24 +250,61 @@ namespace AutoPrintr
             Program.config.save();
         }
 
-        public void print(string filePath, string documentName)
+
+        /// <summary>
+        /// Set trigger type state
+        /// </summary>
+        /// <param name="type">Document type</param>
+        /// <param name="val">Value</param>
+        public void triggerSet(DocType type, bool val)
         {
-            int cnt = quantity;
-            while (cnt-- > 0)
+            bool exists = triggers.Exists(v => v == type);
+            if (val & !exists)
             {
-                printEngine.print(name, filePath, documentName);
-            }                       
+                triggers.Add(type);
+            }
+            else if (!val & exists)
+            {
+                triggers.Remove(type);
+            }
+            Program.config.save();
         }
 
         /// <summary>
-        /// Get printing type value
+        /// Get printing type state
         /// </summary>
         /// <param name="type"></param>
         /// <returns>value</returns>
-        public bool get(DocType type)
+        public bool typeGet(DocType type)
         {
             //return types[(int)printingType];
             return types.Exists(v => v == type);
+        }
+
+        /// <summary>
+        /// Get trigger state
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns>value</returns>
+        public bool triggerGet(DocType type)
+        {
+            //return types[(int)printingType];
+            return triggers.Exists(v => v == type);
+        }
+
+
+        /// <summary>
+        /// Print file
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <param name="documentName"></param>
+        public void print(string filePath, string documentName)
+        {
+            //int cnt = quantity;
+            //while (cnt-- > 0)
+            //{
+            printEngine.print(name, filePath, documentName);
+            //}
         }
 
 
@@ -277,7 +315,7 @@ namespace AutoPrintr
         /// <param name="types">Types states</param>
         /// <param name="r">Receipt sate</param>
         /// <param name="l">Label sate</param>
-        public Printer(string name, List<DocType> types = null)
+        public Printer(string name, List<DocType> types = null) : this()
         {
             this.name = name;
             if (types != null)
@@ -286,6 +324,13 @@ namespace AutoPrintr
             }
         }
 
+        public Printer()
+        {
+            foreach (DocumentType t in DocumentTypes.list)
+            {
+                quantity.Add(t.name, 0);
+            }
+        }
         /// <summary>
         /// Printer to string
         /// </summary>
