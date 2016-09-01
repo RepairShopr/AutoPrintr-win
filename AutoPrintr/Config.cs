@@ -68,7 +68,10 @@ namespace AutoPrintr
         {
             try
             {
-                File.WriteAllText(configFile, JsonConvert.SerializeObject(this, Formatting.Indented));
+                string conf = JsonConvert.SerializeObject(this, Formatting.Indented);
+                log.Debug("Config saving");
+                //log.Trace("Config saving: {0}", conf);
+                File.WriteAllText(configFile, conf);
             }
             catch (Exception err)
             {
