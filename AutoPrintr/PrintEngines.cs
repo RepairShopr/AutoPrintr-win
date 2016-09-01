@@ -37,7 +37,7 @@ namespace AutoPrintr
             {
                 Process.Start(
                     "SumatraPDF.exe",
-                    string.Format("-exit-on-print -print-to \"{0}\" \"{1}\"", printerName, filePath)
+                    string.Format("-silent -exit-on-print -print-to \"{0}\" \"{1}\"", printerName, filePath)
                 );
             })){};
 
