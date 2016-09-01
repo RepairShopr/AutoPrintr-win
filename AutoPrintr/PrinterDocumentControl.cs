@@ -12,63 +12,106 @@ namespace AutoPrintr
 {
     public partial class PrinterDocumentControl : UserControl
     {
-        pCheckBox checkBox;
-        pCount qty;
+        DocumentType type;
+        Printer printer;
+        DocTypeCheckBox docTypeCheckBox;
+        TriggerCheckBox triggerCheckBox;
+        DocQuantity qty;
+
+        const int cbMargin = 7;
+        const int qtyMargin = cbMargin - 2;
 
         void init(DocumentType type, Printer printer)
         {
-            //checkBox.init(type, printer);
-            //qty.init(type, printer);
-            checkBox = new pCheckBox(type, printer);
-            qty = new pCount(type, printer);
+            this.printer = printer;
+            this.type = type;
+
+            docTypeCheckBox = new DocTypeCheckBox(type, printer);
+            qty = new DocQuantity(type, printer);
+            triggerCheckBox = new TriggerCheckBox(type, printer);
 
             Margin = new Padding(0);
             Padding = new Padding(0);
 
-            checkBox.Top = 6;
-            checkBox.Left = 6;
-            checkBox.Anchor = AnchorStyles.None;
+            docTypeCheckBox.Top = cbMargin;
+            docTypeCheckBox.Left = cbMargin;
+            docTypeCheckBox.Anchor = AnchorStyles.None;
 
-            qty.Top = 4;
-            qty.Left = checkBox.Width + 12;
+            qty.Top = qtyMargin;
+            qty.Left = docTypeCheckBox.Width + cbMargin * 2 + qtyMargin;
             qty.Width = 40;
             qty.Anchor = AnchorStyles.None;
-            
-            Height = qty.Height + 8;
-            Width = checkBox.Width + qty.Width + 24;
+
+            triggerCheckBox.Top = 6;
+            triggerCheckBox.Left = qty.Left + qty.Width + qtyMargin + cbMargin;
+
+            Height = qty.Height + qtyMargin*2;
+            Width = docTypeCheckBox.Width + qty.Width + triggerCheckBox.Width + qtyMargin * 2 + cbMargin*4;
 
             qty.ValueChanged += qty_Changed;
-            checkBox.Click += checkBox_Click;
+            docTypeCheckBox.Click += checkBox_Click;
+            triggerCheckBox.Click += trigger_Click;
 
-            Controls.Add(checkBox);
+            Controls.Add(docTypeCheckBox);
             Controls.Add(qty);
+            Controls.Add(triggerCheckBox);
 
             checkBox_Click(null, null);
         }
 
+
+        void savePrinterConfig()
+        {
+            printer.triggerSet(type.type, triggerCheckBox.Checked);
+            printer.typeSet(type.type, docTypeCheckBox.Checked);
+            printer.quantity[type.name] = (int)qty.Value;
+            Program.config.save(); 
+        }
+
         void qty_Changed(object sender, EventArgs e)
         {
-            //MessageBox.Show("qty " + qty.Value);
             if (qty.Value == 0)
             {
-                checkBox.Checked = false;
+                if (docTypeCheckBox.Checked | triggerCheckBox.Checked)
+                {
+                    triggerCheckBox.Checked = docTypeCheckBox.Checked = false;
+                }
             }
-            else if (!checkBox.Checked)
+            else if (!docTypeCheckBox.Checked | !triggerCheckBox.Checked)
             {
-                checkBox.Checked = true;
+                triggerCheckBox.Checked = docTypeCheckBox.Checked = true;
             }
+            savePrinterConfig();
         }
 
         void checkBox_Click(object sender, EventArgs e)
         {
-            //MessageBox.Show("checkBox_Click " + qty.Value);
-            if (checkBox.Checked & qty.Value == 0)
+            if (docTypeCheckBox.Checked & qty.Value == 0)
             {
+                triggerCheckBox.Checked = true;
                 qty.Value = 1;
             }
-            else if (!checkBox.Checked & qty.Value != 0)
+            else if (!docTypeCheckBox.Checked)
             {
+                triggerCheckBox.Checked = false;
                 qty.Value = 0;
+            }
+            else
+            {
+                savePrinterConfig();
+            }
+        }
+
+        void trigger_Click(object sender, EventArgs e)
+        {
+            if (triggerCheckBox.Checked & qty.Value == 0)
+            {
+                docTypeCheckBox.Checked = true;
+                qty.Value = 1;
+            }
+            else
+            {
+                savePrinterConfig();
             }
         }
         

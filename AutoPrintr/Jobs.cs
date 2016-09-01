@@ -173,6 +173,8 @@ namespace AutoPrintr
                 this.file = file;
             }
         }
+
+
     }
 
 
@@ -269,6 +271,8 @@ namespace AutoPrintr
         /// </summary>
         public int qty = 1;
 
+        public DocType docType;
+
         /// <summary>
         /// Job download progress event
         /// </summary>
@@ -340,8 +344,15 @@ namespace AutoPrintr
             {
                 foreach (Printer printer in printers)
                 {
-                    // Print job file                    
-                    printer.print(localFilePath, fileName);
+                    if (printer.triggerGet(docType) == true | autoprinted == false)
+                    {
+                        // Print job file                    
+                        int cnt = printer.quantity[document];
+                        while (cnt-- > 0)
+                        {
+                            printer.print(localFilePath, fileName);
+                        }
+                    }                    
                 }
                 cb(null);
                 Printed();
@@ -374,6 +385,8 @@ namespace AutoPrintr
             // Generate local file path with partial random name
             this.localFileName = tools.randomFileName() + "_" + fileName;
             this.localFilePath = Path.Combine(Program.tempDnDir, this.localFileName);
+
+            docType = DocumentTypes.ToDocumentType(this.document).type;
         }
         /// <summary>
         /// Converting job to string
