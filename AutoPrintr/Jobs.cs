@@ -186,6 +186,10 @@ namespace AutoPrintr
         public int location = 0;
         public string file = "";
         public string document = "";
+        public bool autoprinted;
+        public string register = "";
+  //      "autoprinted": false,
+  //"register": null,
         public override string ToString()
         {
             return "type: '" + type +
@@ -320,8 +324,7 @@ namespace AutoPrintr
                 this.err = err;
                 Error();
                 cb(err);
-            }
-            
+            }            
         }
 
         /// <summary>

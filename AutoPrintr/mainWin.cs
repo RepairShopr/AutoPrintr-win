@@ -64,8 +64,9 @@ namespace AutoPrintr
                 tabs.SelectTab("loginTab");
             }
 
-
             this.Shown += mainWin_Shown;
+            
+            WinAutoSize.apply(this, new Control[]{printersTable, jobsTable.table});
         }
 
         void onLogChange(object o, EventArgs e)
