@@ -86,7 +86,7 @@ namespace AutoPrintr
         //    string type;
         //    foreach(var c in controls){
         //        type = c.GetType().ToString();
-        //        if (type == "AutoPrintr.pCheckBox") { continue; }
+        //        if (type == "AutoPrintr.DocTypeCheckBox") { continue; }
         //        list.Add(c);
         //    }
         //    return list;
@@ -118,7 +118,7 @@ namespace AutoPrintr
                 type = c.GetType().ToString();
                 if (
                     c.Name.Length == 0 |
-                    type == "AutoPrintr.pCheckBox" |
+                    type == "AutoPrintr.DocTypeCheckBox" |
                     type == "System.Windows.Forms.TableLayoutPanel"
                 ) { 
                     continue; 
@@ -164,7 +164,7 @@ namespace AutoPrintr
             {
                 name = control.Name;
                 type = control.GetType().ToString();
-                if (type == "AutoPrintr.pCheckBox")
+                if (type == "AutoPrintr.DocTypeCheckBox")
                 {
                     if (config.CheckBox != null)
                     {
