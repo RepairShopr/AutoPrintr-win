@@ -139,7 +139,7 @@
     <value>4, 4</value>
   </data>
   <data name="jobsTable.Size" type="System.Drawing.Size, System.Drawing">
-    <value>913, 28</value>
+    <value>1014, 28</value>
   </data>
   <data name="jobsTable.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -148,7 +148,7 @@
     <value>jobsTable</value>
   </data>
   <data name="&gt;&gt;jobsTable.Type" xml:space="preserve">
-    <value>AutoPrintr.JobsList, AutoPrintr, Version=0.0.0.408, Culture=neutral, PublicKeyToken=null</value>
+    <value>AutoPrintr.JobsList, AutoPrintr, Version=0.0.0.479, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;jobsTable.Parent" xml:space="preserve">
     <value>jobsTab</value>
@@ -160,7 +160,7 @@
     <value>4, 22</value>
   </data>
   <data name="jobsTab.Size" type="System.Drawing.Size, System.Drawing">
-    <value>976, 466</value>
+    <value>468, 473</value>
   </data>
   <data name="jobsTab.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -229,7 +229,7 @@
     <value>3, 3, 3, 3</value>
   </data>
   <data name="printersTab.Size" type="System.Drawing.Size, System.Drawing">
-    <value>976, 466</value>
+    <value>468, 473</value>
   </data>
   <data name="printersTab.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -304,7 +304,7 @@
     <value>locationsList</value>
   </data>
   <data name="&gt;&gt;locationsList.Type" xml:space="preserve">
-    <value>AutoPrintr.CheckBoxList, AutoPrintr, Version=0.0.0.408, Culture=neutral, PublicKeyToken=null</value>
+    <value>AutoPrintr.CheckBoxList, AutoPrintr, Version=0.0.0.479, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;locationsList.Parent" xml:space="preserve">
     <value>locationGroupBox</value>
@@ -502,7 +502,7 @@
     <value>3, 3, 3, 3</value>
   </data>
   <data name="loginTab.Size" type="System.Drawing.Size, System.Drawing">
-    <value>976, 466</value>
+    <value>468, 473</value>
   </data>
   <data name="loginTab.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -610,7 +610,7 @@
     <value>4, 22</value>
   </data>
   <data name="logTab.Size" type="System.Drawing.Size, System.Drawing">
-    <value>976, 466</value>
+    <value>468, 473</value>
   </data>
   <data name="logTab.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -735,7 +735,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     <value>4, 22</value>
   </data>
   <data name="aboutTab.Size" type="System.Drawing.Size, System.Drawing">
-    <value>976, 466</value>
+    <value>1020, 466</value>
   </data>
   <data name="aboutTab.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -765,7 +765,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     <value>0, 0</value>
   </data>
   <data name="tabs.Size" type="System.Drawing.Size, System.Drawing">
-    <value>984, 492</value>
+    <value>1028, 492</value>
   </data>
   <data name="tabs.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -822,7 +822,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     <value>0, 494</value>
   </data>
   <data name="statusStrip.Size" type="System.Drawing.Size, System.Drawing">
-    <value>985, 22</value>
+    <value>1029, 22</value>
   </data>
   <data name="statusStrip.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -867,7 +867,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     <value>checkBoxList1</value>
   </data>
   <data name="&gt;&gt;checkBoxList1.Type" xml:space="preserve">
-    <value>AutoPrintr.CheckBoxList, AutoPrintr, Version=0.0.0.408, Culture=neutral, PublicKeyToken=null</value>
+    <value>AutoPrintr.CheckBoxList, AutoPrintr, Version=0.0.0.479, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -882,7 +882,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     <value>GrowAndShrink</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>985, 516</value>
+    <value>1029, 516</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -1742,6 +1742,9 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
 </value>
+  </data>
+  <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>AutoPrintr</value>
