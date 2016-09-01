@@ -249,12 +249,11 @@ namespace AutoPrintr
             Program.config.save();
         }
 
-        public void print(string filePath, string documentName, Action<int, int> onProgress)
+        public void print(string filePath, string documentName)
         {
             int cnt = quantity;
             while (cnt-- > 0)
             {
-                onProgress(cnt, quantity);
                 printEngine.print(name, filePath, documentName);
             }                       
         }

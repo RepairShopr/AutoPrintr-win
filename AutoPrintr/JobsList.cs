@@ -49,19 +49,20 @@ namespace AutoPrintr
         /// <param name="uiJob"></param>
         void addJobControls(UIJob uiJob)
         {
-            
-
             table.RowCount++;
             table.RowStyles.Add(new RowStyle(SizeType.AutoSize));
-            table.Controls.Add(uiJob.lIndex, 0, uiJob.row);
-            table.Controls.Add(uiJob.lFile, 1, uiJob.row);
-            table.Controls.Add(uiJob.lState, 2, uiJob.row);
-            table.Controls.Add(uiJob.lProgress, 3, uiJob.row);
-            table.Controls.Add(uiJob.lRecived, 4, uiJob.row);
-            table.Controls.Add(uiJob.lType, 5, uiJob.row);
-            table.Controls.Add(uiJob.lDocument, 6, uiJob.row);
-            table.Controls.Add(uiJob.lPrinters, 7, uiJob.row);
-            table.Controls.Add(uiJob.lUrl, 8, uiJob.row);
+
+            int column = 0;
+            table.Controls.Add(uiJob.repeatBtn, column++, uiJob.row);
+            table.Controls.Add(uiJob.lIndex,    column++, uiJob.row);
+            table.Controls.Add(uiJob.lFile,     column++, uiJob.row);
+            table.Controls.Add(uiJob.lState,    column++, uiJob.row);
+            table.Controls.Add(uiJob.lProgress, column++, uiJob.row);
+            table.Controls.Add(uiJob.lRecived,  column++, uiJob.row);
+            table.Controls.Add(uiJob.lType,     column++, uiJob.row);
+            table.Controls.Add(uiJob.lDocument, column++, uiJob.row);
+            table.Controls.Add(uiJob.lPrinters, column++, uiJob.row);
+            table.Controls.Add(uiJob.lUrl,      column++, uiJob.row);
 
             updateTableWidth();
         }
@@ -136,16 +137,22 @@ namespace AutoPrintr
             foreach (Control control in table.Controls)
             {
                 if (column == columns) { column = 0; }
-                colw[column] = Math.Max(control.Width, colw[column]);
+                colw[column] = Math.Max(
+                    control.Width, 
+                    colw[column]
+                ); 
                 column++;
             }
 
             // And set each item width to same value
+            column = 0;
             foreach (Control control in table.Controls)
             {
                 if (column == columns) { column = 0; }
                 w = colw[column];
-                if (control.Width != w) { control.Width = w; }
+                if (control.Width != w) { 
+                    control.Width = w - control.Margin.Left - control.Margin.Right;
+                }
                 column++;
             }
         }
@@ -158,14 +165,15 @@ namespace AutoPrintr
         {
             InitializeComponent();
             table.RowStyles.Clear();
-            table.Controls.Add(new JLHeaderLabel("№"), 0, 0);
+            table.Controls.Add(new JLHeaderLabel("Repeat printing"), 0, 0);
+            addColumn("№");
             addColumn("File");
             addColumn("State");
             addColumn("Progress");
             addColumn("Recived");
             addColumn("Type");
             addColumn("Document");
-            addColumn("Printers");
+            addColumn("Printers [qty]");
             addColumn("Url");
         }
 
@@ -188,6 +196,7 @@ namespace AutoPrintr
             public JobsListLabel lDocument;
             public JobsListLabel lPrinters;
             public JobsListLabel lUrl;
+            public JLRepeatBtn repeatBtn;
 
             /// <summary>
             /// Create new UI job instance
@@ -207,8 +216,23 @@ namespace AutoPrintr
                 lRecived = new JobsListLabel(tools.BytesToString(job.recived));
                 lType = new JobsListLabel(job.type);
                 lDocument = new JobsListLabel(job.documentTitle);
-                lPrinters = new JobsListLabel(string.Join<Printer>(",", job.printers.ToArray()));
                 lUrl = new JobsListLabel(job.file);
+
+                //lPrinters = new JobsListLabel(string.Join<Printer>(",", job.printers.ToArray()));
+                //foreach (Printer p in job.printers)
+                //{
+                //}
+
+                lPrinters = new JobsListLabel(
+                    string.Join(
+                        ",", 
+                        job.printers.Select( 
+                            p => p.name + "[" + p.quantity + "]"
+                        ).ToArray()
+                    )
+                );
+
+                repeatBtn = new JLRepeatBtn(this);
             }
             /// <summary>
             /// Update job in UI
@@ -272,6 +296,27 @@ namespace AutoPrintr
                 Text = text;
                 Padding = new Padding(3, 5, 3, 0);
                 Margin = new Padding(0, 0, 0, 0);
+            }
+        }
+
+        public class JLRepeatBtn : Button
+        {
+            public UIJob uijob;
+            int cnt = 0;
+            public JLRepeatBtn(UIJob job)
+                : base()
+            {
+                this.uijob = job;
+                Text = "Repeat";
+                Click += JLRepeatBtn_Click;
+                Margin = new Padding(5);
+            }
+
+            void JLRepeatBtn_Click(object sender, EventArgs e)
+            {
+                cnt++;
+                Text = "Repeat (" + cnt + ")";
+                uijob.job.print((err) => { });
             }
         }
     }
