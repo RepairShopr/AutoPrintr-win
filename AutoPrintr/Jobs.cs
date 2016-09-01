@@ -317,7 +317,8 @@ namespace AutoPrintr
             }
             catch (Exception err)
             {
-                this.Error();
+                this.err = err;
+                Error();
                 cb(err);
             }
             
@@ -336,17 +337,16 @@ namespace AutoPrintr
             {
                 foreach (Printer printer in printers)
                 {
-                    // Print job file
-                    printer.print(localFilePath, fileName, (n, qty) =>
-                    {
-                        qty = 1;
-                    });
+                    // Print job file                    
+                    printer.print(localFilePath, fileName);
                 }
                 cb(null);
                 Printed();
             }
             catch (Exception err)
             {
+                this.err = err;
+                Error();
                 cb(err);
             }
         }
