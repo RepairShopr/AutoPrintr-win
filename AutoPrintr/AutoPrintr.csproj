@@ -19,7 +19,7 @@
     <UpdateAssemblyFileVersion>False</UpdateAssemblyFileVersion>
     <UpdateAssemblyInfoVersion>False</UpdateAssemblyInfoVersion>
     <AssemblyVersionSettings>None.None.None.Increment</AssemblyVersionSettings>
-    <AssemblyVersion>0.0.0.457</AssemblyVersion>
+    <AssemblyVersion>0.0.0.482</AssemblyVersion>
     <AssemblyFileVersionSettings>
     </AssemblyFileVersionSettings>
     <AssemblyInfoVersionSettings>
@@ -147,6 +147,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="tools.cs" />
+    <Compile Include="WinAutoSize.cs" />
     <Content Include="Printer_icon_256.ico" />
     <EmbeddedResource Include="CheckBoxList.resx">
       <DependentUpon>CheckBoxList.cs</DependentUpon>
