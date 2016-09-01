@@ -36,6 +36,8 @@ namespace AutoPrintr
 
         public mainWin()
         {
+            Printers.init();
+            
             log.Info("GUI Initialization start...");
             InitializeComponent();
 
@@ -121,7 +123,6 @@ namespace AutoPrintr
             
             try
             {
-                Printers.init();
                 Printers.get();
             }
             catch (Exception e1)
@@ -143,7 +144,7 @@ namespace AutoPrintr
             printersTable.ColumnStyles.Clear();
             // Printers table header
             // Adding first column header
-            printersTable.Controls.Add(new tabelLabel(), 0, 0);
+            printersTable.Controls.Add(new tabelLabel("Printers:"), 0, 0);
 
             int column = 1;
             foreach (Printer p in Program.config.printers)
@@ -160,7 +161,16 @@ namespace AutoPrintr
             }
 
             printersTable.RowStyles.Clear();
-            int row = 0;
+            printersTable.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+            int row = 1;
+            column = 0;
+            printersTable.RowCount++;
+            printersTable.Controls.Add(new tabelLabel("Documents"), column++, row);
+            foreach (Printer p in Program.config.printers)
+            {
+                printersTable.Controls.Add(new tabelLabel("Enabled | Quantity | Print from triggers"), column++, row);
+            }
+
             foreach (DocumentType type in DocumentTypes.list)
             {
                 column = 0;
@@ -170,8 +180,6 @@ namespace AutoPrintr
                 printersTable.Controls.Add(new tabelLabel(type.title), column++, ++row);
                 foreach (Printer p in Program.config.printers)
                 {
-                    //printersTable.Controls.Add(new pCheckBox(type, p), column, row);
-                    //printersTable.Controls.Add(new pCount(type, p), column, row);
                     printersTable.Controls.Add(new PrinterDocumentControl(type, p), column, row);
                     column++;
                 }
