@@ -63,7 +63,7 @@ namespace AutoPrintr
         /// <param name="type"></param>
         /// <param name="location"></param>
         /// <returns></returns>
-        public static List<Printer> findPrinters(string type, int location)
+        public static List<Printer> findPrinters(string type, int location, int register)
         {
             List<Printer> l = new List<Printer>();
             DocumentType t = DocumentTypes.ToDocumentType(type);
@@ -73,7 +73,7 @@ namespace AutoPrintr
             if (Program.config.locations.Count > 0 & location != 0) 
             {
                 // If location not in array - return empty list
-                if ( !Program.config.locations.Contains(location) ) { return l; } 
+                if (!Program.config.locations.Contains(location)) { return l; } 
             }
             
             // Search printer by type
@@ -81,7 +81,15 @@ namespace AutoPrintr
             {
                 if (printer.typeGet(t.type))
                 {
-                    l.Add(printer);
+                    if (printer.register == 0)
+                    {
+                        l.Add(printer);
+                    }
+                    else if (printer.register == register)
+                    {
+                        l.Add(printer);
+                    }
+                    
                 }
             }
             return l;
@@ -230,6 +238,8 @@ namespace AutoPrintr
         public List<DocType> types = new List<DocType>();
         [JsonProperty]
         public List<DocType> triggers = new List<DocType>();
+        [JsonProperty]
+        public int register = 0;
 
         /// <summary>
         /// Set printing type state
@@ -298,15 +308,14 @@ namespace AutoPrintr
         /// </summary>
         /// <param name="filePath"></param>
         /// <param name="documentName"></param>
-        public void print(string filePath, string documentName)
+        public void print(string filePath, string documentName, string type)
         {
-            //int cnt = quantity;
-            //while (cnt-- > 0)
-            //{
-            printEngine.print(name, filePath, documentName);
-            //}
+            int cnt = quantity[type];
+            while (cnt-- > 0)
+            {
+                printEngine.print(name, filePath, documentName);
+            }
         }
-
 
         /// <summary>
         /// Create new printer

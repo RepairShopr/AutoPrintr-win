@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using Newtonsoft.Json;
 using System.Collections.Specialized;
 using System.IO;
 using System.Net;
 using System.Text;
+using System.Windows.Forms;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace AutoPrintr
 {
@@ -12,7 +14,7 @@ namespace AutoPrintr
     /// <summary>
     /// Login server class
     /// </summary>
-    static class LoginServer
+    public static class LoginServer
     {
         private static NLog.Logger log = NLog.LogManager.GetCurrentClassLogger();
 
@@ -39,7 +41,7 @@ namespace AutoPrintr
         /// <summary>
         /// Array with available user locations
         /// </summary>
-        public static Location[] locationsArr;
+        public static List<Location> locations;
         /// <summary>
         /// User default location
         /// </summary>
@@ -52,7 +54,12 @@ namespace AutoPrintr
         ///  Dictionary-converter for convertin location ID to string
         /// </summary>
         public static Dictionary<int, string> locationID2String = new Dictionary<int, string>();
-        
+
+        /// <summary>
+        /// Registers collection
+        /// </summary>
+        public static List<Register> registers = new List<Register>();
+
         /// <summary>
         /// Method for login via username and password
         /// </summary>
@@ -97,13 +104,14 @@ namespace AutoPrintr
                                 LoginServer.locationString2ID.Add(l.name, l.id);
                                 LoginServer.locationID2String.Add(l.id, l.name);
                             }
-                            locationsArr = resp.LocationsAllowed;
+                            locations = resp.LocationsAllowed;
                         }
 
                         // Setting other variables
                         LoginServer.isMultiLocations = resp.EnableMultiLocations;
                         LoginServer.domain = resp.Subdomain;
-                        LoginServer.channel = getChannel(domain, globalURl, UserToken);
+                        //LoginServer.channel = getChannel(domain, globalURl, UserToken);
+                        getSettings(domain, globalURl, UserToken);
                         //getChannel();
                         return resp;
                     }
@@ -111,6 +119,7 @@ namespace AutoPrintr
                     {
                         string errText = "Response from login server is null";
                         log.Error(errText);
+                        MessageBox.Show(errText);
                         throw new Exception(errText);
                     }
                 }
@@ -122,6 +131,7 @@ namespace AutoPrintr
                         {
                             string errText = "Failed to Authenticate given Username and Password";
                             log.Error(errText);
+                            MessageBox.Show(errText);
                             throw new Exception(errText);
                         }
                     }
@@ -129,6 +139,7 @@ namespace AutoPrintr
                     {
                         string errText = "Unable to Login in RepairShopr. Error: " + ex.Message;
                         log.Error(errText);
+                        MessageBox.Show(errText);
                         throw new Exception(errText);
                     }
                 }
@@ -143,35 +154,91 @@ namespace AutoPrintr
         /// <param name="host"></param>
         /// <param name="xt"></param>
         /// <returns></returns>
-        public static string getChannel(string domain, string host, string xt)
+        public static void getSettings(string domain, string host, string xt)
         {
             string url = "https://" + domain + "." + host + "/api/v1/settings/printing?api_key=" + xt;
             string response = "";
-            getChannelResp ch;
+            SettingsResponse settings;
             response = GET(url);
-            ch = JsonConvert.DeserializeObject<getChannelResp>(
+            settings = JsonConvert.DeserializeObject<SettingsResponse>(
                 response, 
                 new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore}
             );
-            
-            if (ch.messaging_channel != null)
+
+
+            if (settings.messaging_channel != null)
             {
-                return ch.messaging_channel;
+                LoginServer.channel = settings.messaging_channel;
             }
             else
             {
-                string errText = "Can\'t get channel from response. Error: '" + ch.error.ToString() + "'. Response: " + response;
+                string errText = "Can\'t get channel from response. Error: '" + settings.error.ToString() + "'. Response: " + response;
                 log.Error(errText);
                 throw new Exception(errText);
             }
+
+            if (settings.registers != null)
+            {
+                foreach(Register r in settings.registers){
+                    LoginServer.registers.Add(r);
+                }
+            }
         }
 
-        private class getChannelResp
+        private class SettingsResponse
         {
             public string messaging_channel = null;
+            public List<Register> registers = new List<Register>();
             public string error = null;
         }
 
+        /// <summary>
+        /// Register class api/v1/settings/printing
+        /// </summary>
+        public class Register
+        {
+            public int id = 0;
+            public string name = "";
+            public int location_id = 0;
+            public string location_name = "";
+        }
+
+        public static class Registers
+        {
+            public static Register get(int id)
+            {
+                return Program.config.registers.Find(v => v.id == id);
+            }
+
+            public static Register get(string name)
+            {
+                return Program.config.registers.Find(v => v.name == name);
+            }
+
+            public static void Add(Register r)
+            {
+                Program.config.registers.Add(r);
+                Program.config.save();
+            }
+        }
+
+        //{
+        //  "messaging_channel": "",
+        //  "registers": [
+        //    {
+        //      "id": 2748,
+        //      "name": "Register 1",
+        //      "location_id": 1019,
+        //      "location_name": "Office 1"
+        //    },
+        //    {
+        //      "id": 2750,
+        //      "name": "Register 2",
+        //      "location_id": 1020,
+        //      "location_name": "Small Office"
+        //    }
+        //  ]
+        //}
         /// <summary>
         /// Get request to url
         /// </summary>

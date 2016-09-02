@@ -19,7 +19,7 @@
     <UpdateAssemblyFileVersion>False</UpdateAssemblyFileVersion>
     <UpdateAssemblyInfoVersion>False</UpdateAssemblyInfoVersion>
     <AssemblyVersionSettings>None.None.None.Increment</AssemblyVersionSettings>
-    <AssemblyVersion>0.0.0.523</AssemblyVersion>
+    <AssemblyVersion>0.0.0.559</AssemblyVersion>
     <AssemblyFileVersionSettings>
     </AssemblyFileVersionSettings>
     <AssemblyInfoVersionSettings>
@@ -59,7 +59,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Printer_icon_256.ico</ApplicationIcon>
+    <ApplicationIcon>AutoPrintr.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -131,6 +131,9 @@
     <Compile Include="PrinterDocumentControl.Designer.cs">
       <DependentUpon>PrinterDocumentControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="RegisterDD.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Skin.cs" />
     <Compile Include="Srv.cs" />
     <Compile Include="LoginResponse.cs" />
@@ -151,6 +154,7 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="WinAutoSize.cs" />
+    <Content Include="AutoPrintr.ico" />
     <Content Include="Printer_icon_256.ico" />
     <EmbeddedResource Include="CheckBoxList.resx">
       <DependentUpon>CheckBoxList.cs</DependentUpon>
