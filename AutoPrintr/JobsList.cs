@@ -173,7 +173,7 @@ namespace AutoPrintr
             addColumn("Recived");
             addColumn("Type");
             addColumn("Document");
-            addColumn("Printers [qty]");
+            addColumn("Printers [quantity]");
             addColumn("Url");
         }
 
@@ -211,7 +211,7 @@ namespace AutoPrintr
                 this.index = index;
                 lIndex = new JobsListLabel(index.ToString());
                 lFile = new JobsListLabel(job.localFileName);
-                lState = new JobsListLabel(job.state.ToString());
+                lState = new JobsListLabel(job.state.ToString() + job.stateDetails);
                 lProgress = new JobsListLabel(job.progress.ToString()+"%");
                 lRecived = new JobsListLabel(tools.BytesToString(job.recived));
                 lType = new JobsListLabel(job.type);
@@ -227,9 +227,9 @@ namespace AutoPrintr
                     string.Join(
                         ",", 
                         job.printers.Select( 
-                            p => p.name + "[" + p.quantity + "]"
+                            p => p.name + "[" + p.quantity[job.document] + "]"
                         ).ToArray()
-                    )
+                    ) 
                 );
 
                 repeatBtn = new JLRepeatBtn(this);
@@ -240,7 +240,7 @@ namespace AutoPrintr
             /// <param name="job"></param>
             public void update(Job job)
             {
-                lState.Text = job.state.ToString();
+                lState.Text = job.state.ToString() + job.stateDetails;
                 lProgress.Text = job.progress.ToString() + "%";
                 lRecived.Text = tools.BytesToString(job.recived);
             }
