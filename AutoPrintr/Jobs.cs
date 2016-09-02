@@ -37,13 +37,15 @@ namespace AutoPrintr
         /// <param name="msg">parsed msg object from pusher</param>
         /// <returns></returns>
         static bool msgValidate(dynamic msg)
-        {
+        {            
             JToken message = (JToken)msg;
             JToken document = message["document"];
             JToken file = message["file"];
             JToken type = message["type"];
             JToken location = message["location"];
-
+            JToken autoprinted = message["autoprinted"];
+            JToken register = message["register"];
+            
             // Check for null
             if(
                 document == null |
@@ -78,7 +80,15 @@ namespace AutoPrintr
                 return false;
             }
 
-            // Valdations is passed
+            if (autoprinted.Type == JTokenType.Null)
+            {
+                msg.autoprinted = false;
+            }
+
+            if (register.Type != JTokenType.Integer)
+            {
+                msg.register = 0;
+            }
             return true;
         }
 
@@ -100,7 +110,9 @@ namespace AutoPrintr
                         (string)msg.document,
                         (string)msg.file,
                         (int)msg.location,
-                        (string)msg.type
+                        (string)msg.type,
+                        (bool)msg.autoprinted,
+                        (int)msg.register
                     );
 
                     job.Processing();
@@ -189,7 +201,7 @@ namespace AutoPrintr
         public string file = "";
         public string document = "";
         public bool autoprinted;
-        public string register = "";
+        public int register = 0;
   //      "autoprinted": false,
   //"register": null,
         public override string ToString()
@@ -213,6 +225,7 @@ namespace AutoPrintr
         Downloaded, 
         Printing,
         Printed,
+        Ignored,
         Error
     }
 
@@ -261,6 +274,7 @@ namespace AutoPrintr
         /// Job state
         /// </summary>
         public JobState state = JobState.New;
+        public string stateDetails = "";
         /// <summary>
         /// Job change event
         /// </summary>
@@ -337,25 +351,43 @@ namespace AutoPrintr
         /// <param name="cb"></param>
         public void print(Action<Exception> cb)
         {
+            stateDetails = "";
             Printing();
             // Job printing
             // Looks like more optimal solution will be sending job to "Printers" class and it will decise print job or not... Just idea...
             try
             {
+                int ignoredCnt = 0
+                    , printedCnt = 0
+                    , cnt
+                ;
+
                 foreach (Printer printer in printers)
-                {
-                    if (printer.triggerGet(docType) == true | autoprinted == false)
+                {            
+                    cnt = printer.quantity[document];
+                    if ( 
+                        (printer.triggerGet(docType) == false) & 
+                        (autoprinted == true)
+                    )
                     {
-                        // Print job file                    
-                        int cnt = printer.quantity[document];
+                        ignoredCnt += cnt;
+                    }
+                    else
+                    {
                         while (cnt-- > 0)
                         {
                             printer.print(localFilePath, fileName);
+                            Printed(printedCnt++);
                         }
-                    }                    
+                    }
+                                 
                 }
                 cb(null);
-                Printed();
+                if (ignoredCnt != 0)
+                {
+                    stateDetails = " (ignored " + ignoredCnt + ")";
+                }
+                Printed(printedCnt);
             }
             catch (Exception err)
             {
@@ -372,12 +404,22 @@ namespace AutoPrintr
         /// <param name="file"></param>
         /// <param name="location"></param>
         /// <param name="type"></param>
-        public Job(string document, string file, int location, string type)
+        public Job(
+            string document, 
+            string file, 
+            int location, 
+            string type,
+            bool autoprinted,
+            int register
+       )
         {
             this.document = document;
             this.file = file;
             this.type = type;
             this.location = location;
+            this.autoprinted = autoprinted;
+            this.register = register;
+
             this.url = new Uri(file);
             this.fileName = Path.GetFileName(this.url.LocalPath);
             this.documentTitle = DocumentTypes.toTitle(document);
@@ -441,13 +483,25 @@ namespace AutoPrintr
         /// <summary>
         /// Set job state "Printed"
         /// </summary>
-        public void Printed()
+        public void Printed(int count)
 	    { 
 		    state = JobState.Printed; 
 		    if( onChange != null ){
                 onChange(null, this);
 		    }
+
 	    }
+        /// <summary>
+        /// Set job state "Ignored"
+        /// </summary>
+        public void Ignored(int count)
+	    {
+            //state = JobState.Ignored;
+		    if( onChange != null ){
+                onChange(null, this);
+		    }
+	    }
+        
         /// <summary>
         /// Set job state "Error"
         /// </summary>
