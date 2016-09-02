@@ -4,6 +4,7 @@ using System.IO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Net;
+using System.Windows.Forms;
 
 namespace AutoPrintr
 {
@@ -85,7 +86,7 @@ namespace AutoPrintr
                 msg.autoprinted = false;
             }
 
-            if (register.Type != JTokenType.Integer)
+            if (register.Type == JTokenType.Null)
             {
                 msg.register = 0;
             }
@@ -105,57 +106,60 @@ namespace AutoPrintr
                 // Msg validation
                 if (msgValidate(msg))
                 {
-                    // Job cration
-                    Job job = new Job(
-                        (string)msg.document,
-                        (string)msg.file,
-                        (int)msg.location,
-                        (string)msg.type,
-                        (bool)msg.autoprinted,
-                        (int)msg.register
-                    );
-
-                    job.Processing();
-
                     // Searching printers for this job
-                    List<Printer> printers = Printers.findPrinters(job.document, job.location);
-                    if (printers.Count == 0) { 
+                    List<Printer> printers = Printers.findPrinters((string)msg.document, (int)msg.location, (int)msg.register);
+                    if (printers.Count == 0) {
                         return;
                     }
 
-                    // Setting job printers
-                    job.printers = printers;
-
-                    // New job callback (not sure if it corret and better via event)
-                    onJob(null, job);
-
-                    // New job event 
-                    if (jobAdded != null) { jobAdded(null, job); }
-
-                    job.download((err1) =>
+                    foreach (Printer printer in printers)
                     {
-                        if (err1 == null)
+                        // Job cration
+                        Job job = new Job(
+                            (string)msg.document,
+                            (string)msg.file,
+                            (int)msg.location,
+                            (string)msg.type,
+                            (bool)msg.autoprinted,
+                            (int)msg.register
+                        );
+
+                        job.Processing();
+
+                        // Setting job printers
+                        job.printer = printer;
+
+                        // New job callback (not sure if it corret and better via event)
+                        onJob(null, job);
+
+                        // New job event 
+                        if (jobAdded != null) { jobAdded(null, job); }
+
+                        job.download((err1) =>
                         {
-                            if (jobDownloaded != null) { jobDownloaded(null, job); }
-                            job.print((err2) =>
+                            if (err1 == null)
                             {
-                                if (err2 == null)
+                                if (jobDownloaded != null) { jobDownloaded(null, job); }
+                                job.print((err2) =>
                                 {
-                                    if (jobPrinted != null) { jobPrinted(null, job); }
-                                }
-                                else
-                                {
-                                    job.err = err2;
-                                    log.Error("File printing error. File: \"{0}\"; Error details:\n{1}", job.localFilePath, err2);
-                                }
-                            });
-                        }
-                        else
-                        {
-                            job.err = err1;
-                            log.Error("File download error. File: \"{0}\"; Error details:\n{1}", job.file, err1);
-                        }
-                    });
+                                    if (err2 == null)
+                                    {
+                                        if (jobPrinted != null) { jobPrinted(null, job); }
+                                    }
+                                    else
+                                    {
+                                        job.err = err2;
+                                        log.Error("File printing error. File: \"{0}\"; Error details:\n{1}", job.localFilePath, err2);
+                                    }
+                                });
+                            }
+                            else
+                            {
+                                job.err = err1;
+                                log.Error("File download error. File: \"{0}\"; Error details:\n{1}", job.file, err1);
+                            }
+                        });
+                    }
                 }
                 else
                 {
@@ -225,7 +229,7 @@ namespace AutoPrintr
         Downloaded, 
         Printing,
         Printed,
-        Ignored,
+        Skipped,
         Error
     }
 
@@ -265,7 +269,7 @@ namespace AutoPrintr
         /// <summary>
         /// List of associated with this job printers
         /// </summary>
-        public List<Printer> printers;
+        public Printer printer;
         /// <summary>
         /// Job error
         /// </summary>
@@ -356,38 +360,22 @@ namespace AutoPrintr
             // Job printing
             // Looks like more optimal solution will be sending job to "Printers" class and it will decise print job or not... Just idea...
             try
-            {
-                int ignoredCnt = 0
-                    , printedCnt = 0
-                    , cnt
-                ;
-
-                foreach (Printer printer in printers)
-                {            
-                    cnt = printer.quantity[document];
-                    if ( 
-                        (printer.triggerGet(docType) == false) & 
-                        (autoprinted == true)
-                    )
-                    {
-                        ignoredCnt += cnt;
-                    }
-                    else
-                    {
-                        while (cnt-- > 0)
-                        {
-                            printer.print(localFilePath, fileName);
-                            Printed(printedCnt++);
-                        }
-                    }
-                                 
-                }
-                cb(null);
-                if (ignoredCnt != 0)
+            {       
+         
+                if ( 
+                    (printer.triggerGet(docType) == false) & 
+                    (autoprinted == true)
+                )
                 {
-                    stateDetails = " (ignored " + ignoredCnt + ")";
+                    cb(null);
+                    Skipped(quantity());
                 }
-                Printed(printedCnt);
+                else
+                {
+                    printer.print(localFilePath, fileName, document);
+                    cb(null);
+                    Printed();
+                }                
             }
             catch (Exception err)
             {
@@ -396,7 +384,14 @@ namespace AutoPrintr
                 cb(err);
             }
         }
-
+        /// <summary>
+        /// Get quantity for this job
+        /// </summary>
+        /// <returns></returns>
+        public int quantity()
+        {
+            return printer.quantity[document];
+        }
         /// <summary>
         /// New job consturctor
         /// </summary>
@@ -483,7 +478,7 @@ namespace AutoPrintr
         /// <summary>
         /// Set job state "Printed"
         /// </summary>
-        public void Printed(int count)
+        public void Printed()
 	    { 
 		    state = JobState.Printed; 
 		    if( onChange != null ){
@@ -494,9 +489,10 @@ namespace AutoPrintr
         /// <summary>
         /// Set job state "Ignored"
         /// </summary>
-        public void Ignored(int count)
+        public void Skipped(int count)
 	    {
             //state = JobState.Ignored;
+            stateDetails = count.ToString();
 		    if( onChange != null ){
                 onChange(null, this);
 		    }

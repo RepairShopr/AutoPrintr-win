@@ -1,4 +1,6 @@
 ﻿using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
 
 namespace AutoPrintr
 {
@@ -49,17 +51,17 @@ namespace AutoPrintr
     /// </summary>
     public class LoginResponse
     {
-        [JsonProperty("user_token")]                public string       UserToken               { get; set; }
-        [JsonProperty("user_email")]                public string       UserEmail               { get; set; }
-        [JsonProperty("user_name")]                 public string       UserName                { get; set; }
-        [JsonProperty("user_id")]                   public int          UserId                  { get; set; }
-        [JsonProperty("admin")]                     public bool         Admin                   { get; set; }
-        [JsonProperty("can_use_app")]               public bool         CanUseApp               { get; set; }
-        [JsonProperty("subdomain")]                 public string       Subdomain               { get; set; }
-        [JsonProperty("default_location")]          public int          DefaulLocation          { get; set; }
-        [JsonProperty("enable_multi_locations")]    public bool         EnableMultiLocations    { get; set; }
-        [JsonProperty("locations_allowed")]         public Location[]   LocationsAllowed        { get; set; }
-        [JsonProperty("permissions")]               public Permissions  Permissions             { get; set; }
+        [JsonProperty("user_token")]                public string           UserToken               { get; set; }
+        [JsonProperty("user_email")]                public string           UserEmail               { get; set; }
+        [JsonProperty("user_name")]                 public string           UserName                { get; set; }
+        [JsonProperty("user_id")]                   public int              UserId                  { get; set; }
+        [JsonProperty("admin")]                     public bool             Admin                   { get; set; }
+        [JsonProperty("can_use_app")]               public bool             CanUseApp               { get; set; }
+        [JsonProperty("subdomain")]                 public string           Subdomain               { get; set; }
+        [JsonProperty("default_location")]          public int              DefaulLocation          { get; set; }
+        [JsonProperty("enable_multi_locations")]    public bool             EnableMultiLocations    { get; set; }
+        [JsonProperty("locations_allowed")]         public List<Location>   LocationsAllowed        { get; set; }
+        [JsonProperty("permissions")]               public Permissions      Permissions             { get; set; }
     }
 
 }
