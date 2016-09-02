@@ -56,13 +56,14 @@ namespace AutoPrintr
             table.Controls.Add(uiJob.repeatBtn, column++, uiJob.row);
             table.Controls.Add(uiJob.lIndex,    column++, uiJob.row);
             table.Controls.Add(uiJob.lFile,     column++, uiJob.row);
+            table.Controls.Add(uiJob.lQuantity, column++, uiJob.row);
             table.Controls.Add(uiJob.lState,    column++, uiJob.row);
             table.Controls.Add(uiJob.lProgress, column++, uiJob.row);
             table.Controls.Add(uiJob.lRecived,  column++, uiJob.row);
             table.Controls.Add(uiJob.lType,     column++, uiJob.row);
             table.Controls.Add(uiJob.lDocument, column++, uiJob.row);
-            table.Controls.Add(uiJob.lPrinters, column++, uiJob.row);
-            table.Controls.Add(uiJob.lUrl,      column++, uiJob.row);
+            table.Controls.Add(uiJob.lPrinter,  column++, uiJob.row);
+            //table.Controls.Add(uiJob.lUrl,      column++, uiJob.row);
 
             updateTableWidth();
         }
@@ -168,13 +169,14 @@ namespace AutoPrintr
             table.Controls.Add(new JLHeaderLabel("Repeat printing"), 0, 0);
             addColumn("№");
             addColumn("File");
+            addColumn("Quantity");
             addColumn("State");
             addColumn("Progress");
             addColumn("Recived");
             addColumn("Type");
             addColumn("Document");
-            addColumn("Printers [quantity]");
-            addColumn("Url");
+            addColumn("Printer");
+            //addColumn("Url");
         }
 
         
@@ -189,15 +191,16 @@ namespace AutoPrintr
             public int index;
             public JobsListLabel lIndex;
             public JobsListLabel lFile;
+            public JobsListLabel lQuantity;
             public JobsListLabel lState;
             public JobsListLabel lProgress;
             public JobsListLabel lRecived;
             public JobsListLabel lType;
             public JobsListLabel lDocument;
-            public JobsListLabel lPrinters;
-            public JobsListLabel lUrl;
+            public JobsListLabel lPrinter;
+            //public JobsListLabel lUrl;
             public JLRepeatBtn repeatBtn;
-
+            
             /// <summary>
             /// Create new UI job instance
             /// </summary>
@@ -209,30 +212,34 @@ namespace AutoPrintr
                 this.job = job;
                 this.row = row;
                 this.index = index;
+
+                //foreach(Printer printer in job.printers){
+                
+                repeatBtn = new JLRepeatBtn(this);
                 lIndex = new JobsListLabel(index.ToString());
                 lFile = new JobsListLabel(job.localFileName);
+                lQuantity = new JobsListLabel(job.quantity().ToString());
                 lState = new JobsListLabel(job.state.ToString() + job.stateDetails);
                 lProgress = new JobsListLabel(job.progress.ToString()+"%");
                 lRecived = new JobsListLabel(tools.BytesToString(job.recived));
                 lType = new JobsListLabel(job.type);
                 lDocument = new JobsListLabel(job.documentTitle);
-                lUrl = new JobsListLabel(job.file);
+                lPrinter = new JobsListLabel(job.printer.name);
+                //lUrl = new JobsListLabel(job.file);
 
                 //lPrinters = new JobsListLabel(string.Join<Printer>(",", job.printers.ToArray()));
                 //foreach (Printer p in job.printers)
                 //{
                 //}
 
-                lPrinters = new JobsListLabel(
-                    string.Join(
-                        ",", 
-                        job.printers.Select( 
-                            p => p.name + "[" + p.quantity[job.document] + "]"
-                        ).ToArray()
-                    ) 
-                );
-
-                repeatBtn = new JLRepeatBtn(this);
+                //lPrinter = new JobsListLabel(
+                //    string.Join(
+                //        ",", 
+                //        job.printers.Select( 
+                //            p => p.name + "[" + p.quantity[job.document] + "]"
+                //        ).ToArray()
+                //    ) 
+                //);
             }
             /// <summary>
             /// Update job in UI

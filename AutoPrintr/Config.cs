@@ -24,6 +24,15 @@ namespace AutoPrintr
         /// </summary>
         public List<int> locations = new List<int>();
         /// <summary>
+        /// Selected locations
+        /// </summary>
+        public List<Location> availableLocations = new List<Location>();
+        /// <summary>
+        /// Registers list
+        /// </summary>
+        public List<LoginServer.Register> registers = new List<LoginServer.Register>();
+
+        /// <summary>
         /// Printers configurations
         /// </summary>
         public List<Printer> printers = new List<Printer>();
@@ -95,6 +104,8 @@ namespace AutoPrintr
                     login = config.login;
                     locations = config.locations;
                     printers = config.printers;
+                    availableLocations = config.availableLocations;
+                    registers = config.registers;
                 }
                 else
                 {

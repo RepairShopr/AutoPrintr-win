@@ -67,6 +67,14 @@ namespace AutoPrintr
 
         }
 
+
+        public void clear()
+        {
+            tableLayout.Controls.Clear();
+            tableLayout.RowStyles.Clear();
+            tableLayout.RowCount = 1;
+        }
+
         public CheckBoxList()
         {
             InitializeComponent();

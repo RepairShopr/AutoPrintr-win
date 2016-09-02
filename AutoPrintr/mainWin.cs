@@ -67,7 +67,7 @@ namespace AutoPrintr
             }
 
             this.Shown += mainWin_Shown;
-            
+
             WinAutoSize.apply(this, new Control[]{printersTable, jobsTable.table});
         }
 
@@ -99,7 +99,15 @@ namespace AutoPrintr
 
             log.Info("Skin initialization...");
             Skins.load();
+            
+            if (Program.config.locations != null)
+            {
+                updateLocations(Program.config.availableLocations);
+            }
+
             log.Info("Application started...");
+
+
         }
 
 
@@ -194,6 +202,16 @@ namespace AutoPrintr
                 printersTable.Controls.Add(new PrintEngineDD(p), column++, row);
             }
 
+            column = 0;
+            printersTable.RowCount++;
+            printersTable.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+            printersTable.Controls.Add(new tabelLabel("Register"), column++, ++row);
+            foreach (Printer p in Program.config.printers)
+            {
+                printersTable.Controls.Add(new RegisterDD(p, Program.config.registers), column++, row);
+            }
+
+            //
             // Adding rest columns and headers
             //int column = 1;
             //foreach (PrintType type in PrintTypes.list)
@@ -311,10 +329,14 @@ namespace AutoPrintr
             //Program.config.location = locationsList.SelectedItems.Cast<ListViewItem>(
                 //).Select( i => LoginServer.locations[i.Text] ).ToList();
 
-            Program.config.locations = 
+            Program.config.locations =
                 locationsList.Selected.Cast<CheckBoxListItem>().Select(
                     i => ((Location)i.userData).id
                 ).ToList();
+            //Program.config.locations =
+            //    locationsList.Selected.Cast<CheckBoxListItem>().Select(
+            //        i => (Location)i.userData
+            //    ).ToList();
             //Program.config.serverKey = pusherKey.Text;
             Program.config.save();
             configSaveStatus.Text = "config saved";
@@ -379,33 +401,19 @@ namespace AutoPrintr
             if (resp != null)
             {
                 statusLogin.Text = "logged in";
-                if (LoginServer.locationsArr != null)
+                if (LoginServer.locations != null)
                 {
-                    locationsList.Items.Clear();
-
-                    // Check for setting the default location
-                    bool checkForDedault = (LoginServer.defaultLocation != null) & (Program.config.locations.Count == 0);
-                    foreach (Location loc in LoginServer.locationsArr)
-                    {
-                        CheckBoxListItem item = locationsList.add(loc.name, loc);
-                        if (checkForDedault)
-                        {
-                            if (LoginServer.defaultLocation.id == loc.id)
-                            {
-                                item.Selected = true;
-                            }                                                   
-                        }
-                        foreach (int n in Program.config.locations)
-                        {
-                            if (n == loc.id) {
-                                item.Selected = true;
-                            }
-                        }
-                    }                
+                    updateLocations(LoginServer.locations, LoginServer.defaultLocation);
                 }
 
+                // Registers
+                foreach (LoginServer.Register r in LoginServer.registers)
+                {
+                    Program.config.registers.Add(r);
+                }
                 Program.config.login = login.Text;
                 Program.config.channel = LoginServer.channel;
+                Program.config.availableLocations = LoginServer.locations;
                 Program.config.save();
                 configSave.Enabled = false;
                 srvConnect(LoginServer.channel);
@@ -445,6 +453,32 @@ namespace AutoPrintr
             );
         }
 
+        void updateLocations(List<Location> locations, Location defaultLocation = null)
+        {
+            locationsList.clear();
+            //locationsList.Contr
+            // Check for setting the default location
+            //bool checkForDedault = (LoginServer.defaultLocation != null) & (Program.config.locations.Count == 0);
+            bool checkForDedault = (defaultLocation != null) & (Program.config.locations.Count == 0);
+            foreach (Location loc in locations)
+            {
+                CheckBoxListItem item = locationsList.add(loc.name, loc);
+                if (checkForDedault)
+                {
+                    if (defaultLocation.id == loc.id)
+                    {
+                        item.Selected = true;
+                    }
+                }
+                foreach (int id in Program.config.locations)
+                {
+                    if (id == loc.id) 
+                    {
+                        item.Selected = true;
+                    }
+                }
+            }      
+        }
         void logTabInit()
         {
             foreach (string logLevel in LogConfig.LogLevels)
