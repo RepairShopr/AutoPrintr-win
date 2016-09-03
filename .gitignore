@@ -4,6 +4,8 @@
 **config.json
 obj/
 AutoPrintr/Credentials.cs
+AutoPrintr.v12.suo
+AutoPrintr.suo
 
 # User-specific files
 *.suo
