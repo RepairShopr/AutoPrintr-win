@@ -19,7 +19,7 @@
     <UpdateAssemblyFileVersion>False</UpdateAssemblyFileVersion>
     <UpdateAssemblyInfoVersion>False</UpdateAssemblyInfoVersion>
     <AssemblyVersionSettings>None.None.Increment.None</AssemblyVersionSettings>
-    <AssemblyVersion>0.9.633.0</AssemblyVersion>
+    <AssemblyVersion>0.9.635.0</AssemblyVersion>
     <AssemblyFileVersionSettings>
     </AssemblyFileVersionSettings>
     <AssemblyInfoVersionSettings>
@@ -239,7 +239,7 @@
   <PropertyGroup>
     <PostBuildEvent>echo "Copying NLog.config"
 DEL NLog.config
-copy /B /Y "%25CD%25/../NLog.config" NLog.config
+copy /B /Y "$(ProjectDir)/NLog.config" NLog.config
 if $(ConfigurationName) EQU Release (
 "C:\Program Files (x86)\NSIS\makensis.exe" "$(SolutionDir)installer\AutoPrintr.nsi"
 "C:\Program Files\7-Zip\7z.exe" a -t7z "$(SolutionDir)installer\AutoPrintr.7z" "$(SolutionDir)installer\AutoPrintr.exe"
