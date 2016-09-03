@@ -59,6 +59,10 @@
             this.statusSeparator2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.configSaveStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.trayIcon = new System.Windows.Forms.NotifyIcon(this.components);
+            this.updateStatus = new System.Windows.Forms.ToolStripStatusLabel();
+            this.progressBar = new System.Windows.Forms.ToolStripProgressBar();
+            this.progressBarValue = new System.Windows.Forms.ToolStripStatusLabel();
+            this.statusSeparatorUpdate = new System.Windows.Forms.ToolStripStatusLabel();
             this.jobsTable = new AutoPrintr.JobsList();
             this.locationsList = new AutoPrintr.CheckBoxList();
             this.checkBoxList1 = new AutoPrintr.CheckBoxList();
@@ -226,7 +230,11 @@
             this.statusSeparator1,
             this.statusLogin,
             this.statusSeparator2,
-            this.configSaveStatus});
+            this.configSaveStatus,
+            this.statusSeparatorUpdate,
+            this.updateStatus,
+            this.progressBar,
+            this.progressBarValue});
             resources.ApplyResources(this.statusStrip, "statusStrip");
             this.statusStrip.Name = "statusStrip";
             // 
@@ -264,6 +272,27 @@
             // 
             this.trayIcon.BalloonTipIcon = System.Windows.Forms.ToolTipIcon.Info;
             resources.ApplyResources(this.trayIcon, "trayIcon");
+            // 
+            // updateStatus
+            // 
+            this.updateStatus.Name = "updateStatus";
+            resources.ApplyResources(this.updateStatus, "updateStatus");
+            // 
+            // progressBar
+            // 
+            this.progressBar.Name = "progressBar";
+            resources.ApplyResources(this.progressBar, "progressBar");
+            this.progressBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
+            // 
+            // progressBarValue
+            // 
+            this.progressBarValue.Name = "progressBarValue";
+            resources.ApplyResources(this.progressBarValue, "progressBarValue");
+            // 
+            // statusSeparatorUpdate
+            // 
+            this.statusSeparatorUpdate.Name = "statusSeparatorUpdate";
+            resources.ApplyResources(this.statusSeparatorUpdate, "statusSeparatorUpdate");
             // 
             // jobsTable
             // 
@@ -343,6 +372,10 @@
         private System.Windows.Forms.Label logLevelLabel;
         private System.Windows.Forms.ComboBox logLevelSelect;
         private System.Windows.Forms.NotifyIcon trayIcon;
+        private System.Windows.Forms.ToolStripStatusLabel updateStatus;
+        private System.Windows.Forms.ToolStripProgressBar progressBar;
+        private System.Windows.Forms.ToolStripStatusLabel progressBarValue;
+        private System.Windows.Forms.ToolStripStatusLabel statusSeparatorUpdate;
     }
 }
 

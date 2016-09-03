@@ -6,6 +6,7 @@
 ; there. 
 
 ;--------------------------------
+SetCompressor /FINAL lzma
 
 !include LogicLib.nsh
 Icon "..\resources\ico\48x48.ico"
@@ -36,6 +37,32 @@ LicenseData "..\LICENSE"
 
 ;--------------------------------
 
+; Function WriteToFile
+; Exch $0 ;file to write to
+; Exch
+; Exch $1 ;text to write
+ 
+;   FileOpen $0 $0 a #open file
+;   FileSeek $0 0 END #go to end
+;   FileWrite $0 $1 #write to file
+;   FileClose $0
+ 
+; Pop $1
+; Pop $0
+; FunctionEnd
+
+; Push `` ;text to write to file 
+; Push `version.txt` ;file to write to 
+; Call WriteToFile
+
+Function saveVersion
+    FileOpen $R0 "$EXEDIR\version.txt" w ;Opens a Empty File an fills it
+    FileWrite $R0 "${appv_1}.${appv_2}.${appv_3}.${appv_4}"
+    FileClose $R0 ;Closes the filled file
+FunctionEnd
+
+;--------------------------------
+
 ; Pages
 
 Page license
@@ -51,6 +78,7 @@ UninstPage instfiles
 ; The stuff to install
 Section "" ;No components page, name is not important
 
+    call saveVersion
     ; ExecWait 'Taskkill /F /IM AutoPrintr.exe'
     ; Sleep 1500
     ; Set output path to the installation directory.
