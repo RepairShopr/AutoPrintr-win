@@ -189,8 +189,6 @@ namespace AutoPrintr
                 this.file = file;
             }
         }
-
-
     }
 
 
@@ -367,14 +365,15 @@ namespace AutoPrintr
                     (autoprinted == true)
                 )
                 {
-                    cb(null);
+                    
                     Skipped(quantity());
+                    cb(null);
                 }
                 else
                 {
                     printer.print(localFilePath, fileName, document);
-                    cb(null);
                     Printed();
+                    cb(null);
                 }                
             }
             catch (Exception err)
@@ -491,8 +490,8 @@ namespace AutoPrintr
         /// </summary>
         public void Skipped(int count)
 	    {
-            //state = JobState.Ignored;
-            stateDetails = count.ToString();
+            state = JobState.Skipped;
+            //stateDetails = count.ToString();
 		    if( onChange != null ){
                 onChange(null, this);
 		    }
