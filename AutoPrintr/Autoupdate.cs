@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.IO.Compression;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -12,32 +13,54 @@ namespace AutoPrintr
     {
         private static NLog.Logger log = NLog.LogManager.GetCurrentClassLogger();
 
-        const string url = "https://api.github.com/repos/RepairShopr/AutoPrintr-win/releases";
-        public static string remotePath;
+        const string url = "https://api.github.com/repos/RepairShopr/AutoPrintr-win/releases/latest";
         public static string localPath;
+        public static GHRelease release;
+        public static GHRelease.Asset releaseFile = null;
 
-        public static EventHandler onAvailable;
-        public static EventHandler onDonwloaded;
+        public delegate void onAvailableHandler(object sender, UpdateEventArgs e);
+        public delegate void onDownloadedHandler(object sender, EventArgs e);
+        public delegate void onProgressHandler(object sender, DownloadProgressChangedEventArgs e);
 
-        static bool check()
+        public static event onAvailableHandler onAvailable;
+        public static event onDownloadedHandler onDownloaded;
+        public static event onProgressHandler onProgress;
+
+        public static void check()
         {
             string apiStringRes = tools.GET(url);
-            GHRelease[] apiResponse = JsonConvert.DeserializeObject<GHRelease[]>(
+            Autoupdate.release = JsonConvert.DeserializeObject<GHRelease>(
                 apiStringRes,
                 new JsonSerializerSettings
                 { // allow null values
                     NullValueHandling = NullValueHandling.Ignore
                 }
             );
-            //if (onAvailable != null)
-            //{
-            //    onAvailable(null, new EventArgs());
-            //}
-            return false;
+
+            releaseFile = release.assets.Find(
+                (file) => file.name == "AutoPrintr.zip"
+                //(file) => file.name == "AutoPrintr_595.zip"
+            );
+
+            if (releaseFile != null & release.name != System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString())
+            {
+                if (onAvailable != null)
+                {
+                    onAvailable(null, new UpdateEventArgs(Autoupdate.release));
+                }            
+            }
         }
 
-        static void download(){
-            Autoupdate.localPath = Path.Combine(Program.tempDir, "AutoPrintr_update.exe");
+        static public void install()
+        {
+            ZipFile.ExtractToDirectory(Autoupdate.localPath, Program.tempDir);
+            //AutoPrintr.exe
+            //System.IO.
+        }
+
+        static public void download()
+        {
+            Autoupdate.localPath = Path.Combine(Program.tempDir, "AutoPrintr_update.zip");
             using (WebClient wc = new WebClient())
             {
                 // Adding progress event handler
@@ -47,29 +70,57 @@ namespace AutoPrintr
                 {
                     if (e.Error != null)
                     {
-                        //cb(e.Error); ;
                         log.Error(e.Error, "Error while downloading update");
+                        //throw e.Error;
+                        //System.Windows.Forms.MessageBox.Show(releaseFile.browser_download_url + "\n" + e.Error.ToString());
                     }
                     else
                     {
-                        //cb(null);
-                        if (onDonwloaded != null)
+                        if (onDownloaded != null)
                         {
-                            onDonwloaded(null, new EventArgs());
+                            onDownloaded(null, new EventArgs());
                         }
                     }
                 };
                 // Start file donwload
-                wc.DownloadFileAsync(new Uri(url), remotePath);
+                wc.DownloadFileAsync(
+                    new Uri(releaseFile.browser_download_url), 
+                    Autoupdate.localPath
+                );
             }
         }
 
         static void wc_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
         {
-            //progress = e.ProgressPercentage;
-            //recived = e.TotalBytesToReceive;
+            if (onProgress != null)
+            {
+                onProgress(null, e);
+            }
         }
-        
+
+        public class ProgressEventArgs : EventArgs
+        {
+            public string Status { get; private set; }
+
+            public ProgressEventArgs(string status)
+            {
+                Status = status;
+            }
+        }
+
+        public class UpdateEventArgs : EventArgs
+        {
+            public GHRelease release { get; private set; }
+
+            public UpdateEventArgs(GHRelease release)
+            {
+                this.release = release;
+            }
+        }
+
+        /// <summary>
+        /// Github API releases response
+        /// </summary>
         [JsonObject(MemberSerialization.OptIn)]
         public class GHRelease
         {
