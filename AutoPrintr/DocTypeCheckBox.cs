@@ -6,7 +6,7 @@ namespace AutoPrintr
     /// <summary>
     /// Printer document type checkbox
     /// </summary>
-    public class pCheckBox : CheckBoxSlider
+    public class DocTypeCheckBox : CheckBoxSlider
     {
         private static NLog.Logger log = NLog.LogManager.GetCurrentClassLogger();
         /// <summary>
@@ -15,17 +15,17 @@ namespace AutoPrintr
         public DocType docType;
         public Printer printer;
 
-        public pCheckBox()
+        public DocTypeCheckBox()
         {
-            Margin = new Padding(5, 5, 5, 5);
-            Click += pCheckBox_Click;
+            Margin = new Padding(7);
+            //Click += DocTypeCheckBox_Click;
         }
 
         public void init(DocumentType type, Printer printer)
         {
             this.docType = type.type;
             this.printer = printer;
-            Checked = printer.get(docType);
+            Checked = printer.typeGet(docType);
             // Create the ToolTip and associate with the Form container.
             ToolTip tt = new ToolTip();
             // Set up the delays for the ToolTip.
@@ -37,36 +37,36 @@ namespace AutoPrintr
             SetToolTip(tt, type.title);
         }
 
-        public pCheckBox(DocumentType type, Printer printer) : this()
+        public DocTypeCheckBox(DocumentType type, Printer printer) : this()
         {
             init(type, printer);
         }
 
-        /// <summary>
-        /// Checkbox change event handler
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        void pCheckBox_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                printer.set(docType, Checked);
-            }
-            catch (Exception err)
-            {
-                log.Error(err, "Error while saving printers config.");
-            }
-        }
+        ///// <summary>
+        ///// Checkbox change event handler
+        ///// </summary>
+        ///// <param name="sender"></param>
+        ///// <param name="e"></param>
+        //void DocTypeCheckBox_Click(object sender, EventArgs e)
+        //{
+        //    try
+        //    {
+        //        printer.typeSet(docType, Checked);
+        //    }
+        //    catch (Exception err)
+        //    {
+        //        log.Error(err, "Error while saving printers config.");
+        //    }
+        //}
 
         private void InitializeComponent()
         {
             this.SuspendLayout();
             // 
-            // pCheckBox
+            // DocTypeCheckBox
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.Name = "pCheckBox";
+            this.Name = "DocTypeCheckBox";
             this.Size = new System.Drawing.Size(56, 18);
             this.ResumeLayout(false);
         }

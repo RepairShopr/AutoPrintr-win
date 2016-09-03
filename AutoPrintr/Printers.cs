@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+using System.Diagnostics;
 using Newtonsoft.Json;
-using System.Windows.Forms;
+using Microsoft.Win32;
+//using System.Linq;
+//using System.Text;
 
 namespace AutoPrintr
 {
@@ -12,60 +13,15 @@ namespace AutoPrintr
     /// </summary>
     static class Printers
     {
-        ///// <summary>
-        ///// List of printers with properties. Each printer automatically save changed property.
-        ///// </summary>
-        //public static List<Printer> list = Program.config.printers;
-
-        ///// <summary>
-        ///// Printers config file path or name.
-        ///// </summary>
-        //public static string config = "printers.json";
-
-        ///// <summary>
-        ///// Load printers from file.
-        ///// </summary>
-        ///// <returns>Printer[]</returns>
-        //private static Printer[] load()
-        //{
-        //    Printer[] arr = null;
-        //    if (File.Exists(config))
-        //    {
-        //        //try 
-        //        //{	        
-        //        arr = JsonConvert.DeserializeObject<Printer[]>(File.ReadAllText( config ));
-        //        //}
-        //        //catch (Exception e)
-        //        //{
-        //        //    throw e;
-        //        //}    
-        //    }
-        //    if (arr == null)
-        //    {
-        //        arr = new Printer[0];
-        //    }
-        //    return arr;
-        //}
-
-        ///// <summary>
-        ///// Save printers to config file.
-        ///// </summary>
-        //public static void save() 
-        //{
-        //    File.WriteAllText(config, JsonConvert.SerializeObject(Printers.list));
-        //}
+        private static NLog.Logger log = NLog.LogManager.GetCurrentClassLogger();
 
         /// <summary>
-        /// Find existing system printers; load printers grom file; merge 2 lists.
+        /// Find existing system printers and merge it with saved in config printers list
         /// </summary>
         /// <returns></returns>
         public static List<Printer> get()
         {
             List<Printer> pList = new List<Printer>();
-
-            // Loading printers config
-            //Printer[] savedPrinters = load();
-
             // Getting available printers
             bool notLoaded;
             foreach (string printerName in System.Drawing.Printing.PrinterSettings.InstalledPrinters)
@@ -78,7 +34,7 @@ namespace AutoPrintr
                     {
                         pList.Add(printer);
                         notLoaded = false;
-                        break;
+                        break; // Hmm... Looks like here something wrong... What you think?
                     }
                 }
                 
@@ -87,64 +43,61 @@ namespace AutoPrintr
                     pList.Add(new Printer(printerName));
                 }
             }
-            //list = pList;
-            //save();
+            // Sorted text list are alsways betterm then unsorted
             pList.Sort((a, b) => a.name.CompareTo(b.name));
+            // Saving printers to config
             Program.config.printers = pList;            
             Program.config.save();
             return pList;
         }
 
+        /// <summary>
+        /// Intialization of printers static class
+        /// </summary>
         public static void init()
         {
-            PrintTypes.list = new List<PrintType>() { 
-                //new PrintType( PType.tickets, "Tickets" ),
-                //new PrintType( PType.tickets_receipt, "Tickets Receipt" ),
-                //new PrintType( PType.intake_forms, "Intake Forms" ),
-                //new PrintType( PType.invoices, "Invoices" ),
-                //new PrintType( PType.receipt, "Receipt" ),
-                //new PrintType( PType.customer_labels, "Customer Labels" ),
-                //new PrintType( PType.asset_labels, "Asset Labels" ),
-                //new PrintType( PType.ticket_labels, "Ticket Labels" )
-                new PrintType( PType.Invoice, "Invoice" ),
-                new PrintType( PType.Estimate, "Estimate" ),
-                new PrintType( PType.Ticket, "Ticket" ),
-                new PrintType( PType.IntakeForm, "Intake Form" ),
-                new PrintType( PType.Receipt, "Receipt" ),
-                new PrintType( PType.ZReport, "Z Report" ),
-                new PrintType( PType.TicketReceipt, "Ticket Receipt" ),
-                new PrintType( PType.PopDrawer, "Pop Drawer" ),
-                new PrintType( PType.Adjustment, "Adjustment" ),
-                new PrintType( PType.CustomerID, "Customer ID" ),
-                new PrintType( PType.Asset, "Asset" ),
-                new PrintType( PType.TicketLabel, "Ticket Label" )
-            };
-            //PrintTypes.list = (List<PrintType>)PrintTypes.list.OrderBy(item => item.name);
-            PrintTypes.list.Sort( (a, b) => a.name.CompareTo(b.name) );
+            DocumentTypes.init();
         }
 
-        public static List<string> getPrinters(string type, int location)
+        /// <summary>
+        /// Find printers for this types and location
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="location"></param>
+        /// <returns></returns>
+        public static List<Printer> findPrinters(string type, int location, int register)
         {
-            List<string> l = new List<string>();
-            PrintType t = PrintTypes.ToPrintType(type);
-            //MessageBox.Show(
-            //    type + " / " + location + "\n\n" +
-            //    Program.config.location.Contains(location).ToString()
-            //);
+            log.Info("    Searching printers for document type '{0}', location '{1}', register '{2}'", type, location, register);
+            List<Printer> l = new List<Printer>();
+            DocumentType t = DocumentTypes.ToDocumentType(type);
             if( t == null){ return l; }
 
-
-            if (Program.config.location.Count > 0) // Check for empty locations array
+            // Check for empty locations array and empty location (0)
+            if (Program.config.locations.Count > 0 & location != 0) 
             {
-                if ( !Program.config.location.Contains(location) ) { return l; } // If location not in array - return empty list
+                // If location not in array - return empty list
+                if (!Program.config.locations.Contains(location)) {
+                    log.Info("    Printers for location '{0}' not founded", location);
+                    return l; 
+                } 
             }
             
-            // Search printer byt type
+            // Search printer by type
+            log.Info("    Searching printer by document type '{0}'", t.name);
             foreach (Printer printer in Program.config.printers)
             {
-                if (printer.get(t.type))
+                if (printer.typeGet(t.type))
                 {
-                    l.Add(printer.name);
+                    if (printer.register == 0)
+                    {
+                        log.Info("        Printer selected '{0}' - printer register is 'None' ", printer.name);
+                        l.Add(printer);
+                    }
+                    else if (printer.register == register)
+                    {
+                        log.Info("        Printer selected '{0}' - printer register is '{0}' ", register);
+                        l.Add(printer);
+                    }                    
                 }
             }
             return l;
@@ -152,19 +105,10 @@ namespace AutoPrintr
     }
 
     /// <summary>
-    /// Printing types
+    /// Document types id list
     /// </summary>
-    public enum PType : byte
-    {
-        //tickets,
-        //tickets_receipt,
-        //intake_forms,
-        //invoices,
-        //receipt,
-        //customer_labels,
-        //asset_labels,
-        //ticket_labels
-
+    public enum DocType : byte
+    { 
         Invoice,
         Estimate,
         Ticket,
@@ -177,32 +121,32 @@ namespace AutoPrintr
         CustomerID,
         Asset,
         TicketLabel
-    }
+    };
 
-
-    public static class PrintTypes
+    /// <summary>
+    /// Document types manager
+    /// </summary>
+    public static class DocumentTypes
     {
-        public static List<PrintType> list;
-
-        public static string title(PType type)
+        private static NLog.Logger log = NLog.LogManager.GetCurrentClassLogger();
+        /// <summary>
+        /// Available document types
+        /// </summary>
+        public static List<DocumentType> list;
+        
+        /// <summary>
+        /// Get DocumentType object from string
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static DocumentType ToDocumentType(string str)
         {
-            PrintType t = list.Find(x => x.type == type);
+            DocumentType t = list.Find(x => x.name == str);
             if (t == null)
             {
-                throw new Exception("Can't find PType '" + type.ToString() + "' in PrintTypes.list");
-            }
-            else
-            {
-                return t.title;
-            }
-        }
-
-        public static PrintType ToPrintType(string str)
-        {
-            PrintType t = list.Find(x => x.name == str);
-            if (t == null)
-            {
-                throw new Exception("Can't find PType string '" + str + "' in PrintTypes.list");
+                //throw new Exception("Can't find PType string '" + str + "' in PrintTypes.list");
+                log.Error("Can't find DocumentType string '" + str + "' in DocumentTypes.list");
+                return null;
             }
             else
             {
@@ -210,84 +154,185 @@ namespace AutoPrintr
             }
         }
 
-    }    
+        /// <summary>
+        /// Convert document type string to human readable string
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static string toTitle(string str)
+        {
+            DocumentType t = DocumentTypes.ToDocumentType(str);
+            if( t != null ){
+                return t.title;
+            } else {
+                return "null";
+            }            
+        }
 
-    public class PrintType
+        /// <summary>
+        /// Initialization method
+        /// </summary>
+        public static void init()
+        {
+            DocumentTypes.list = new List<DocumentType>() {
+                new DocumentType( DocType.Invoice, "Invoice" ),
+                new DocumentType( DocType.Estimate, "Estimate" ),
+                new DocumentType( DocType.Ticket, "Ticket" ),
+                new DocumentType( DocType.IntakeForm, "Intake Form" ),
+                new DocumentType( DocType.Receipt, "Receipt" ),
+                new DocumentType( DocType.ZReport, "Z Report" ),
+                new DocumentType( DocType.TicketReceipt, "Ticket Receipt" ),
+                new DocumentType( DocType.PopDrawer, "Pop Drawer" ),
+                new DocumentType( DocType.Adjustment, "Adjustment" ),
+                new DocumentType( DocType.CustomerID, "Customer ID" ),
+                new DocumentType( DocType.Asset, "Asset" ),
+                new DocumentType( DocType.TicketLabel, "Ticket Label" )
+            };
+            DocumentTypes.list.Sort((a, b) => a.name.CompareTo(b.name));
+        }
+    }
+
+    /// <summary>
+    /// Document type class
+    /// </summary>
+    public class DocumentType
     {
-        public readonly PType type;
+        /// <summary>
+        /// Document type ID
+        /// </summary>
+        public readonly DocType type;
+        /// <summary>
+        /// Document type name (string)
+        /// </summary>
         public readonly string name;
+        /// <summary>
+        /// Document type human redeable string
+        /// </summary>
         public readonly string title;
-
+        /// <summary>
+        /// Convert to string
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             return name;
         }
-
-        public PrintType(PType type, string title)
+        /// <summary>
+        /// DocumentType constructor
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="title"></param>
+        public DocumentType(DocType type, string title)
         {
             this.type = type;
             this.name = type.ToString();
             this.title = title;
-            //PrintTypes.list.Add(this);
         }
     }
 
-
-    //public class PrinterProps
-    //{
-    //    public string name;
-    //    public bool[] types;
-    //}
-
+    [JsonObject(MemberSerialization.OptIn)]
     /// <summary>
-    /// Printer class. Automatically save changed property.
+    /// Printer class. Automatically save changed properties.
     /// </summary>
     public class Printer
     {
+        [JsonProperty]
         public readonly string name;
-        public List<PType>types = new List<PType>();
+        [JsonProperty]
+        public Dictionary<string, int> quantity = new Dictionary<string, int>() { };
+        [JsonProperty,JsonConverter(typeof(PrintEngines.Converter))]
+        public PrintEngine printEngine = PrintEngines.SumatraPDF;
+        [JsonProperty]
+        public List<DocType> types = new List<DocType>();
+        [JsonProperty]
+        public List<DocType> triggers = new List<DocType>();
+        [JsonProperty]
+        public int register = 0;
 
         /// <summary>
-        /// Set printing type value
+        /// Set printing type state
         /// </summary>
-        /// <param name="printingType">Printing type</param>
+        /// <param name="type">Document type</param>
         /// <param name="val">Value</param>
-        public void set(PType printingType, bool val)
+        public void typeSet(DocType type, bool val)
         {
-            //types[(int)printingType] = val;
-            bool exists = types.Exists(v => v == printingType);
+            bool exists = types.Exists(v => v == type);
             if (val & !exists)
             {
-                types.Add(printingType);
+                types.Add(type);
             }
             else if (!val & exists)
             {
-                types.Remove(printingType);
+                types.Remove(type);
             }
-            //Printers.save();
+            Program.config.save();
+        }
+
+
+        /// <summary>
+        /// Set trigger type state
+        /// </summary>
+        /// <param name="type">Document type</param>
+        /// <param name="val">Value</param>
+        public void triggerSet(DocType type, bool val)
+        {
+            bool exists = triggers.Exists(v => v == type);
+            if (val & !exists)
+            {
+                triggers.Add(type);
+            }
+            else if (!val & exists)
+            {
+                triggers.Remove(type);
+            }
             Program.config.save();
         }
 
         /// <summary>
-        /// Get printing type value
+        /// Get printing type state
         /// </summary>
-        /// <param name="printingType"></param>
+        /// <param name="type"></param>
         /// <returns>value</returns>
-        public bool get(PType printingType)
+        public bool typeGet(DocType type)
         {
             //return types[(int)printingType];
-            return types.Exists(v => v == printingType);
+            return types.Exists(v => v == type);
+        }
+
+        /// <summary>
+        /// Get trigger state
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns>value</returns>
+        public bool triggerGet(DocType type)
+        {
+            //return types[(int)printingType];
+            return triggers.Exists(v => v == type);
         }
 
 
         /// <summary>
-        /// Create new printer.
+        /// Print file
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <param name="documentName"></param>
+        public void print(string filePath, string documentName, string type)
+        {
+            int cnt = quantity[type];
+            while (cnt-- > 0)
+            {
+                printEngine.print(name, filePath, documentName);
+            }
+        }
+
+        /// <summary>
+        /// Create new printer
         /// </summary>
         /// <param name="name">Name</param>
         /// <param name="types">Types states</param>
         /// <param name="r">Receipt sate</param>
         /// <param name="l">Label sate</param>
-        public Printer(string name, List<PType> types = null)
+        public Printer(string name, List<DocType> types = null) : this()
         {
             this.name = name;
             if (types != null)
@@ -296,60 +341,21 @@ namespace AutoPrintr
             }
         }
 
-        //public override bool Equals(System.Object obj)
-        //{
-        //    // If parameter is null return false.
-        //    if (obj == null)
-        //    {
-        //        return false;
-        //    }
-        //    MessageBox.Show(obj.ToString());
-        //    // If parameter cannot be cast to type return false.
-        //    Printer p = (Printer)obj;
-        //    if ((System.Object)p == null)
-        //    {
-        //        return false;
-        //    }
-
-        //    return name == p.name;
-        //}
-
-        //public bool Equals(Printer p)
-        //{
-        //    // If parameter is null return false:
-        //    if ((object)p == null)
-        //    {
-        //        return false;
-        //    }
-
-        //    // Return true if the fields match:
-        //    return  name == p.name;
-        //}
-
-        //public static bool operator == (Printer p1, Printer p2) {
-        //    return p1.Equals(p2);
-        //}
-
-        //public static bool operator != (Printer p1, Printer p2) {
-        //    return !p1.Equals(p2);
-        //}
-
-        //public override int GetHashCode()
-        //{
-        //    return name.GetHashCode();
-        //}
-
-        ///// <summary>
-        ///// Debug function
-        ///// </summary>
-        ///// <returns></returns>
-        //public override string ToString()
-        //{
-        //    return
-        //        name + ": Fullsize = " + _fullsize +
-        //        " / Receipt = " + _receipt +
-        //        " / Label = " + _label;
-        //}
+        public Printer()
+        {
+            foreach (DocumentType t in DocumentTypes.list)
+            {
+                quantity.Add(t.name, 0);
+            }
+        }
+        /// <summary>
+        /// Printer to string
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return name;
+        }
     }
 
 
