@@ -159,7 +159,7 @@ namespace AutoPrintr
             string url = "https://" + domain + "." + host + "/api/v1/settings/printing?api_key=" + xt;
             string response = "";
             SettingsResponse settings;
-            response = GET(url);
+            response = tools.GET(url);
             settings = JsonConvert.DeserializeObject<SettingsResponse>(
                 response, 
                 new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore}
@@ -239,21 +239,7 @@ namespace AutoPrintr
         //    }
         //  ]
         //}
-        /// <summary>
-        /// Get request to url
-        /// </summary>
-        /// <param name="Url"></param>
-        /// <returns></returns>
-        public static string GET(string Url)
-        {
-            WebRequest req = WebRequest.Create(Url);
-            WebResponse resp = req.GetResponse();
-            Stream stream = resp.GetResponseStream();
-            StreamReader sr = new StreamReader(stream);
-            string Out = sr.ReadToEnd();
-            sr.Close();
-            return Out;
-        }
+
     }
 
 }

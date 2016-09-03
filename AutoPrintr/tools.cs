@@ -5,6 +5,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Drawing;
+using System.Net;
+
 
 namespace AutoPrintr
 {
@@ -110,6 +112,22 @@ namespace AutoPrintr
                 log.Error(err, "Error while removing files from directory '" + path + "'");
             }
             
+        }
+
+        /// <summary>
+        /// Get request to url
+        /// </summary>
+        /// <param name="Url"></param>
+        /// <returns></returns>
+        public static string GET(string Url)
+        {
+            WebRequest req = WebRequest.Create(Url);
+            WebResponse resp = req.GetResponse();
+            Stream stream = resp.GetResponseStream();
+            StreamReader sr = new StreamReader(stream);
+            string Out = sr.ReadToEnd();
+            sr.Close();
+            return Out;
         }
 
         ///// <summary>

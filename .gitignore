@@ -6,6 +6,7 @@ obj/
 AutoPrintr/Credentials.cs
 AutoPrintr.v12.suo
 AutoPrintr.suo
+installer/AutoPrintr.exe
 
 # User-specific files
 *.suo

@@ -64,6 +64,7 @@ namespace AutoPrintr
         /// </summary>
         /// <param name="type"></param>
         /// <param name="location"></param>
+        /// <param name="register"></param>
         /// <returns></returns>
         public static List<Printer> findPrinters(string type, int location, int register)
         {
@@ -77,7 +78,7 @@ namespace AutoPrintr
             {
                 // If location not in array - return empty list
                 if (!Program.config.locations.Contains(location)) {
-                    log.Info("    Printers for location '{0}' not founded", location);
+                    log.Info("    Printers for location '{0}' not found", location);
                     return l; 
                 } 
             }
