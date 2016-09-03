@@ -28,25 +28,29 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(mainWin));
             this.tabs = new System.Windows.Forms.TabControl();
+            this.jobsTab = new System.Windows.Forms.TabPage();
             this.printersTab = new System.Windows.Forms.TabPage();
             this.printersTable = new System.Windows.Forms.TableLayoutPanel();
-            this.settingsTab = new System.Windows.Forms.TabPage();
-            this.saveConfig = new System.Windows.Forms.Button();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.locationsList = new AutoPrintr.CheckBoxList();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.loginTab = new System.Windows.Forms.TabPage();
+            this.configSave = new System.Windows.Forms.Button();
+            this.locationGroupBox = new System.Windows.Forms.GroupBox();
+            this.loginGroupBox = new System.Windows.Forms.GroupBox();
             this.loginLabel = new System.Windows.Forms.Label();
             this.submit = new System.Windows.Forms.Button();
             this.login = new System.Windows.Forms.TextBox();
             this.passwordLabel = new System.Windows.Forms.Label();
             this.password = new System.Windows.Forms.MaskedTextBox();
+            this.logTab = new System.Windows.Forms.TabPage();
+            this.logLevelLabel = new System.Windows.Forms.Label();
+            this.logLevelSelect = new System.Windows.Forms.ComboBox();
+            this.logTextBox = new System.Windows.Forms.RichTextBox();
             this.aboutTab = new System.Windows.Forms.TabPage();
-            this.button1 = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.licenseText = new System.Windows.Forms.RichTextBox();
+            this.helpButton = new System.Windows.Forms.Button();
+            this.versionLabel = new System.Windows.Forms.Label();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusServer = new System.Windows.Forms.ToolStripStatusLabel();
@@ -54,25 +58,38 @@
             this.statusLogin = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusSeparator2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.configSaveStatus = new System.Windows.Forms.ToolStripStatusLabel();
+            this.trayIcon = new System.Windows.Forms.NotifyIcon(this.components);
+            this.jobsTable = new AutoPrintr.JobsList();
+            this.locationsList = new AutoPrintr.CheckBoxList();
             this.checkBoxList1 = new AutoPrintr.CheckBoxList();
             this.tabs.SuspendLayout();
+            this.jobsTab.SuspendLayout();
             this.printersTab.SuspendLayout();
-            this.settingsTab.SuspendLayout();
-            this.groupBox3.SuspendLayout();
-            this.groupBox1.SuspendLayout();
+            this.loginTab.SuspendLayout();
+            this.locationGroupBox.SuspendLayout();
+            this.loginGroupBox.SuspendLayout();
+            this.logTab.SuspendLayout();
             this.aboutTab.SuspendLayout();
-            this.groupBox4.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabs
             // 
             resources.ApplyResources(this.tabs, "tabs");
+            this.tabs.Controls.Add(this.jobsTab);
             this.tabs.Controls.Add(this.printersTab);
-            this.tabs.Controls.Add(this.settingsTab);
+            this.tabs.Controls.Add(this.loginTab);
+            this.tabs.Controls.Add(this.logTab);
             this.tabs.Controls.Add(this.aboutTab);
             this.tabs.Name = "tabs";
             this.tabs.SelectedIndex = 0;
+            // 
+            // jobsTab
+            // 
+            resources.ApplyResources(this.jobsTab, "jobsTab");
+            this.jobsTab.Controls.Add(this.jobsTable);
+            this.jobsTab.Name = "jobsTab";
+            this.jobsTab.UseVisualStyleBackColor = true;
             // 
             // printersTab
             // 
@@ -86,43 +103,38 @@
             resources.ApplyResources(this.printersTable, "printersTable");
             this.printersTable.Name = "printersTable";
             // 
-            // settingsTab
+            // loginTab
             // 
-            this.settingsTab.Controls.Add(this.saveConfig);
-            this.settingsTab.Controls.Add(this.groupBox3);
-            this.settingsTab.Controls.Add(this.groupBox1);
-            resources.ApplyResources(this.settingsTab, "settingsTab");
-            this.settingsTab.Name = "settingsTab";
-            this.settingsTab.UseVisualStyleBackColor = true;
+            this.loginTab.Controls.Add(this.configSave);
+            this.loginTab.Controls.Add(this.locationGroupBox);
+            this.loginTab.Controls.Add(this.loginGroupBox);
+            resources.ApplyResources(this.loginTab, "loginTab");
+            this.loginTab.Name = "loginTab";
+            this.loginTab.UseVisualStyleBackColor = true;
             // 
-            // saveConfig
+            // configSave
             // 
-            resources.ApplyResources(this.saveConfig, "saveConfig");
-            this.saveConfig.Name = "saveConfig";
-            this.saveConfig.UseVisualStyleBackColor = true;
+            resources.ApplyResources(this.configSave, "configSave");
+            this.configSave.Name = "configSave";
+            this.configSave.UseVisualStyleBackColor = true;
             // 
-            // groupBox3
+            // locationGroupBox
             // 
-            this.groupBox3.Controls.Add(this.locationsList);
-            resources.ApplyResources(this.groupBox3, "groupBox3");
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.TabStop = false;
+            this.locationGroupBox.Controls.Add(this.locationsList);
+            resources.ApplyResources(this.locationGroupBox, "locationGroupBox");
+            this.locationGroupBox.Name = "locationGroupBox";
+            this.locationGroupBox.TabStop = false;
             // 
-            // locationsList
+            // loginGroupBox
             // 
-            resources.ApplyResources(this.locationsList, "locationsList");
-            this.locationsList.Name = "locationsList";
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.loginLabel);
-            this.groupBox1.Controls.Add(this.submit);
-            this.groupBox1.Controls.Add(this.login);
-            this.groupBox1.Controls.Add(this.passwordLabel);
-            this.groupBox1.Controls.Add(this.password);
-            resources.ApplyResources(this.groupBox1, "groupBox1");
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.TabStop = false;
+            this.loginGroupBox.Controls.Add(this.loginLabel);
+            this.loginGroupBox.Controls.Add(this.submit);
+            this.loginGroupBox.Controls.Add(this.login);
+            this.loginGroupBox.Controls.Add(this.passwordLabel);
+            this.loginGroupBox.Controls.Add(this.password);
+            resources.ApplyResources(this.loginGroupBox, "loginGroupBox");
+            this.loginGroupBox.Name = "loginGroupBox";
+            this.loginGroupBox.TabStop = false;
             // 
             // loginLabel
             // 
@@ -152,38 +164,59 @@
             this.password.Name = "password";
             this.password.UseSystemPasswordChar = true;
             // 
+            // logTab
+            // 
+            resources.ApplyResources(this.logTab, "logTab");
+            this.logTab.Controls.Add(this.logLevelLabel);
+            this.logTab.Controls.Add(this.logLevelSelect);
+            this.logTab.Controls.Add(this.logTextBox);
+            this.logTab.Name = "logTab";
+            this.logTab.UseVisualStyleBackColor = true;
+            // 
+            // logLevelLabel
+            // 
+            resources.ApplyResources(this.logLevelLabel, "logLevelLabel");
+            this.logLevelLabel.Name = "logLevelLabel";
+            // 
+            // logLevelSelect
+            // 
+            this.logLevelSelect.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.logLevelSelect.FormattingEnabled = true;
+            resources.ApplyResources(this.logLevelSelect, "logLevelSelect");
+            this.logLevelSelect.Name = "logLevelSelect";
+            // 
+            // logTextBox
+            // 
+            resources.ApplyResources(this.logTextBox, "logTextBox");
+            this.logTextBox.Name = "logTextBox";
+            this.logTextBox.ReadOnly = true;
+            // 
             // aboutTab
             // 
-            this.aboutTab.Controls.Add(this.button1);
-            this.aboutTab.Controls.Add(this.label1);
-            this.aboutTab.Controls.Add(this.groupBox4);
+            this.aboutTab.BackColor = System.Drawing.Color.Transparent;
+            this.aboutTab.Controls.Add(this.licenseText);
+            this.aboutTab.Controls.Add(this.helpButton);
+            this.aboutTab.Controls.Add(this.versionLabel);
             resources.ApplyResources(this.aboutTab, "aboutTab");
             this.aboutTab.Name = "aboutTab";
-            this.aboutTab.UseVisualStyleBackColor = true;
-            // 
-            // button1
-            // 
-            resources.ApplyResources(this.button1, "button1");
-            this.button1.Name = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            // 
-            // label1
-            // 
-            resources.ApplyResources(this.label1, "label1");
-            this.label1.Name = "label1";
-            // 
-            // groupBox4
-            // 
-            this.groupBox4.Controls.Add(this.licenseText);
-            resources.ApplyResources(this.groupBox4, "groupBox4");
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.TabStop = false;
             // 
             // licenseText
             // 
             resources.ApplyResources(this.licenseText, "licenseText");
             this.licenseText.Name = "licenseText";
             this.licenseText.ReadOnly = true;
+            // 
+            // helpButton
+            // 
+            resources.ApplyResources(this.helpButton, "helpButton");
+            this.helpButton.Name = "helpButton";
+            this.helpButton.UseVisualStyleBackColor = true;
+            this.helpButton.Click += new System.EventHandler(this.helpButton_Click);
+            // 
+            // versionLabel
+            // 
+            resources.ApplyResources(this.versionLabel, "versionLabel");
+            this.versionLabel.Name = "versionLabel";
             // 
             // statusStrip
             // 
@@ -196,7 +229,6 @@
             this.configSaveStatus});
             resources.ApplyResources(this.statusStrip, "statusStrip");
             this.statusStrip.Name = "statusStrip";
-            this.statusStrip.SizingGrip = false;
             // 
             // statusLabel
             // 
@@ -228,6 +260,22 @@
             this.configSaveStatus.Name = "configSaveStatus";
             resources.ApplyResources(this.configSaveStatus, "configSaveStatus");
             // 
+            // trayIcon
+            // 
+            this.trayIcon.BalloonTipIcon = System.Windows.Forms.ToolTipIcon.Info;
+            resources.ApplyResources(this.trayIcon, "trayIcon");
+            // 
+            // jobsTable
+            // 
+            resources.ApplyResources(this.jobsTable, "jobsTable");
+            this.jobsTable.BackColor = System.Drawing.Color.Transparent;
+            this.jobsTable.Name = "jobsTable";
+            // 
+            // locationsList
+            // 
+            resources.ApplyResources(this.locationsList, "locationsList");
+            this.locationsList.Name = "locationsList";
+            // 
             // checkBoxList1
             // 
             resources.ApplyResources(this.checkBoxList1, "checkBoxList1");
@@ -237,19 +285,23 @@
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.Control;
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.tabs);
             this.Name = "mainWin";
             this.tabs.ResumeLayout(false);
+            this.jobsTab.ResumeLayout(false);
+            this.jobsTab.PerformLayout();
             this.printersTab.ResumeLayout(false);
             this.printersTab.PerformLayout();
-            this.settingsTab.ResumeLayout(false);
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.loginTab.ResumeLayout(false);
+            this.locationGroupBox.ResumeLayout(false);
+            this.loginGroupBox.ResumeLayout(false);
+            this.loginGroupBox.PerformLayout();
+            this.logTab.ResumeLayout(false);
+            this.logTab.PerformLayout();
             this.aboutTab.ResumeLayout(false);
             this.aboutTab.PerformLayout();
-            this.groupBox4.ResumeLayout(false);
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
             this.ResumeLayout(false);
@@ -260,31 +312,37 @@
         #endregion
 
         private System.Windows.Forms.TabControl tabs;
-        private System.Windows.Forms.TabPage settingsTab;
+        private System.Windows.Forms.TabPage loginTab;
         private System.Windows.Forms.Label loginLabel;
         private System.Windows.Forms.MaskedTextBox password;
         private System.Windows.Forms.Label passwordLabel;
         private System.Windows.Forms.TextBox login;
         private System.Windows.Forms.Button submit;
         private System.Windows.Forms.TabPage printersTab;
-        private System.Windows.Forms.TableLayoutPanel printersTable;
         private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.ToolStripStatusLabel statusLabel;
         private System.Windows.Forms.ToolStripStatusLabel statusServer;
         private System.Windows.Forms.ToolStripStatusLabel statusLogin;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox loginGroupBox;
         private System.Windows.Forms.ToolStripStatusLabel statusSeparator1;
-        private System.Windows.Forms.Button saveConfig;
+        private System.Windows.Forms.Button configSave;
         private System.Windows.Forms.ToolStripStatusLabel statusSeparator2;
         private System.Windows.Forms.ToolStripStatusLabel configSaveStatus;
-        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.GroupBox locationGroupBox;
         private CheckBoxList checkBoxList1;
         private CheckBoxList locationsList;
         private System.Windows.Forms.TabPage aboutTab;
-        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.Label versionLabel;
+        private System.Windows.Forms.Button helpButton;
+        private System.Windows.Forms.TabPage jobsTab;
+        private System.Windows.Forms.TabPage logTab;
+        private JobsList jobsTable;
+        private System.Windows.Forms.RichTextBox logTextBox;
+        private System.Windows.Forms.TableLayoutPanel printersTable;
         private System.Windows.Forms.RichTextBox licenseText;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label logLevelLabel;
+        private System.Windows.Forms.ComboBox logLevelSelect;
+        private System.Windows.Forms.NotifyIcon trayIcon;
     }
 }
 

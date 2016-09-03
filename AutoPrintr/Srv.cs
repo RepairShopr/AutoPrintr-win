@@ -1,100 +1,96 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web;
-using System.Net;
 using PusherClient;
-using System.Windows.Forms;
 
 namespace AutoPrintr
 {
-    static class Srv
+    /// <summary>
+    /// Server with API for requesting new print jobs
+    /// </summary>
+    static class JobsServer
     {
+        /// <summary>
+        /// List of channels
+        /// </summary>
         public static List<Channel> channels = new List<Channel>();
+        /// <summary>
+        /// Pusher current connection state
+        /// </summary>
         public static ConnectionState state = ConnectionState.Disconnected;
+        /// <summary>
+        /// Pusher instance
+        /// </summary>
         private static Pusher pusher = null;
 
+        /// <summary>
+        /// Connect to jobs server
+        /// </summary>
+        /// <param name="listeners"></param>
+        /// <param name="onError"></param>
+        /// <param name="onStateChanged"></param>
         public static void connect(
             List<Listener> listeners,
             Action<PusherException> onError,
             Action<String> onStateChanged
         ){
-            //if (Srv.state == ConnectionState.Connected)
+            // Disconnect pusher, if it already connected
             if (pusher != null)
             {
                 pusher.Disconnect();
                 pusher = null;
             }
-
-            //string xt = WinPrintr.Properties.Settings.Default.PucherKey;
-            string xt = Program.config.serverKey;
-            if(xt == null){
-                onError(new PusherException("Pusher key is empty.", ErrorCodes.Unkown));
-                return;
-            }
-
-            pusher = new Pusher(xt, new PusherOptions());
+            // Create new pusher instanc
+            pusher = new Pusher(Credentials.SrvXT, new PusherOptions());
+            // Set pusher connection changed event handler
             pusher.ConnectionStateChanged += (object sender, ConnectionState state) =>
             {
-                Srv.state = state;
+                JobsServer.state = state;
                 onStateChanged(state.ToString());
             };
-
+            // Set error event handler
             pusher.Error += (object sender, PusherException error) => onError(error);
 
+            // Subscribe listeners to they channels
             Channel c;
             foreach(Listener l in listeners)
             {
                 c = pusher.Subscribe(l.channel);
-                c.Bind(l.ev, l.action);
+                c.Bind(l.evt, l.onMessage);
                 channels.Add(c);
             }
-
-            //// Setup private channel
-            //Channel c1 = pusher.Subscribe(ch);
-            //c1.Subscribed += (object sender) => cb();
-            
-            //// Inline binding!
-            //c1.Bind(ev, (dynamic data) =>
-            //{
-            //    //MessageBox.Show("[" + data.name + "] " + data.message);
-            //});
-
+            // Connect to pusher
             pusher.Connect();
-        }
-
-        //static void c1_Subscribed(object sender)
-        //{
-        //    //throw new NotImplementedException();
-        //    MessageBox.Show("c1_Subscribed");
-        //}
-
-        //static void srv_Error(object sender, PusherException error)
-        //{
-        //    //throw new NotImplementedException();
-        //    //MessageBox.Show("srv_Error" + error.ToString());
-        //}
-
-        //static void srv_ConnectionStateChanged(object sender, ConnectionState state)
-        //{
-        //    //Message
-        //    MessageBox.Show("srv_ConnectionStateChanged" + state.ToString());
-        //}
-        
+        }        
     }
 
+    /// <summary>
+    /// Pusher channel listener
+    /// </summary>
     public class Listener
     {
+        /// <summary>
+        /// Listener channel string id
+        /// </summary>
         public string channel = "";
-        public string ev = "";
-        public Action<dynamic> action;
-        public Listener(string c, string e, Action<dynamic> a)
+        /// <summary>
+        /// Listener event string
+        /// </summary>
+        public string evt = "";
+        /// <summary>
+        /// Listener action for message from pusher
+        /// </summary>
+        public Action<dynamic> onMessage;
+        /// <summary>
+        /// Create new listener for channel and event
+        /// </summary>
+        /// <param name="channel"></param>
+        /// <param name="evt"></param>
+        /// <param name="onMessage"></param>
+        public Listener(string channel, string evt, Action<dynamic> onMessage)
         {
-            channel = c;
-            ev = e;
-            action = a;
+            this.channel = channel;
+            this.evt = evt;
+            this.onMessage = onMessage;
         }
     }
 

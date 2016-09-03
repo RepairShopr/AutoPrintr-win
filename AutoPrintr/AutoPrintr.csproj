@@ -13,6 +13,17 @@
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PrimaryVersionType>AssemblyVersionAttribute</PrimaryVersionType>
+    <AssemblyInfoFilePath>Properties\AssemblyInfo.cs</AssemblyInfoFilePath>
+    <UpdateAssemblyVersion>True</UpdateAssemblyVersion>
+    <UpdateAssemblyFileVersion>False</UpdateAssemblyFileVersion>
+    <UpdateAssemblyInfoVersion>False</UpdateAssemblyInfoVersion>
+    <AssemblyVersionSettings>None.None.None.Increment</AssemblyVersionSettings>
+    <AssemblyVersion>0.0.0.595</AssemblyVersion>
+    <AssemblyFileVersionSettings>
+    </AssemblyFileVersionSettings>
+    <AssemblyInfoVersionSettings>
+    </AssemblyInfoVersionSettings>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -47,6 +58,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>AutoPrintr.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -63,6 +77,7 @@
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -83,13 +98,44 @@
     <Compile Include="CheckBoxList.Designer.cs">
       <DependentUpon>CheckBoxList.cs</DependentUpon>
     </Compile>
+    <Compile Include="CheckBoxSlider.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CheckBoxSlider.Designer.cs">
+      <DependentUpon>CheckBoxSlider.cs</DependentUpon>
+    </Compile>
     <Compile Include="Config.cs" />
+    <Compile Include="Credentials.cs" />
     <Compile Include="Jobs.cs" />
+    <Compile Include="JobsList.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="JobsList.Designer.cs">
+      <DependentUpon>JobsList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LogConfig.cs" />
+    <Compile Include="LogWatcher.cs" />
     <Compile Include="LoginServer.cs" />
-    <Compile Include="pCheckBox.cs">
+    <Compile Include="DocTypeCheckBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DocQuantity.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="RawPrint.cs" />
+    <Compile Include="PrintEngineDD.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="PrintEngines.cs" />
+    <Compile Include="PrinterDocumentControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PrinterDocumentControl.Designer.cs">
+      <DependentUpon>PrinterDocumentControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RegisterDD.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Skin.cs" />
     <Compile Include="Srv.cs" />
     <Compile Include="LoginResponse.cs" />
     <Compile Include="mainWin.cs">
@@ -104,14 +150,35 @@
     <Compile Include="tabelLabel.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="tools.cs" />
+    <Compile Include="TriggerCheckBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WinAutoSize.cs" />
+    <Content Include="AutoPrintr.ico" />
+    <Content Include="Printer_icon_256.ico" />
     <EmbeddedResource Include="CheckBoxList.resx">
       <DependentUpon>CheckBoxList.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CheckBoxSlider.resx">
+      <DependentUpon>CheckBoxSlider.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="JobsList.resx">
+      <DependentUpon>JobsList.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="mainWin.en.resx">
       <DependentUpon>mainWin.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="mainWin.resx">
       <DependentUpon>mainWin.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DocTypeCheckBox.resx">
+      <DependentUpon>DocTypeCheckBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PrinterDocumentControl.resx">
+      <DependentUpon>PrinterDocumentControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -161,6 +228,16 @@
     </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent>echo "Copying NLog.config"
+DEL NLog.config
+copy /B /Y "%25CD%25/../NLog.config" NLog.config
+</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
