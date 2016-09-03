@@ -56,6 +56,8 @@ namespace AutoPrintr
         }
         static void OnProcessExit(object sender, EventArgs e)
         {
+            log.Info("Removing temp files...");
+            Jobs.clearFiles();
             log.Info("Application quit...");
         }
     }
