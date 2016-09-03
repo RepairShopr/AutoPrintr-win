@@ -32,11 +32,13 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(mainWin));
             this.tabs = new System.Windows.Forms.TabControl();
             this.jobsTab = new System.Windows.Forms.TabPage();
+            this.jobsTable = new AutoPrintr.JobsList();
             this.printersTab = new System.Windows.Forms.TabPage();
             this.printersTable = new System.Windows.Forms.TableLayoutPanel();
             this.loginTab = new System.Windows.Forms.TabPage();
             this.configSave = new System.Windows.Forms.Button();
             this.locationGroupBox = new System.Windows.Forms.GroupBox();
+            this.locationsList = new AutoPrintr.CheckBoxList();
             this.loginGroupBox = new System.Windows.Forms.GroupBox();
             this.loginLabel = new System.Windows.Forms.Label();
             this.submit = new System.Windows.Forms.Button();
@@ -58,13 +60,11 @@
             this.statusLogin = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusSeparator2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.configSaveStatus = new System.Windows.Forms.ToolStripStatusLabel();
-            this.trayIcon = new System.Windows.Forms.NotifyIcon(this.components);
+            this.statusSeparatorUpdate = new System.Windows.Forms.ToolStripStatusLabel();
             this.updateStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.progressBar = new System.Windows.Forms.ToolStripProgressBar();
             this.progressBarValue = new System.Windows.Forms.ToolStripStatusLabel();
-            this.statusSeparatorUpdate = new System.Windows.Forms.ToolStripStatusLabel();
-            this.jobsTable = new AutoPrintr.JobsList();
-            this.locationsList = new AutoPrintr.CheckBoxList();
+            this.trayIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.checkBoxList1 = new AutoPrintr.CheckBoxList();
             this.tabs.SuspendLayout();
             this.jobsTab.SuspendLayout();
@@ -94,6 +94,12 @@
             this.jobsTab.Controls.Add(this.jobsTable);
             this.jobsTab.Name = "jobsTab";
             this.jobsTab.UseVisualStyleBackColor = true;
+            // 
+            // jobsTable
+            // 
+            resources.ApplyResources(this.jobsTable, "jobsTable");
+            this.jobsTable.BackColor = System.Drawing.Color.Transparent;
+            this.jobsTable.Name = "jobsTable";
             // 
             // printersTab
             // 
@@ -128,6 +134,11 @@
             resources.ApplyResources(this.locationGroupBox, "locationGroupBox");
             this.locationGroupBox.Name = "locationGroupBox";
             this.locationGroupBox.TabStop = false;
+            // 
+            // locationsList
+            // 
+            resources.ApplyResources(this.locationsList, "locationsList");
+            this.locationsList.Name = "locationsList";
             // 
             // loginGroupBox
             // 
@@ -268,10 +279,10 @@
             this.configSaveStatus.Name = "configSaveStatus";
             resources.ApplyResources(this.configSaveStatus, "configSaveStatus");
             // 
-            // trayIcon
+            // statusSeparatorUpdate
             // 
-            this.trayIcon.BalloonTipIcon = System.Windows.Forms.ToolTipIcon.Info;
-            resources.ApplyResources(this.trayIcon, "trayIcon");
+            this.statusSeparatorUpdate.Name = "statusSeparatorUpdate";
+            resources.ApplyResources(this.statusSeparatorUpdate, "statusSeparatorUpdate");
             // 
             // updateStatus
             // 
@@ -289,21 +300,10 @@
             this.progressBarValue.Name = "progressBarValue";
             resources.ApplyResources(this.progressBarValue, "progressBarValue");
             // 
-            // statusSeparatorUpdate
+            // trayIcon
             // 
-            this.statusSeparatorUpdate.Name = "statusSeparatorUpdate";
-            resources.ApplyResources(this.statusSeparatorUpdate, "statusSeparatorUpdate");
-            // 
-            // jobsTable
-            // 
-            resources.ApplyResources(this.jobsTable, "jobsTable");
-            this.jobsTable.BackColor = System.Drawing.Color.Transparent;
-            this.jobsTable.Name = "jobsTable";
-            // 
-            // locationsList
-            // 
-            resources.ApplyResources(this.locationsList, "locationsList");
-            this.locationsList.Name = "locationsList";
+            this.trayIcon.BalloonTipIcon = System.Windows.Forms.ToolTipIcon.Info;
+            resources.ApplyResources(this.trayIcon, "trayIcon");
             // 
             // checkBoxList1
             // 
