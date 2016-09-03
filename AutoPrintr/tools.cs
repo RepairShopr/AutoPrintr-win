@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Drawing;
 using System.Net;
-
+using System.Reflection;
 
 namespace AutoPrintr
 {
@@ -113,6 +113,8 @@ namespace AutoPrintr
             }
             
         }
+        
+        static string userAgent = "AutoPrintr v." + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
         /// <summary>
         /// Get request to url
@@ -121,7 +123,8 @@ namespace AutoPrintr
         /// <returns></returns>
         public static string GET(string Url)
         {
-            WebRequest req = WebRequest.Create(Url);
+            HttpWebRequest req = WebRequest.CreateHttp(Url);
+            req.UserAgent = userAgent;
             WebResponse resp = req.GetResponse();
             Stream stream = resp.GetResponseStream();
             StreamReader sr = new StreamReader(stream);
@@ -139,6 +142,36 @@ namespace AutoPrintr
 
         //}
 
+        public static bool SetAllowUnsafeHeaderParsing20()
+        {
+            //Get the assembly that contains the internal class
+            Assembly aNetAssembly = Assembly.GetAssembly(typeof(System.Net.Configuration.SettingsSection));
+            if (aNetAssembly != null)
+            {
+                //Use the assembly in order to get the internal type for the internal class
+                Type aSettingsType = aNetAssembly.GetType("System.Net.Configuration.SettingsSectionInternal");
+                if (aSettingsType != null)
+                {
+                    //Use the internal static property to get an instance of the internal settings class.
+                    //If the static instance isn't created allready the property will create it for us.
+                    object anInstance = aSettingsType.InvokeMember("Section",
+                      BindingFlags.Static | BindingFlags.GetProperty | BindingFlags.NonPublic, null, null, new object[] { });
 
+                    if (anInstance != null)
+                    {
+                        //Locate the private bool field that tells the framework is unsafe header parsing should be allowed or not
+                        FieldInfo aUseUnsafeHeaderParsing = aSettingsType.GetField("useUnsafeHeaderParsing", BindingFlags.NonPublic |
+
+                BindingFlags.Instance);
+                        if (aUseUnsafeHeaderParsing != null)
+                        {
+                            aUseUnsafeHeaderParsing.SetValue(anInstance, true);
+                            return true;
+                        }
+                    }
+                }
+            }
+            return false;
+        }
     }
 }
