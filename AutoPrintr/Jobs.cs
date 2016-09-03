@@ -109,6 +109,14 @@ namespace AutoPrintr
                     // Searching printers for this job
                     List<Printer> printers = Printers.findPrinters((string)msg.document, (int)msg.location, (int)msg.register);
                     if (printers.Count == 0) {
+                        log.Info("Skipped job: document: {0}, file: {1}, location: {2}, type: {3}, autoprinted: {4}, register: {5}", 
+                            (string)msg.document,
+                            (string)msg.file,
+                            (int)msg.location,
+                            (string)msg.type,
+                            (bool)msg.autoprinted,
+                            (int)msg.register
+                        );
                         return;
                     }
 
@@ -189,6 +197,11 @@ namespace AutoPrintr
                 this.file = file;
             }
         }
+
+        public static void clearFiles()
+        {
+            tools.DirEmpty(Program.tempDnDir);
+        }
     }
 
 
@@ -211,7 +224,9 @@ namespace AutoPrintr
             return "type: '" + type +
                 "', location:'" + location +
                 "', file: '" + file +
-                "', document: '" + document + "'"
+                "', document: '" + document +
+                "', autoprinted: '" + autoprinted +
+                "', register: '" + register + "'"
             ;
         }
     }
