@@ -88,12 +88,39 @@ namespace AutoPrintr
         }
 
         /// <summary>
-        /// Update items sizes
+        /// Remove all fiels from directory
         /// </summary>
-        /// <param name="?"></param>
-        public static void TableLayoutPanelUpdateItemsSizes(TableLayoutPanel p)
+        /// <param name="path"></param>
+        public static void DirEmpty(string path)
         {
-
+            try
+            {
+                System.IO.DirectoryInfo di = new DirectoryInfo(path);
+                foreach (FileInfo file in di.GetFiles())
+                {
+                    file.Delete();
+                }
+                foreach (DirectoryInfo dir in di.GetDirectories())
+                {
+                    dir.Delete(true);
+                }
+            }
+            catch (Exception err)
+            {
+                log.Error(err, "Error while removing files from directory '" + path + "'");
+            }
+            
         }
+
+        ///// <summary>
+        ///// Update items sizes
+        ///// </summary>
+        ///// <param name="?"></param>
+        //public static void TableLayoutPanelUpdateItemsSizes(TableLayoutPanel p)
+        //{
+
+        //}
+
+
     }
 }

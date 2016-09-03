@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(mainWin));
             this.tabs = new System.Windows.Forms.TabControl();
             this.jobsTab = new System.Windows.Forms.TabPage();
@@ -57,6 +58,7 @@
             this.statusLogin = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusSeparator2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.configSaveStatus = new System.Windows.Forms.ToolStripStatusLabel();
+            this.trayIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.jobsTable = new AutoPrintr.JobsList();
             this.locationsList = new AutoPrintr.CheckBoxList();
             this.checkBoxList1 = new AutoPrintr.CheckBoxList();
@@ -258,6 +260,11 @@
             this.configSaveStatus.Name = "configSaveStatus";
             resources.ApplyResources(this.configSaveStatus, "configSaveStatus");
             // 
+            // trayIcon
+            // 
+            this.trayIcon.BalloonTipIcon = System.Windows.Forms.ToolTipIcon.Info;
+            resources.ApplyResources(this.trayIcon, "trayIcon");
+            // 
             // jobsTable
             // 
             resources.ApplyResources(this.jobsTable, "jobsTable");
@@ -335,6 +342,7 @@
         private System.Windows.Forms.RichTextBox licenseText;
         private System.Windows.Forms.Label logLevelLabel;
         private System.Windows.Forms.ComboBox logLevelSelect;
+        private System.Windows.Forms.NotifyIcon trayIcon;
     }
 }
 
