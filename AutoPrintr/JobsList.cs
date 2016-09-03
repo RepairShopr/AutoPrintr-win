@@ -60,7 +60,7 @@ namespace AutoPrintr
             table.Controls.Add(uiJob.lState,    column++, uiJob.row);
             table.Controls.Add(uiJob.lProgress, column++, uiJob.row);
             table.Controls.Add(uiJob.lRecived,  column++, uiJob.row);
-            table.Controls.Add(uiJob.lType,     column++, uiJob.row);
+            //table.Controls.Add(uiJob.lType,     column++, uiJob.row);
             table.Controls.Add(uiJob.lDocument, column++, uiJob.row);
             table.Controls.Add(uiJob.lPrinter,  column++, uiJob.row);
             //table.Controls.Add(uiJob.lUrl,      column++, uiJob.row);
@@ -173,7 +173,7 @@ namespace AutoPrintr
             addColumn("State");
             addColumn("Progress");
             addColumn("Recived");
-            addColumn("Type");
+            //addColumn("Type");
             addColumn("Document");
             addColumn("Printer");
             //addColumn("Url");
@@ -195,7 +195,7 @@ namespace AutoPrintr
             public JobsListLabel lState;
             public JobsListLabel lProgress;
             public JobsListLabel lRecived;
-            public JobsListLabel lType;
+            //public JobsListLabel lType;
             public JobsListLabel lDocument;
             public JobsListLabel lPrinter;
             //public JobsListLabel lUrl;
@@ -222,7 +222,7 @@ namespace AutoPrintr
                 lState = new JobsListLabel(job.state.ToString() + job.stateDetails);
                 lProgress = new JobsListLabel(job.progress.ToString()+"%");
                 lRecived = new JobsListLabel(tools.BytesToString(job.recived));
-                lType = new JobsListLabel(job.type);
+                //lType = new JobsListLabel(job.type);
                 lDocument = new JobsListLabel(job.documentTitle);
                 lPrinter = new JobsListLabel(job.printer.name);
                 //lUrl = new JobsListLabel(job.file);
@@ -314,7 +314,7 @@ namespace AutoPrintr
                 : base()
             {
                 this.uijob = job;
-                Text = "Repeat";
+                Text = "Reprint";
                 Click += JLRepeatBtn_Click;
                 Margin = new Padding(5);
             }
