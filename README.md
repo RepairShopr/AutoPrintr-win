@@ -1,6 +1,8 @@
 # AutoPrintr
 
-Allow to automatically print PDF files from http://www.repairshopr.com/
+![logo](http://i.imgur.com/v7D7COV.png "AutoPrintr Logo")
+
+Automatically print to the desired printer (instantly) - by http://www.repairshopr.com/
 
 ## Installation
 
