@@ -13,6 +13,8 @@ using System.Threading;
 using System.Reflection;
 using NLog;
 using System.Diagnostics;
+using System.Web;
+
 
  //Log levels:
  // - Fatal
@@ -30,10 +32,12 @@ namespace AutoPrintr
        
         const string mailto = "help@repairshopr.com";
         const string subject = "Support request from AutoPrintr";
-        const string userMessageTemplate = "Hi!{0}{0}I'm user of AutoPrintr and need help.{0}<My problem is...>{0}{0}Here the last 100 lines of AutoPrintr log file:{0}{0}";
+        const string userMessageTemplate = "Hi!\n\nI'm user of AutoPrintr and need help.\n<My problem is...>\n\nHere the last 100 lines of AutoPrintr log file:\n\n";
         const int lastLinesOfLog = 100;
         const int pusherReconnectDelay = 20000;
+       
 
+        List<RegisterDD> registersDD = new List<RegisterDD>();
         public mainWin()
         {
             Printers.init();
@@ -65,6 +69,8 @@ namespace AutoPrintr
             {
                 tabs.SelectTab("loginTab");
             }
+
+            licenseText.Text = getLicenseText();
 
             this.Shown += mainWin_Shown;
 
@@ -206,9 +212,12 @@ namespace AutoPrintr
             printersTable.RowCount++;
             printersTable.RowStyles.Add(new RowStyle(SizeType.AutoSize));
             printersTable.Controls.Add(new tabelLabel("Register"), column++, ++row);
+            RegisterDD rdd;
             foreach (Printer p in Program.config.printers)
             {
-                printersTable.Controls.Add(new RegisterDD(p, Program.config.registers), column++, row);
+                rdd = new RegisterDD(p, Program.config.registers);
+                registersDD.Add(rdd);
+                printersTable.Controls.Add(rdd, column++, row);
             }
 
             //
@@ -403,7 +412,7 @@ namespace AutoPrintr
                 statusLogin.Text = "logged in";
                 if (LoginServer.locations != null)
                 {
-                    updateLocations(LoginServer.locations, LoginServer.defaultLocation);
+                    Program.config.locations = updateLocations(LoginServer.locations, LoginServer.defaultLocation);
                 }
 
                 // Registers
@@ -411,6 +420,12 @@ namespace AutoPrintr
                 {
                     Program.config.registers.Add(r);
                 }
+
+                foreach (RegisterDD rdd in registersDD)
+                {
+                    rdd.setItems(Program.config.registers);
+                }
+
                 Program.config.login = login.Text;
                 Program.config.channel = LoginServer.channel;
                 Program.config.availableLocations = LoginServer.locations;
@@ -436,30 +451,42 @@ namespace AutoPrintr
         private void helpButton_Click(object sender, EventArgs e)
         {
             log.Info("Help button pressed. Processing help request");
-            var body =
-               String.Format( userMessageTemplate, "%0D%0A") +
-               string.Join( "%0D%0A",
-                    LogWatcher.text.Split('\n').Reverse().Take(lastLinesOfLog).ToArray()
-               )
+            //var body =
+            //   String.Format( userMessageTemplate, "%0D%0A") +
+            //   string.Join( "%0D%0A",
+            //        LogWatcher.text.Split('\n').Reverse().Take(lastLinesOfLog).ToArray()
+            //   ) 
+            //   + "%0D%0A%0D%0A%0D%0Aconfig.json%0D%0A%0D%0A" +                
+            //   string.Join( "%0D%0A",
+            //        Program.config.ToString().Split('\n').Reverse().ToArray()
+            //   )       
+            //;
+
+            var body = userMessageTemplate + 
+                "\n\n" + 
+                string.Join( "\n", LogWatcher.text.Split('\n').Reverse().Take(lastLinesOfLog).ToArray() ) + 
+                "\n\n\nconfig.json\n\n" + Program.config.ToString()
             ;
-            
+
             Process.Start(
                 String.Format(
                     "mailto:{0}?subject={1}&body={2}",
                     mailto,
                     subject,
-                    body
+                    HttpUtility.UrlEncode( body )
                 )
             );
         }
 
-        void updateLocations(List<Location> locations, Location defaultLocation = null)
+        List<int> updateLocations(List<Location> locations, Location defaultLocation = null)
         {
             locationsList.clear();
             //locationsList.Contr
             // Check for setting the default location
             //bool checkForDedault = (LoginServer.defaultLocation != null) & (Program.config.locations.Count == 0);
             bool checkForDedault = (defaultLocation != null) & (Program.config.locations.Count == 0);
+            List<int> locs = new List<int>();
+
             foreach (Location loc in locations)
             {
                 CheckBoxListItem item = locationsList.add(loc.name, loc);
@@ -468,17 +495,28 @@ namespace AutoPrintr
                     if (defaultLocation.id == loc.id)
                     {
                         item.Selected = true;
+                        if ( !locs.Exists( i => i == loc.id))
+                        {
+                            locs.Add(loc.id);
+                        }
                     }
-                }
+                }                
                 foreach (int id in Program.config.locations)
                 {
-                    if (id == loc.id) 
+                    if (id == loc.id)
                     {
                         item.Selected = true;
+                        if ( !locs.Exists(i => i == loc.id))
+                        {
+                            locs.Add(loc.id);
+                        }
                     }
                 }
-            }      
+                
+            }
+            return locs;
         }
+
         void logTabInit()
         {
             foreach (string logLevel in LogConfig.LogLevels)
@@ -494,6 +532,15 @@ namespace AutoPrintr
         {
             LogConfig.logLevel(logLevelSelect.Text);
         }
+
+        string getLicenseText()
+        {
+            return String.Format(
+                "The MIT License (MIT)\n\nCopyright (c) {0} RepairShopr \n\nPermission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the \"Software\"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions: \n\nThe above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. \n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.\n"
+                , DateTime.Now.Year.ToString()
+            );
+        }
+
 
         //protected override void OnSizeChanged(EventArgs e)
         //{

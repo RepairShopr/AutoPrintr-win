@@ -13,10 +13,7 @@ namespace AutoPrintr
         /// Printer for this combo box
         /// </summary>
         public Printer printer;
-        Dictionary<string, int> rlist = new Dictionary<string, int>()
-        {
-             {"None", 0}
-        };
+        Dictionary<string, int> rlist = new Dictionary<string, int>(){};
         /// <summary>
         /// Create new combo box for selected printer
         /// </summary>
@@ -24,21 +21,12 @@ namespace AutoPrintr
         public RegisterDD(Printer printer, List<LoginServer.Register> rlist)
         {
             this.printer = printer;
-
             DropDownStyle = ComboBoxStyle.DropDownList;
-            Items.Add("None");
-            this.Text = "None";
-            foreach (LoginServer.Register r in rlist)
-            {
-                this.rlist.Add(r.name, r.id);
-                Items.Add(r.name);
-            }
-
             // Setting handler for change event
-            this.SelectedIndexChanged += RegisterDD_TextChanged;
-
             AutoSize = true;
             Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top;
+            setItems(rlist);
+            this.SelectedIndexChanged += RegisterDD_TextChanged;
         }
 
         /// <summary>
@@ -50,6 +38,24 @@ namespace AutoPrintr
         {
             printer.register = rlist[this.Text];    
             Program.config.save();
+        }
+
+        public void setItems(List<LoginServer.Register> rlist)
+        {           
+            Items.Clear();
+            Items.Add("None");
+            this.rlist.Clear();
+            this.rlist.Add("None", 0);
+            Text = "None";
+            foreach (LoginServer.Register r in rlist)
+            {
+                this.rlist.Add(r.name, r.id);
+                Items.Add(r.name);
+                //if (printer.register != 0 & printer.register == r.id)
+                //{
+
+                //}
+            }
         }
     }
 }
