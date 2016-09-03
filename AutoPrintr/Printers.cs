@@ -12,7 +12,9 @@ namespace AutoPrintr
     /// Static class for printers management
     /// </summary>
     static class Printers
-    {        
+    {
+        private static NLog.Logger log = NLog.LogManager.GetCurrentClassLogger();
+
         /// <summary>
         /// Find existing system printers and merge it with saved in config printers list
         /// </summary>
@@ -65,6 +67,7 @@ namespace AutoPrintr
         /// <returns></returns>
         public static List<Printer> findPrinters(string type, int location, int register)
         {
+            log.Info("    Searching printers for document type '{0}', location '{1}', register '{2}'", type, location, register);
             List<Printer> l = new List<Printer>();
             DocumentType t = DocumentTypes.ToDocumentType(type);
             if( t == null){ return l; }
@@ -73,23 +76,28 @@ namespace AutoPrintr
             if (Program.config.locations.Count > 0 & location != 0) 
             {
                 // If location not in array - return empty list
-                if (!Program.config.locations.Contains(location)) { return l; } 
+                if (!Program.config.locations.Contains(location)) {
+                    log.Info("    Printers for location '{0}' not founded", location);
+                    return l; 
+                } 
             }
             
             // Search printer by type
+            log.Info("    Searching printer by document type '{0}'", t.name);
             foreach (Printer printer in Program.config.printers)
             {
                 if (printer.typeGet(t.type))
                 {
                     if (printer.register == 0)
                     {
+                        log.Info("        Printer selected '{0}' - printer register is 'None' ", printer.name);
                         l.Add(printer);
                     }
                     else if (printer.register == register)
                     {
+                        log.Info("        Printer selected '{0}' - printer register is '{0}' ", register);
                         l.Add(printer);
-                    }
-                    
+                    }                    
                 }
             }
             return l;
