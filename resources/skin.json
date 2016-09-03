@@ -1,0 +1,64 @@
+{
+  "window": null,
+  "CheckBox": {
+    "Font": {
+      "Name": "Microsoft Sans Serif",
+      "Size": 8.25,
+      "Unit": 3,
+      "Bold": false,
+      "Italic": false,
+      "Strikeout": false,
+      "Underline": false
+    },
+    "on": {
+      "TopColor": "51a351",
+      "BottomColor": "62c462",
+      "TextColor": "FFFFFF",
+      "BorderColor": "0xDDDDDD"
+    },
+    "middle": {
+      "TopColor": "FFFFFF",
+      "BottomColor": "e6e6e6",
+      "TextColor": "FFFFFF",
+      "BorderColor": "DDDDDD"
+    },
+    "off": {
+      "TopColor": "e6e6e6",
+      "BottomColor": "FFFFFF",
+      "TextColor": "000000",
+      "BorderColor": "DDDDDD"
+    }
+  },
+  "table": {
+    "RowHeader": {
+      "BackColor": "EAEAEA",
+      "TextColor": "000000",
+      "Font": {
+        "Name": "Microsoft Sans Serif",
+        "Size": 8.25,
+        "Unit": 3,
+        "Bold": false,
+        "Italic": false,
+        "Strikeout": false,
+        "Underline": false
+      }
+    },
+    "ColumnHeader": {
+      "BackColor": "EAEAEA",
+      "TextColor": "000000",
+      "Font": {
+        "Name": "Microsoft Sans Serif",
+        "Size": 8.25,
+        "Unit": 3,
+        "Bold": false,
+        "Italic": false,
+        "Strikeout": false,
+        "Underline": false
+      }
+    },
+    "Border": 2
+  },
+  "all": null,
+  "controlsByType": {},
+  "controls": []
+}

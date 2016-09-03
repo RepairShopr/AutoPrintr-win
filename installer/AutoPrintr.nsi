@@ -91,13 +91,13 @@ Section "" ;No components page, name is not important
     SetOverwrite on
     ; All other files
     File ..\AutoPrintr\bin\Release\AutoPrintr.exe
-    File ..\AutoPrintr\skin.json
-    File ..\AutoPrintr\bin\Release\SumatraPDF.exe
     File ..\AutoPrintr\bin\Release\PusherClient.dll
     File ..\AutoPrintr\bin\Release\WebSocket4Net.dll
     File ..\AutoPrintr\bin\Release\Newtonsoft.Json.dll
-    File ..\AutoPrintr\NLog.config
     File ..\AutoPrintr\bin\Release\NLog.dll
+    File ..\resources\skin.json
+    File ..\resources\NLog.config
+    File ..\resources\SumatraPDF.exe
 
     ;create desktop shortcut
     CreateShortCut "$DESKTOP\AutoPrintr.lnk" "$INSTDIR\AutoPrintr.exe" ""
