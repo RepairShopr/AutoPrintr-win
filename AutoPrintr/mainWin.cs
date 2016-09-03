@@ -41,7 +41,10 @@ namespace AutoPrintr
         public mainWin()
         {
             Printers.init();
-            
+
+            log.Info("Removing temp files...");
+            Jobs.clearFiles();
+
             log.Info("GUI Initialization start...");
             InitializeComponent();
 
@@ -72,9 +75,19 @@ namespace AutoPrintr
 
             licenseText.Text = getLicenseText();
 
+            trayIcon.Click += trayIcon_Click;
+
             this.Shown += mainWin_Shown;
+            this.Resize += mainWin_Resize;
 
             WinAutoSize.apply(this, new Control[]{printersTable, jobsTable.table});
+        }
+
+        void trayIcon_Click(object sender, EventArgs e)
+        {
+            trayIcon.Visible = false;
+            Show();
+            WindowState = FormWindowState.Normal;
         }
 
         void onLogChange(object o, EventArgs e)
@@ -112,8 +125,6 @@ namespace AutoPrintr
             }
 
             log.Info("Application started...");
-
-
         }
 
 
@@ -539,6 +550,25 @@ namespace AutoPrintr
                 "The MIT License (MIT)\n\nCopyright (c) {0} RepairShopr \n\nPermission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the \"Software\"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions: \n\nThe above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. \n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.\n"
                 , DateTime.Now.Year.ToString()
             );
+        }
+
+        /// <summary>
+        /// Tray icon in minimize
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void mainWin_Resize(object sender, EventArgs e)
+        {
+            if (FormWindowState.Minimized == this.WindowState)
+            {
+                trayIcon.Visible = true;
+                trayIcon.ShowBalloonTip(1000);
+                this.Hide();
+            }
+            else if (FormWindowState.Normal == this.WindowState)
+            {
+                trayIcon.Visible = false;
+            }
         }
 
 
