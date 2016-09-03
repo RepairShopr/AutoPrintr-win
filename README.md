@@ -2,53 +2,17 @@
 
 Allow to automatically print PDF files from http://www.repairshopr.com/
 
-## Configuration
+## Installation
 
-AutoPrintr stores it's configuration in
+Head to our [Help Page](http://feedback.repairshopr.com/knowledgebase/articles/944752-cloudprint-issues-meet-autoprintr) on AutoPrintr if you are an end user
 
-```
-    <home_directory>/config.json
-```
 
-After first run AutoPrintr will automatically create this file.
+## Developers 
 
-Configuration example:
+Build documentation coming soon
 
-```
-{
-  "location": [         // List of locations ID or one location
-    1019
-  ],
-  "printers": [         // Printers configuration
-    {
-      "name": "File Printer",    // Printer system name
-      "types": [                 // ID of documents types for this printer
-        1,
-        3,
-        7
-      ]
-    },
-    {
-      "name": "Microsoft XPS Document Writer",
-      "types": [
-        9
-      ]
-    }
-  ]
-}
-```
 
-## Pusher API key
+## Open Source
 
-Key is stored inside file `AutoPrintr/Credentials.cs`:
-```C#
-    public const string SrvXT = "YOUR_KEY_HERE";
-```
+MIT License.
 
-Then execute next command in gitshell:
-
-```
-git update-index --assume-unchanged AutoPrintr\Credentials.cs
-```
-
-This command will prevent commiting this file to repo, if it changes.
