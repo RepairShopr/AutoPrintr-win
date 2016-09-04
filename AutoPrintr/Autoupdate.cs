@@ -27,6 +27,9 @@ namespace AutoPrintr
         public static event onDownloadedHandler onDownloaded;
         public static event onProgressHandler onProgress;
 
+        static string versionFile;
+        static string installer;
+
         public static void check()
         {
             string apiStringRes = tools.GET(url);
@@ -55,8 +58,6 @@ namespace AutoPrintr
         static public void install()
         {
             ZipFile.ExtractToDirectory(Autoupdate.localPath, Program.tempDir);
-            string versionFile = Path.Combine(Program.tempDir, "version.txt");
-            string installer = Path.Combine(Program.tempDir, "AutoPrintr_install.exe");
             string errMsg = "Can't find file {0} from release archive. Update aborted.";
 
             if( !File.Exists(versionFile) )
@@ -77,6 +78,24 @@ namespace AutoPrintr
 
         static public void download()
         {
+            versionFile = Path.Combine(Program.tempDir, "version.txt");
+            installer = Path.Combine(Program.tempDir, "AutoPrintr_install.exe");
+
+            if (File.Exists(versionFile))
+            {
+                File.Delete(versionFile); 
+            }
+
+            if (File.Exists(installer))
+            {
+                File.Delete(installer);
+            }
+
+            if (File.Exists(Autoupdate.localPath))
+            {
+                File.Delete(Autoupdate.localPath);
+            }
+            
             Autoupdate.localPath = Path.Combine(Program.tempDir, "AutoPrintr_install.zip");
             using (WebClient wc = new WebClient())
             {
