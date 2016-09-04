@@ -20,10 +20,36 @@ namespace AutoPrintr
         /// </summary>
         public static List<string> LogLevels = new List<string>()
         {
-            "Fatal"
-            , "Error"
-            , "Warn"
-            , "Info"            
+            "Default"
+            , "Everything"
+            //"Fatal"
+            //, "Error"
+            //, "Warn"
+            //, "Info"        
+            //, "Debug"
+            //, "Trace"
+        }; 
+
+        /// <summary>
+        /// Converter for log levels
+        /// </summary>
+        static Dictionary<string, string> UserLogName2NLog = new Dictionary<string, string>()
+        {
+            { "Default", "Warn"},
+            { "Everything", "Info"}
+        };
+
+        /// <summary>
+        /// Converter for log levels
+        /// </summary>
+        static Dictionary<string, string> NLog2UserLogName = new Dictionary<string, string>()
+        {
+            { "Fatal", "Default" },
+            { "Error", "Default" },
+            { "Warn", "Default" },
+            { "Info", "Everything" },
+            { "Debug", "Everything" },
+            { "Trace", "Everything" }
         };
 
         /// <summary>
@@ -56,18 +82,17 @@ namespace AutoPrintr
                 // Searching logger with name="*" and read / update it minlevel attribute
                 foreach (XmlNode node in nodes)
                 {
-
                     name = node.Attributes["name"];
                     if (name.Value == "*")
                     {
                         minlevel = node.Attributes["minlevel"];
                         if (level == null)
                         {
-                            return minlevel.Value;
+                            return NLog2UserLogName[minlevel.Value];
                         }
                         else
                         {
-                            minlevel.Value = level;
+                            minlevel.Value = UserLogName2NLog[level];
                         }
                     }
                 }

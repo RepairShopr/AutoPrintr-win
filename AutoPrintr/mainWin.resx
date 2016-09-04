@@ -148,7 +148,7 @@
     <value>jobsTable</value>
   </data>
   <data name="&gt;&gt;jobsTable.Type" xml:space="preserve">
-    <value>AutoPrintr.JobsList, AutoPrintr, Version=0.0.0.591, Culture=neutral, PublicKeyToken=null</value>
+    <value>AutoPrintr.JobsList, AutoPrintr, Version=0.9.646.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;jobsTable.Parent" xml:space="preserve">
     <value>jobsTab</value>
@@ -304,7 +304,7 @@
     <value>locationsList</value>
   </data>
   <data name="&gt;&gt;locationsList.Type" xml:space="preserve">
-    <value>AutoPrintr.CheckBoxList, AutoPrintr, Version=0.0.0.591, Culture=neutral, PublicKeyToken=null</value>
+    <value>AutoPrintr.CheckBoxList, AutoPrintr, Version=0.9.646.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;locationsList.Parent" xml:space="preserve">
     <value>locationGroupBox</value>
@@ -808,6 +808,33 @@
     <value>|</value>
   </data>
   <data name="configSaveStatus.Size" type="System.Drawing.Size, System.Drawing">
+    <value>0, 17</value>
+  </data>
+  <data name="statusSeparatorUpdate.Size" type="System.Drawing.Size, System.Drawing">
+    <value>10, 17</value>
+  </data>
+  <data name="statusSeparatorUpdate.Text" xml:space="preserve">
+    <value>|</value>
+  </data>
+  <data name="statusSeparatorUpdate.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="updateStatus.Size" type="System.Drawing.Size, System.Drawing">
+    <value>0, 17</value>
+  </data>
+  <data name="updateStatus.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="progressBar.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 16</value>
+  </data>
+  <data name="progressBar.ToolTipText" xml:space="preserve">
+    <value>Download progress</value>
+  </data>
+  <data name="progressBar.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="progressBarValue.Size" type="System.Drawing.Size, System.Drawing">
     <value>0, 17</value>
   </data>
   <data name="statusStrip.Location" type="System.Drawing.Point, System.Drawing">
@@ -1758,7 +1785,7 @@
     <value>checkBoxList1</value>
   </data>
   <data name="&gt;&gt;checkBoxList1.Type" xml:space="preserve">
-    <value>AutoPrintr.CheckBoxList, AutoPrintr, Version=0.0.0.591, Culture=neutral, PublicKeyToken=null</value>
+    <value>AutoPrintr.CheckBoxList, AutoPrintr, Version=0.9.646.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -6937,9 +6964,6 @@
         fPjOVaoVDylNGrgQ8P8DPI5hzo++u24AAAAASUVORK5CYII=
 </value>
   </data>
-  <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
   <data name="$this.Text" xml:space="preserve">
     <value>AutoPrintr</value>
   </data>
@@ -6977,6 +7001,30 @@
     <value>configSaveStatus</value>
   </data>
   <data name="&gt;&gt;configSaveStatus.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripStatusLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;statusSeparatorUpdate.Name" xml:space="preserve">
+    <value>statusSeparatorUpdate</value>
+  </data>
+  <data name="&gt;&gt;statusSeparatorUpdate.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripStatusLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;updateStatus.Name" xml:space="preserve">
+    <value>updateStatus</value>
+  </data>
+  <data name="&gt;&gt;updateStatus.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripStatusLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;progressBar.Name" xml:space="preserve">
+    <value>progressBar</value>
+  </data>
+  <data name="&gt;&gt;progressBar.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripProgressBar, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;progressBarValue.Name" xml:space="preserve">
+    <value>progressBarValue</value>
+  </data>
+  <data name="&gt;&gt;progressBarValue.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripStatusLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;trayIcon.Name" xml:space="preserve">

@@ -18,8 +18,8 @@
     <UpdateAssemblyVersion>True</UpdateAssemblyVersion>
     <UpdateAssemblyFileVersion>False</UpdateAssemblyFileVersion>
     <UpdateAssemblyInfoVersion>False</UpdateAssemblyInfoVersion>
-    <AssemblyVersionSettings>None.None.None.Increment</AssemblyVersionSettings>
-    <AssemblyVersion>0.0.0.595</AssemblyVersion>
+    <AssemblyVersionSettings>None.None.Increment.None</AssemblyVersionSettings>
+    <AssemblyVersion>0.9.655.0</AssemblyVersion>
     <AssemblyFileVersionSettings>
     </AssemblyFileVersionSettings>
     <AssemblyInfoVersionSettings>
@@ -57,6 +57,8 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\AutoPrintr.XML</DocumentationFile>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>AutoPrintr.ico</ApplicationIcon>
@@ -77,6 +79,7 @@
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -92,6 +95,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Autoupdate.cs" />
     <Compile Include="CheckBoxList.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -235,8 +239,14 @@
   <PropertyGroup>
     <PostBuildEvent>echo "Copying NLog.config"
 DEL NLog.config
-copy /B /Y "%25CD%25/../NLog.config" NLog.config
-</PostBuildEvent>
+echo copy /B /Y "$(SolutionDir)resources\NLog.config" "$(TargetDir)NLog.config"
+echo copy /B /Y "$(SolutionDir)resources\SumatraPDF.exe" "$(TargetDir)SumatraPDF.exe"
+if $(ConfigurationName) EQU Release (
+    If Not Exist "$(SolutionDir)installer\version.exe" "C:\Program Files (x86)\NSIS\makensis.exe" "$(SolutionDir)installer\version.nsi"
+    "C:\Program Files (x86)\NSIS\makensis.exe" "$(SolutionDir)installer\AutoPrintr_install.nsi"
+    "C:\Program Files\7-Zip\7z.exe" a -t7z "$(SolutionDir)installer\AutoPrintr_install.7z" "$(SolutionDir)installer\AutoPrintr_install.exe" "$(SolutionDir)installer\version.txt" 
+    "C:\Program Files\7-Zip\7z.exe" a -tzip "$(SolutionDir)installer\AutoPrintr_install.zip" "$(SolutionDir)installer\AutoPrintr_install.exe" "$(SolutionDir)installer\version.txt" 
+)</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
