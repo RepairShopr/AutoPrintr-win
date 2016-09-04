@@ -50,8 +50,9 @@ namespace AutoPrintr
                 Process.Start(
                     Registry.LocalMachine.OpenSubKey(
                         @"SOFTWARE\Microsoft\Windows\CurrentVersion" +
-                        @"\App Paths\AcroRd32.exe").GetValue("").ToString(),
-                        string.Format("/h /t \"{0}\" \"{1}\"", filePath, printerName)
+                        @"\App Paths\AcroRd32.exe"
+                    ).GetValue("").ToString(),
+                    string.Format("/h /t \"{0}\" \"{1}\"", filePath, printerName)
                 );
             })){};
 
