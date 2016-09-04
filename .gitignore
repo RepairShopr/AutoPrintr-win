@@ -6,10 +6,9 @@ obj/
 AutoPrintr/Credentials.cs
 AutoPrintr.v12.suo
 AutoPrintr.suo
-installer/*.exe
-installer/*.7z
-installer/*.zip
-installer/*.exe
+**.exe
+**.7z
+**.zip
 
 # User-specific files
 *.suo
