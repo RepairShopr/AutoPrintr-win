@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Diagnostics;
 
 namespace AutoPrintr
 {
@@ -38,7 +39,7 @@ namespace AutoPrintr
             );
 
             releaseFile = release.assets.Find(
-                (file) => file.name == "AutoPrintr.zip"
+                (file) => file.name == "AutoPrintr_install.zip"
                 //(file) => file.name == "AutoPrintr_595.zip"
             );
 
@@ -54,13 +55,29 @@ namespace AutoPrintr
         static public void install()
         {
             ZipFile.ExtractToDirectory(Autoupdate.localPath, Program.tempDir);
+            string versionFile = Path.Combine(Program.tempDir, "version.txt");
+            string installer = Path.Combine(Program.tempDir, "AutoPrintr_install.exe");
+            string errMsg = "Can't find file {0} from release archive. Update aborted.";
+
+            if( !File.Exists(versionFile) )
+            {
+                log.Error(errMsg, versionFile);
+                return;
+            }
+
+            if( !File.Exists(installer) ){
+                log.Error(errMsg, installer);
+                return;
+            }
+
+            Process.Start(installer, "/S");
             //AutoPrintr.exe
             //System.IO.
         }
 
         static public void download()
         {
-            Autoupdate.localPath = Path.Combine(Program.tempDir, "AutoPrintr_update.zip");
+            Autoupdate.localPath = Path.Combine(Program.tempDir, "AutoPrintr_install.zip");
             using (WebClient wc = new WebClient())
             {
                 // Adding progress event handler

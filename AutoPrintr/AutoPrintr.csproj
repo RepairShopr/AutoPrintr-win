@@ -19,7 +19,7 @@
     <UpdateAssemblyFileVersion>False</UpdateAssemblyFileVersion>
     <UpdateAssemblyInfoVersion>False</UpdateAssemblyInfoVersion>
     <AssemblyVersionSettings>None.None.Increment.None</AssemblyVersionSettings>
-    <AssemblyVersion>0.9.644.0</AssemblyVersion>
+    <AssemblyVersion>0.9.650.0</AssemblyVersion>
     <AssemblyFileVersionSettings>
     </AssemblyFileVersionSettings>
     <AssemblyInfoVersionSettings>
@@ -239,12 +239,13 @@
   <PropertyGroup>
     <PostBuildEvent>echo "Copying NLog.config"
 DEL NLog.config
-echo copy /B /Y "$(SolutionDir)resources\NLog.config" NLog.config
-echo copy /B /Y "$(SolutionDir)resources\SumatraPDF.exe" SumatraPDF.exe
+echo copy /B /Y "$(SolutionDir)resources\NLog.config" "$(TargetDir)NLog.config"
+echo copy /B /Y "$(SolutionDir)resources\SumatraPDF.exe" "$(TargetDir)SumatraPDF.exe"
 if $(ConfigurationName) EQU Release (
-"C:\Program Files (x86)\NSIS\makensis.exe" "$(SolutionDir)installer\AutoPrintr.nsi"
-"C:\Program Files\7-Zip\7z.exe" a -t7z "$(SolutionDir)installer\AutoPrintr.7z" "$(SolutionDir)installer\AutoPrintr.exe"
-"C:\Program Files\7-Zip\7z.exe" a -tzip "$(SolutionDir)installer\AutoPrintr.zip" "$(SolutionDir)installer\AutoPrintr.exe"
+    If Not Exist "$(SolutionDir)installer\version.exe" "C:\Program Files (x86)\NSIS\makensis.exe" "$(SolutionDir)installer\version.nsi"
+    "C:\Program Files (x86)\NSIS\makensis.exe" "$(SolutionDir)installer\AutoPrintr_install.nsi"
+    "C:\Program Files\7-Zip\7z.exe" a -t7z "$(SolutionDir)installer\AutoPrintr_install.7z" "$(SolutionDir)installer\AutoPrintr_install.exe" "$(SolutionDir)installer\version.txt" 
+    "C:\Program Files\7-Zip\7z.exe" a -tzip "$(SolutionDir)installer\AutoPrintr_install.zip" "$(SolutionDir)installer\AutoPrintr_install.exe" "$(SolutionDir)installer\version.txt" 
 )</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
