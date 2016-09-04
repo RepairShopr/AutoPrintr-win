@@ -76,12 +76,12 @@ namespace AutoPrintr
                 tabs.SelectTab("loginTab");
             }
 
-            //log.Info("Cheking update...");
-            //Autoupdate.onAvailable += Autoupdate_onAvailable;
-            //Autoupdate.onDownloaded += Autoupdate_onDownloaded;
-            //Autoupdate.onProgress += Autoupdate_onProgress;
-            //updateStatus.Click += updateStatus_Click;
-            //Autoupdate.check();
+            log.Info("Cheking update...");
+            Autoupdate.onAvailable += Autoupdate_onAvailable;
+            Autoupdate.onDownloaded += Autoupdate_onDownloaded;
+            Autoupdate.onProgress += Autoupdate_onProgress;
+            updateStatus.Click += updateStatus_Click;
+            Autoupdate.check();
 
             log.Info("Configuring GUI...");
             licenseText.Text = getLicenseText();
