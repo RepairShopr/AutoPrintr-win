@@ -48,7 +48,7 @@ namespace AutoPrintr
             
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-
+            
             AppDomain.CurrentDomain.ProcessExit += new EventHandler(OnProcessExit); 
             
             Program.window = new mainWin();
