@@ -38,9 +38,12 @@ namespace AutoPrintr
        
 
         List<RegisterDD> registersDD = new List<RegisterDD>();
+
+
         public mainWin()
         {
             Printers.init();
+            tools.SetAllowUnsafeHeaderParsing20();
 
             log.Info("Removing temp files...");
             Jobs.clearFiles();
@@ -64,8 +67,8 @@ namespace AutoPrintr
             logTabInit();
 
             log.Info("Setting application version in UI...");
-            string version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
-            versionLabel.Text = "RepairShopr AutoPrintr - v." + version;
+            Version version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
+            versionLabel.Text = String.Format("RepairShopr AutoPrintr - v.{0}.{1}.{2}", version.Major, version.Minor, version.Build);
 
             log.Info("Cheking config for saved credentials...");
             if (Program.config.channel.Length == 0)
@@ -73,16 +76,22 @@ namespace AutoPrintr
                 tabs.SelectTab("loginTab");
             }
 
+            log.Info("Cheking update...");
+            Autoupdate.onAvailable += Autoupdate_onAvailable;
+            Autoupdate.onDownloaded += Autoupdate_onDownloaded;
+            Autoupdate.onProgress += Autoupdate_onProgress;
+            updateStatus.Click += updateStatus_Click;
+            Autoupdate.check();
+
+            log.Info("Configuring GUI...");
             licenseText.Text = getLicenseText();
-
             trayIcon.Click += trayIcon_Click;
-
             this.Shown += mainWin_Shown;
             this.Resize += mainWin_Resize;
-
             WinAutoSize.apply(this, new Control[]{printersTable, jobsTable.table});
         }
 
+      
         void trayIcon_Click(object sender, EventArgs e)
         {
             trayIcon.Visible = false;
@@ -571,6 +580,53 @@ namespace AutoPrintr
             }
         }
 
+        // -------------------------------------------------------------------------------------
+        // Autoupdate
+
+        void Autoupdate_onProgress(object sender, System.Net.DownloadProgressChangedEventArgs e)
+        {
+            progressBar.Value = e.ProgressPercentage;
+            
+            progressBarValue.Text =
+                e.ProgressPercentage + "% | " + 
+                tools.BytesToString(e.TotalBytesToReceive) +
+                " / " + tools.BytesToString(e.TotalBytesToReceive)
+            ;
+        }
+
+        void Autoupdate_onDownloaded(object sender, EventArgs e)
+        {
+            progressBar.Visible = false;
+            progressBarValue.Visible = false;
+            statusSeparatorUpdate.Visible = false;;
+            updateStatus.Visible = false;
+            Autoupdate.install();
+        }
+
+        void Autoupdate_onAvailable(object sender, Autoupdate.UpdateEventArgs e)
+        {
+            statusSeparatorUpdate.Visible = true;
+            updateStatus.Visible = true;            
+            updateStatus.Text = "Update available " + e.release.name + " - click here to install";
+        }
+
+        void updateStatus_Click(object sender, EventArgs e)
+        {
+            string caption = "AutoPrintr update";
+            string msg = 
+                "AutoPrintr new version available: " + Autoupdate.release.name +
+                "\n\n " + Autoupdate.release.body +
+                "\n\nDownload (" + tools.BytesToString(Autoupdate.releaseFile.size) +
+                ") and install new version?"
+            ;
+            if( MessageBox.Show(msg, caption, MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                updateStatus.Text = "Update downloading";
+                progressBar.Visible = true;
+                progressBarValue.Visible = true;
+                Autoupdate.download();
+            }
+        }
 
         //protected override void OnSizeChanged(EventArgs e)
         //{
