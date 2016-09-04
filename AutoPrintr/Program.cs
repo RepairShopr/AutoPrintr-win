@@ -32,12 +32,20 @@ namespace AutoPrintr
         /// Application start log marker
         /// </summary>
         public const string appInitString = "/       === Application initialization... ===       /";
+
+        /// <summary>
+        /// Application version
+        /// </summary>
+        public static string version;
         /// <summary>
         /// Main entry point
         /// </summary>
         [STAThread]
         static void Main()
         {
+            Version v = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
+            Program.version = String.Format("{0}.{1}.{2}", v.Major, v.Minor, v.Build);
+
             log.Info("/***************************************************/");
             log.Info("/                                                   /");
             log.Info(appInitString);
