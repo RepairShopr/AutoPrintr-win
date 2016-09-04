@@ -46,7 +46,7 @@ namespace AutoPrintr
                 //(file) => file.name == "AutoPrintr_595.zip"
             );
 
-            if (releaseFile != null & release.name != System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString())
+            if (releaseFile != null & release.name != Program.version)
             {
                 if (onAvailable != null)
                 {
