@@ -120,18 +120,32 @@
   - [getSettings(domain,host,xt)](#M-AutoPrintr-LoginServer-getSettings-System-String,System-String,System-String- 'AutoPrintr.LoginServer.getSettings(System.String,System.String,System.String)')
   - [login(username,password)](#M-AutoPrintr-LoginServer-login-System-String,System-String- 'AutoPrintr.LoginServer.login(System.String,System.String)')
 - [logLevels](#T-AutoPrintr-tools-logLevels 'AutoPrintr.tools.logLevels')
+  - [Debug](#F-AutoPrintr-tools-logLevels-Debug 'AutoPrintr.tools.logLevels.Debug')
+  - [Error](#F-AutoPrintr-tools-logLevels-Error 'AutoPrintr.tools.logLevels.Error')
+  - [Fatal](#F-AutoPrintr-tools-logLevels-Fatal 'AutoPrintr.tools.logLevels.Fatal')
+  - [Info](#F-AutoPrintr-tools-logLevels-Info 'AutoPrintr.tools.logLevels.Info')
+  - [Trace](#F-AutoPrintr-tools-logLevels-Trace 'AutoPrintr.tools.logLevels.Trace')
+  - [Warn](#F-AutoPrintr-tools-logLevels-Warn 'AutoPrintr.tools.logLevels.Warn')
 - [LogWatcher](#T-AutoPrintr-LogWatcher 'AutoPrintr.LogWatcher')
   - [file](#F-AutoPrintr-LogWatcher-file 'AutoPrintr.LogWatcher.file')
 - [mainWin](#T-AutoPrintr-mainWin 'AutoPrintr.mainWin')
+  - [#ctor()](#M-AutoPrintr-mainWin-#ctor 'AutoPrintr.mainWin.#ctor')
   - [components](#F-AutoPrintr-mainWin-components 'AutoPrintr.mainWin.components')
+  - [registersDD](#F-AutoPrintr-mainWin-registersDD 'AutoPrintr.mainWin.registersDD')
+  - [aboutTabInit()](#M-AutoPrintr-mainWin-aboutTabInit 'AutoPrintr.mainWin.aboutTabInit')
   - [configTabInit()](#M-AutoPrintr-mainWin-configTabInit 'AutoPrintr.mainWin.configTabInit')
   - [createPrintersUI()](#M-AutoPrintr-mainWin-createPrintersUI 'AutoPrintr.mainWin.createPrintersUI')
   - [Dispose(disposing)](#M-AutoPrintr-mainWin-Dispose-System-Boolean- 'AutoPrintr.mainWin.Dispose(System.Boolean)')
+  - [getLicenseText()](#M-AutoPrintr-mainWin-getLicenseText 'AutoPrintr.mainWin.getLicenseText')
   - [helpButton_Click(sender,e)](#M-AutoPrintr-mainWin-helpButton_Click-System-Object,System-EventArgs- 'AutoPrintr.mainWin.helpButton_Click(System.Object,System.EventArgs)')
   - [InitializeComponent()](#M-AutoPrintr-mainWin-InitializeComponent 'AutoPrintr.mainWin.InitializeComponent')
+  - [logTabInit()](#M-AutoPrintr-mainWin-logTabInit 'AutoPrintr.mainWin.logTabInit')
   - [mainWin_Resize(sender,e)](#M-AutoPrintr-mainWin-mainWin_Resize-System-Object,System-EventArgs- 'AutoPrintr.mainWin.mainWin_Resize(System.Object,System.EventArgs)')
+  - [onLogChange(o,e)](#M-AutoPrintr-mainWin-onLogChange-System-Object,System-EventArgs- 'AutoPrintr.mainWin.onLogChange(System.Object,System.EventArgs)')
+  - [setStatus(str)](#M-AutoPrintr-mainWin-setStatus-System-String- 'AutoPrintr.mainWin.setStatus(System.String)')
   - [srvConnect()](#M-AutoPrintr-mainWin-srvConnect-System-String- 'AutoPrintr.mainWin.srvConnect(System.String)')
   - [submit_Click(sender,ev)](#M-AutoPrintr-mainWin-submit_Click-System-Object,System-EventArgs- 'AutoPrintr.mainWin.submit_Click(System.Object,System.EventArgs)')
+  - [updateLocations(locations,defaultLocation)](#M-AutoPrintr-mainWin-updateLocations-System-Collections-Generic-List{AutoPrintr-Location},AutoPrintr-Location- 'AutoPrintr.mainWin.updateLocations(System.Collections.Generic.List{AutoPrintr.Location},AutoPrintr.Location)')
 - [pLabel](#T-AutoPrintr-pLabel 'AutoPrintr.pLabel')
 - [printDelegate](#T-AutoPrintr-PrintEngine-printDelegate 'AutoPrintr.PrintEngine.printDelegate')
 - [PrintEngine](#T-AutoPrintr-PrintEngine 'AutoPrintr.PrintEngine')
@@ -171,9 +185,8 @@
   - [config](#F-AutoPrintr-Program-config 'AutoPrintr.Program.config')
   - [tempDir](#F-AutoPrintr-Program-tempDir 'AutoPrintr.Program.tempDir')
   - [tempDnDir](#F-AutoPrintr-Program-tempDnDir 'AutoPrintr.Program.tempDnDir')
-  - [version](#F-AutoPrintr-Program-version 'AutoPrintr.Program.version')
   - [window](#F-AutoPrintr-Program-window 'AutoPrintr.Program.window')
-  - [Main()](#M-AutoPrintr-Program-Main 'AutoPrintr.Program.Main')
+  - [Main()](#M-AutoPrintr-Program-Main-System-String[]- 'AutoPrintr.Program.Main(System.String[])')
 - [Register](#T-AutoPrintr-LoginServer-Register 'AutoPrintr.LoginServer.Register')
 - [RegisterDD](#T-AutoPrintr-RegisterDD 'AutoPrintr.RegisterDD')
   - [#ctor(printer)](#M-AutoPrintr-RegisterDD-#ctor-AutoPrintr-Printer,System-Collections-Generic-List{AutoPrintr-LoginServer-Register}- 'AutoPrintr.RegisterDD.#ctor(AutoPrintr.Printer,System.Collections.Generic.List{AutoPrintr.LoginServer.Register})')
@@ -182,6 +195,7 @@
 - [Resources](#T-AutoPrintr-Properties-Resources 'AutoPrintr.Properties.Resources')
   - [Culture](#P-AutoPrintr-Properties-Resources-Culture 'AutoPrintr.Properties.Resources.Culture')
   - [ResourceManager](#P-AutoPrintr-Properties-Resources-ResourceManager 'AutoPrintr.Properties.Resources.ResourceManager')
+- [setStatusCb](#T-AutoPrintr-mainWin-setStatusCb 'AutoPrintr.mainWin.setStatusCb')
 - [Settings](#T-AutoPrintr-Settings 'AutoPrintr.Settings')
   - [availableLocations](#F-AutoPrintr-Settings-availableLocations 'AutoPrintr.Settings.availableLocations')
   - [channel](#F-AutoPrintr-Settings-channel 'AutoPrintr.Settings.channel')
@@ -202,6 +216,8 @@
   - [fileExample](#F-AutoPrintr-Skins-fileExample 'AutoPrintr.Skins.fileExample')
 - [tabelLabel](#T-AutoPrintr-tabelLabel 'AutoPrintr.tabelLabel')
 - [tools](#T-AutoPrintr-tools 'AutoPrintr.tools')
+  - [shortVersion](#F-AutoPrintr-tools-shortVersion 'AutoPrintr.tools.shortVersion')
+  - [version](#F-AutoPrintr-tools-version 'AutoPrintr.tools.version')
   - [BytesToString(byteCount)](#M-AutoPrintr-tools-BytesToString-System-Int64- 'AutoPrintr.tools.BytesToString(System.Int64)')
   - [Color2RGB(c)](#M-AutoPrintr-tools-Color2RGB-System-Drawing-Color- 'AutoPrintr.tools.Color2RGB(System.Drawing.Color)')
   - [DirEmpty(path)](#M-AutoPrintr-tools-DirEmpty-System-String- 'AutoPrintr.tools.DirEmpty(System.String)')
@@ -209,6 +225,7 @@
   - [GetAllControls(container)](#M-AutoPrintr-tools-GetAllControls-System-Windows-Forms-Control- 'AutoPrintr.tools.GetAllControls(System.Windows.Forms.Control)')
   - [randomFileName()](#M-AutoPrintr-tools-randomFileName 'AutoPrintr.tools.randomFileName')
   - [RGB2Color(s)](#M-AutoPrintr-tools-RGB2Color-System-String- 'AutoPrintr.tools.RGB2Color(System.String)')
+  - [SetAllowUnsafeHeaderParsing20()](#M-AutoPrintr-tools-SetAllowUnsafeHeaderParsing20 'AutoPrintr.tools.SetAllowUnsafeHeaderParsing20')
 - [TriggerCheckBox](#T-AutoPrintr-TriggerCheckBox 'AutoPrintr.TriggerCheckBox')
   - [docType](#F-AutoPrintr-TriggerCheckBox-docType 'AutoPrintr.TriggerCheckBox.docType')
   - [printer](#F-AutoPrintr-TriggerCheckBox-printer 'AutoPrintr.TriggerCheckBox.printer')
@@ -1471,6 +1488,48 @@ AutoPrintr.tools
 
 Log levels of NLog
 
+<a name='F-AutoPrintr-tools-logLevels-Debug'></a>
+### Debug `constants` [#](#F-AutoPrintr-tools-logLevels-Debug 'Go To Here') [=](#contents 'Back To Contents')
+
+##### Summary
+
+Debug log level
+
+<a name='F-AutoPrintr-tools-logLevels-Error'></a>
+### Error `constants` [#](#F-AutoPrintr-tools-logLevels-Error 'Go To Here') [=](#contents 'Back To Contents')
+
+##### Summary
+
+Error log level
+
+<a name='F-AutoPrintr-tools-logLevels-Fatal'></a>
+### Fatal `constants` [#](#F-AutoPrintr-tools-logLevels-Fatal 'Go To Here') [=](#contents 'Back To Contents')
+
+##### Summary
+
+Fatal log level
+
+<a name='F-AutoPrintr-tools-logLevels-Info'></a>
+### Info `constants` [#](#F-AutoPrintr-tools-logLevels-Info 'Go To Here') [=](#contents 'Back To Contents')
+
+##### Summary
+
+Info log level
+
+<a name='F-AutoPrintr-tools-logLevels-Trace'></a>
+### Trace `constants` [#](#F-AutoPrintr-tools-logLevels-Trace 'Go To Here') [=](#contents 'Back To Contents')
+
+##### Summary
+
+Trace log level
+
+<a name='F-AutoPrintr-tools-logLevels-Warn'></a>
+### Warn `constants` [#](#F-AutoPrintr-tools-logLevels-Warn 'Go To Here') [=](#contents 'Back To Contents')
+
+##### Summary
+
+Warning log level
+
 <a name='T-AutoPrintr-LogWatcher'></a>
 ## LogWatcher [#](#T-AutoPrintr-LogWatcher 'Go To Here') [=](#contents 'Back To Contents')
 
@@ -1496,12 +1555,45 @@ Log file name, shall be same as in NLog.config
 
 AutoPrintr
 
+##### Summary
+
+Main window class
+
+<a name='M-AutoPrintr-mainWin-#ctor'></a>
+### #ctor() `constructor` [#](#M-AutoPrintr-mainWin-#ctor 'Go To Here') [=](#contents 'Back To Contents')
+
+##### Summary
+
+Create main window form
+
+##### Parameters
+
+This constructor has no parameters.
+
 <a name='F-AutoPrintr-mainWin-components'></a>
 ### components `constants` [#](#F-AutoPrintr-mainWin-components 'Go To Here') [=](#contents 'Back To Contents')
 
 ##### Summary
 
 Требуется переменная конструктора.
+
+<a name='F-AutoPrintr-mainWin-registersDD'></a>
+### registersDD `constants` [#](#F-AutoPrintr-mainWin-registersDD 'Go To Here') [=](#contents 'Back To Contents')
+
+##### Summary
+
+List of dropdowns with registers
+
+<a name='M-AutoPrintr-mainWin-aboutTabInit'></a>
+### aboutTabInit() `method` [#](#M-AutoPrintr-mainWin-aboutTabInit 'Go To Here') [=](#contents 'Back To Contents')
+
+##### Summary
+
+About tab initialization
+
+##### Parameters
+
+This method has no parameters.
 
 <a name='M-AutoPrintr-mainWin-configTabInit'></a>
 ### configTabInit() `method` [#](#M-AutoPrintr-mainWin-configTabInit 'Go To Here') [=](#contents 'Back To Contents')
@@ -1538,6 +1630,21 @@ This method has no parameters.
 | ---- | ---- | ----------- |
 | disposing | [System.Boolean](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Boolean 'System.Boolean') | истинно, если управляемый ресурс должен быть удален; иначе ложно. |
 
+<a name='M-AutoPrintr-mainWin-getLicenseText'></a>
+### getLicenseText() `method` [#](#M-AutoPrintr-mainWin-getLicenseText 'Go To Here') [=](#contents 'Back To Contents')
+
+##### Summary
+
+Return license text
+
+##### Returns
+
+License string
+
+##### Parameters
+
+This method has no parameters.
+
 <a name='M-AutoPrintr-mainWin-helpButton_Click-System-Object,System-EventArgs-'></a>
 ### helpButton_Click(sender,e) `method` [#](#M-AutoPrintr-mainWin-helpButton_Click-System-Object,System-EventArgs- 'Go To Here') [=](#contents 'Back To Contents')
 
@@ -1563,12 +1670,23 @@ Help button handler
 
 This method has no parameters.
 
+<a name='M-AutoPrintr-mainWin-logTabInit'></a>
+### logTabInit() `method` [#](#M-AutoPrintr-mainWin-logTabInit 'Go To Here') [=](#contents 'Back To Contents')
+
+##### Summary
+
+Log tab initialization
+
+##### Parameters
+
+This method has no parameters.
+
 <a name='M-AutoPrintr-mainWin-mainWin_Resize-System-Object,System-EventArgs-'></a>
 ### mainWin_Resize(sender,e) `method` [#](#M-AutoPrintr-mainWin-mainWin_Resize-System-Object,System-EventArgs- 'Go To Here') [=](#contents 'Back To Contents')
 
 ##### Summary
 
-Tray icon in minimize
+Minimize application to tray icon
 
 ##### Parameters
 
@@ -1576,6 +1694,33 @@ Tray icon in minimize
 | ---- | ---- | ----------- |
 | sender | [System.Object](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Object 'System.Object') |  |
 | e | [System.EventArgs](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.EventArgs 'System.EventArgs') |  |
+
+<a name='M-AutoPrintr-mainWin-onLogChange-System-Object,System-EventArgs-'></a>
+### onLogChange(o,e) `method` [#](#M-AutoPrintr-mainWin-onLogChange-System-Object,System-EventArgs- 'Go To Here') [=](#contents 'Back To Contents')
+
+##### Summary
+
+Evevent handler for log change event
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| o | [System.Object](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Object 'System.Object') |  |
+| e | [System.EventArgs](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.EventArgs 'System.EventArgs') |  |
+
+<a name='M-AutoPrintr-mainWin-setStatus-System-String-'></a>
+### setStatus(str) `method` [#](#M-AutoPrintr-mainWin-setStatus-System-String- 'Go To Here') [=](#contents 'Back To Contents')
+
+##### Summary
+
+Set status string
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| str | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') |  |
 
 <a name='M-AutoPrintr-mainWin-srvConnect-System-String-'></a>
 ### srvConnect() `method` [#](#M-AutoPrintr-mainWin-srvConnect-System-String- 'Go To Here') [=](#contents 'Back To Contents')
@@ -1601,6 +1746,24 @@ Login button handler
 | ---- | ---- | ----------- |
 | sender | [System.Object](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Object 'System.Object') |  |
 | ev | [System.EventArgs](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.EventArgs 'System.EventArgs') |  |
+
+<a name='M-AutoPrintr-mainWin-updateLocations-System-Collections-Generic-List{AutoPrintr-Location},AutoPrintr-Location-'></a>
+### updateLocations(locations,defaultLocation) `method` [#](#M-AutoPrintr-mainWin-updateLocations-System-Collections-Generic-List{AutoPrintr-Location},AutoPrintr-Location- 'Go To Here') [=](#contents 'Back To Contents')
+
+##### Summary
+
+Render locations
+
+##### Returns
+
+
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| locations | [System.Collections.Generic.List{AutoPrintr.Location}](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Collections.Generic.List 'System.Collections.Generic.List{AutoPrintr.Location}') |  |
+| defaultLocation | [AutoPrintr.Location](#T-AutoPrintr-Location 'AutoPrintr.Location') |  |
 
 <a name='T-AutoPrintr-pLabel'></a>
 ## pLabel [#](#T-AutoPrintr-pLabel 'Go To Here') [=](#contents 'Back To Contents')
@@ -2005,6 +2168,10 @@ This method has no parameters.
 
 AutoPrintr
 
+##### Summary
+
+Main class
+
 <a name='F-AutoPrintr-Program-appInitString'></a>
 ### appInitString `constants` [#](#F-AutoPrintr-Program-appInitString 'Go To Here') [=](#contents 'Back To Contents')
 
@@ -2033,13 +2200,6 @@ Temporary directory
 
 Temporary directory for fiels download
 
-<a name='F-AutoPrintr-Program-version'></a>
-### version `constants` [#](#F-AutoPrintr-Program-version 'Go To Here') [=](#contents 'Back To Contents')
-
-##### Summary
-
-Application version
-
 <a name='F-AutoPrintr-Program-window'></a>
 ### window `constants` [#](#F-AutoPrintr-Program-window 'Go To Here') [=](#contents 'Back To Contents')
 
@@ -2047,8 +2207,8 @@ Application version
 
 Main applciation window
 
-<a name='M-AutoPrintr-Program-Main'></a>
-### Main() `method` [#](#M-AutoPrintr-Program-Main 'Go To Here') [=](#contents 'Back To Contents')
+<a name='M-AutoPrintr-Program-Main-System-String[]-'></a>
+### Main() `method` [#](#M-AutoPrintr-Program-Main-System-String[]- 'Go To Here') [=](#contents 'Back To Contents')
 
 ##### Summary
 
@@ -2138,6 +2298,23 @@ AutoPrintr.Properties
 ##### Summary
 
 Возвращает кэшированный экземпляр ResourceManager, использованный этим классом.
+
+<a name='T-AutoPrintr-mainWin-setStatusCb'></a>
+## setStatusCb [#](#T-AutoPrintr-mainWin-setStatusCb 'Go To Here') [=](#contents 'Back To Contents')
+
+##### Namespace
+
+AutoPrintr.mainWin
+
+##### Summary
+
+Delegate for settin status string
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| str | [T:AutoPrintr.mainWin.setStatusCb](#T-T-AutoPrintr-mainWin-setStatusCb 'T:AutoPrintr.mainWin.setStatusCb') |  |
 
 <a name='T-AutoPrintr-Settings'></a>
 ## Settings [#](#T-AutoPrintr-Settings 'Go To Here') [=](#contents 'Back To Contents')
@@ -2323,6 +2500,20 @@ AutoPrintr
 
 Various usefull tools
 
+<a name='F-AutoPrintr-tools-shortVersion'></a>
+### shortVersion `constants` [#](#F-AutoPrintr-tools-shortVersion 'Go To Here') [=](#contents 'Back To Contents')
+
+##### Summary
+
+Application short string version
+
+<a name='F-AutoPrintr-tools-version'></a>
+### version `constants` [#](#F-AutoPrintr-tools-version 'Go To Here') [=](#contents 'Back To Contents')
+
+##### Summary
+
+Application full version
+
 <a name='M-AutoPrintr-tools-BytesToString-System-Int64-'></a>
 ### BytesToString(byteCount) `method` [#](#M-AutoPrintr-tools-BytesToString-System-Int64- 'Go To Here') [=](#contents 'Back To Contents')
 
@@ -2435,6 +2626,21 @@ Color
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | s | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') | Hex string color |
+
+<a name='M-AutoPrintr-tools-SetAllowUnsafeHeaderParsing20'></a>
+### SetAllowUnsafeHeaderParsing20() `method` [#](#M-AutoPrintr-tools-SetAllowUnsafeHeaderParsing20 'Go To Here') [=](#contents 'Back To Contents')
+
+##### Summary
+
+Disable error trowing on http errors in Net module
+
+##### Returns
+
+
+
+##### Parameters
+
+This method has no parameters.
 
 <a name='T-AutoPrintr-TriggerCheckBox'></a>
 ## TriggerCheckBox [#](#T-AutoPrintr-TriggerCheckBox 'Go To Here') [=](#contents 'Back To Contents')

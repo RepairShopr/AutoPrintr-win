@@ -7,6 +7,9 @@ using System.IO;
 
 namespace AutoPrintr
 {
+    /// <summary>
+    /// Main class
+    /// </summary>
     public static class Program
     {
         private static NLog.Logger log = NLog.LogManager.GetCurrentClassLogger();
@@ -34,18 +37,11 @@ namespace AutoPrintr
         public const string appInitString = "/       === Application initialization... ===       /";
 
         /// <summary>
-        /// Application version
-        /// </summary>
-        public static string version;
-        /// <summary>
         /// Main entry point
         /// </summary>
         [STAThread]
-        static void Main()
+        static void Main(string[] args)
         {
-            Version v = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
-            Program.version = String.Format("{0}.{1}.{2}", v.Major, v.Minor, v.Build);
-
             log.Info("/***************************************************/");
             log.Info("/                                                   /");
             log.Info(appInitString);
@@ -61,7 +57,63 @@ namespace AutoPrintr
             
             Program.window = new mainWin();
             Application.Run(Program.window);
+
+            if (args != null && args.Length == 1 && args[0].Length > 1
+                    && (args[0][0] == '-' || args[0][0] == '/'))
+            {
+                switch (args[0].Substring(1).ToLower())
+                {
+                    case "install":
+                    case "i":
+                        //if (Installer.install())
+                        //{
+                        //    Console.WriteLine("Programm installed");
+                        //}
+                        //else
+                        //{
+                        //    Console.WriteLine("Failed to install programm");
+                        //}
+
+                        break;
+                    case "uninstall":
+                    case "u":
+                        //if (Installer.uninstall())
+                        //{
+                        //    Console.WriteLine("Programm uninstalled");
+                        //}
+                        //else
+                        //{
+                        //    Console.WriteLine("Failed to uninstall programm");
+                        //}
+
+                        break;
+                    default:
+                        Console.WriteLine("Unrecognized parameters.\n\n    -i /i -install /install — install programm\n\n    -u /u -uninstall /uninstall — uninstall programm");
+                        break;
+                }
+            }
+            else
+            {
+                try
+                {
+                    //AppDomain.CurrentDomain.ProcessExit += (sender, e) => cpamon.stop();
+                    //cpamon.run();
+                }
+                catch (IOException ex)
+                {
+                    //log.Error("", ex);
+                    Console.WriteLine("IOException", ex);
+                    //cpamon.stop();
+                }
+                catch (Exception ex)
+                {
+                    //log.Fatal("Could not start polling service due to unknown error", ex);
+                    Console.WriteLine("Could not start programm due application error", ex);
+                    //cpamon.stop();
+                }
+            }
         }
+
         static void OnProcessExit(object sender, EventArgs e)
         {
             log.Info("Removing temp files...");

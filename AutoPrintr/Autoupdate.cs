@@ -46,7 +46,7 @@ namespace AutoPrintr
                 //(file) => file.name == "AutoPrintr_595.zip"
             );
 
-            if (releaseFile != null & release.name != Program.version)
+            if (releaseFile != null & tools.isNewerVersion(release.name) )
             {
                 if (onAvailable != null)
                 {
