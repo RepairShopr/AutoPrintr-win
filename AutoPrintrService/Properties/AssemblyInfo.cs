@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // Управление общими сведениями о сборке осуществляется с помощью 
 // набора атрибутов. Измените значения этих атрибутов, чтобы изменить сведения,
 // связанные со сборкой.
-[assembly: AssemblyTitle("WinPrintr")]
+[assembly: AssemblyTitle("AutoPrintrService")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("WinPrintr")]
+[assembly: AssemblyProduct("AutoPrintrService")]
 [assembly: AssemblyCopyright("Copyright ©  2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // Следующий GUID служит для идентификации библиотеки типов, если этот проект будет видимым для COM
-[assembly: Guid("9a160b51-4366-4a63-ab00-8a2099a85389")]
+[assembly: Guid("beb1864e-5060-4ec8-8d4a-432eaa789f7a")]
 
 // Сведения о версии сборки состоят из следующих четырех значений:
 //
@@ -32,4 +32,5 @@ using System.Runtime.InteropServices;
 // Можно задать все значения или принять номера сборки и редакции по умолчанию 
 // используя "*", как показано ниже:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("0.9.686.0")]
+[assembly: AssemblyVersion("1.0.0.14")]
+[assembly: AssemblyFileVersion("1.0.0.0")]

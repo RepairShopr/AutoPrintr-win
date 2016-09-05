@@ -16,12 +16,45 @@ namespace AutoPrintr
     public static class tools
     {
         private static NLog.Logger log = NLog.LogManager.GetCurrentClassLogger();
+
+        /// <summary>
+        /// Application full version
+        /// </summary>
+        public static Version version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
+        /// <summary>
+        /// Application short string version
+        /// </summary>
+        public static string shortVersion = version.ToString(3);
+        
         /// <summary>
         /// Log levels of NLog
         /// </summary>
         public enum logLevels : byte
         {
-            Fatal, Error, Warn, Info, Debug, Trace
+            /// <summary>
+            /// Fatal log level
+            /// </summary>
+            Fatal, 
+            /// <summary>
+            /// Error log level
+            /// </summary>
+            Error,
+            /// <summary>
+            /// Warning log level
+            /// </summary>
+            Warn, 
+            /// <summary>
+            /// Info log level
+            /// </summary>
+            Info,
+            /// <summary>
+            /// Debug log level
+            /// </summary>
+            Debug, 
+            /// <summary>
+            /// Trace log level
+            /// </summary>
+            Trace
         };
         
         /// <summary>
@@ -139,9 +172,12 @@ namespace AutoPrintr
         ///// <param name="?"></param>
         //public static void TableLayoutPanelUpdateItemsSizes(TableLayoutPanel p)
         //{
-
         //}
 
+        /// <summary>
+        /// Disable error trowing on http errors in Net module
+        /// </summary>
+        /// <returns></returns>
         public static bool SetAllowUnsafeHeaderParsing20()
         {
             //Get the assembly that contains the internal class
@@ -173,5 +209,12 @@ namespace AutoPrintr
             }
             return false;
         }
+
+        public static bool isNewerVersion(string nver)
+        {
+            return (new Version(nver)).CompareTo(version) == 1;
+        }
+
+
     }
 }

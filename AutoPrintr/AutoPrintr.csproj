@@ -19,7 +19,7 @@
     <UpdateAssemblyFileVersion>False</UpdateAssemblyFileVersion>
     <UpdateAssemblyInfoVersion>False</UpdateAssemblyInfoVersion>
     <AssemblyVersionSettings>None.None.Increment.None</AssemblyVersionSettings>
-    <AssemblyVersion>0.9.662.0</AssemblyVersion>
+    <AssemblyVersion>0.9.686.0</AssemblyVersion>
     <AssemblyFileVersionSettings>
     </AssemblyFileVersionSettings>
     <AssemblyInfoVersionSettings>
@@ -100,92 +100,116 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Autoupdate.cs" />
-    <Compile Include="CheckBoxList.cs">
+    <Compile Include="mainWin\aboutTab.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="mainWin\autoupdate.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="mainWin\jobsTab.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="mainWin\loginTab.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="mainWin\logTab.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="mainWin\printersTab\CheckBoxList.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="CheckBoxList.Designer.cs">
+    <Compile Include="mainWin\printersTab\CheckBoxList.Designer.cs">
       <DependentUpon>CheckBoxList.cs</DependentUpon>
     </Compile>
-    <Compile Include="CheckBoxSlider.cs">
+    <Compile Include="controls\CheckBoxSlider.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="CheckBoxSlider.Designer.cs">
+    <Compile Include="controls\CheckBoxSlider.Designer.cs">
       <DependentUpon>CheckBoxSlider.cs</DependentUpon>
     </Compile>
     <Compile Include="Config.cs" />
     <Compile Include="Credentials.cs" />
     <Compile Include="Jobs.cs" />
-    <Compile Include="JobsList.cs">
+    <Compile Include="mainWin\jobsTab\JobsList.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="JobsList.Designer.cs">
+    <Compile Include="mainWin\jobsTab\JobsList.Designer.cs">
       <DependentUpon>JobsList.cs</DependentUpon>
     </Compile>
     <Compile Include="LogConfig.cs" />
     <Compile Include="LogWatcher.cs" />
     <Compile Include="LoginServer.cs" />
-    <Compile Include="DocTypeCheckBox.cs">
+    <Compile Include="mainWin\printersTab\DocTypeCheckBox.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="DocQuantity.cs">
+    <Compile Include="mainWin\printersTab\DocQuantity.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="PrintEngineDD.cs">
+    <Compile Include="mainWin\printersTab.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="mainWin\printersTab\PrintEngineDD.cs">
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="mainWin\statusBar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="mainWin\trayIcon.cs">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="PrintEngines.cs" />
-    <Compile Include="PrinterDocumentControl.cs">
+    <Compile Include="mainWin\printersTab\PrinterDocumentControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="PrinterDocumentControl.Designer.cs">
+    <Compile Include="mainWin\printersTab\PrinterDocumentControl.Designer.cs">
       <DependentUpon>PrinterDocumentControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="RegisterDD.cs">
+    <Compile Include="mainWin\printersTab\RegisterDD.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Skin.cs" />
     <Compile Include="Srv.cs" />
     <Compile Include="LoginResponse.cs" />
-    <Compile Include="mainWin.cs">
+    <Compile Include="mainWin\mainWin.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="mainWin.Designer.cs">
+    <Compile Include="mainWin\mainWin.Designer.cs">
       <DependentUpon>mainWin.cs</DependentUpon>
     </Compile>
     <Compile Include="Printers.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="tabelLabel.cs">
+    <Compile Include="controls\tabelLabel.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="tools.cs" />
-    <Compile Include="TriggerCheckBox.cs">
+    <Compile Include="mainWin\printersTab\TriggerCheckBox.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="WinAutoSize.cs" />
     <Content Include="AutoPrintr.ico" />
     <Content Include="Printer_icon_256.ico" />
-    <EmbeddedResource Include="CheckBoxList.resx">
+    <EmbeddedResource Include="mainWin\printersTab\CheckBoxList.resx">
       <DependentUpon>CheckBoxList.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="CheckBoxSlider.resx">
+    <EmbeddedResource Include="controls\CheckBoxSlider.resx">
       <DependentUpon>CheckBoxSlider.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="JobsList.resx">
+    <EmbeddedResource Include="mainWin\jobsTab\JobsList.resx">
       <DependentUpon>JobsList.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="mainWin.en.resx">
+    <EmbeddedResource Include="mainWin\mainWin.en.resx">
       <DependentUpon>mainWin.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="mainWin.resx">
+    <EmbeddedResource Include="mainWin\mainWin.resx">
       <DependentUpon>mainWin.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="DocTypeCheckBox.resx">
+    <EmbeddedResource Include="mainWin\printersTab\DocTypeCheckBox.resx">
       <DependentUpon>DocTypeCheckBox.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PrinterDocumentControl.resx">
+    <EmbeddedResource Include="mainWin\printersTab\PrinterDocumentControl.resx">
       <DependentUpon>PrinterDocumentControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -235,6 +259,7 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>
@@ -243,7 +268,7 @@
   <PropertyGroup>
     <PostBuildEvent>echo "Copying NLog.config"
 DEL NLog.config
-echo copy /B /Y "$(SolutionDir)resources\NLog.config" "$(TargetDir)NLog.config"
+copy /B /Y "$(SolutionDir)resources\NLog.config" "$(TargetDir)NLog.config"
 echo copy /B /Y "$(SolutionDir)resources\SumatraPDF.exe" "$(TargetDir)SumatraPDF.exe"
 if $(ConfigurationName) EQU Release (
     If Not Exist "$(SolutionDir)installer\version.exe" "C:\Program Files (x86)\NSIS\makensis.exe" "$(SolutionDir)installer\version.nsi"
