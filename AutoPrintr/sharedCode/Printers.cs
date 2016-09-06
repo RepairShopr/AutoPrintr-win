@@ -11,7 +11,7 @@ namespace AutoPrintr
     /// <summary>
     /// Static class for printers management
     /// </summary>
-    static class Printers
+    public static class Printers
     {
         private static NLog.Logger log = NLog.LogManager.GetCurrentClassLogger();
 

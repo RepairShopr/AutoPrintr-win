@@ -32,7 +32,7 @@ namespace AutoPrintr
             if (FormWindowState.Minimized == this.WindowState)
             {
                 trayIcon.Visible = true;
-                trayIcon.ShowBalloonTip(1000);
+                //trayIcon.ShowBalloonTip(1000);
                 this.Hide();
             }
             else if (FormWindowState.Normal == this.WindowState)

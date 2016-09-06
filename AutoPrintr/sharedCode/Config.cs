@@ -30,7 +30,7 @@ namespace AutoPrintr
         /// <summary>
         /// Registers list
         /// </summary>
-        public List<LoginServer.Register> registers = new List<LoginServer.Register>();
+        public List<Register> registers = new List<Register>();
 
         /// <summary>
         /// Printers configurations

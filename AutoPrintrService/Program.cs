@@ -7,11 +7,25 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Configuration;
 
-namespace AutoPrintrService
+namespace AutoPrintr
 {
-    static class Program
+    public static class Program
     {
         private static NLog.Logger log = NLog.LogManager.GetCurrentClassLogger();
+
+        /// <summary>
+        /// Application configuration
+        /// </summary>
+        public static Config config;
+        /// <summary>
+        /// Temporary directory
+        /// </summary>
+        public static string tempDir = Path.Combine(Path.GetTempPath(), "AutoPrintr");
+        /// <summary>
+        /// Temporary directory for fiels download
+        /// </summary>
+        public static string tempDnDir = Path.Combine(tempDir, "dn");
+
         ///// <summary>
         ///// Главная точка входа для приложения.
         ///// </summary>
@@ -27,7 +41,12 @@ namespace AutoPrintrService
         static void Main(string[] args)
         {
             //Console.WriteLine("Programm started");
-            log.Fatal("Service started");
+            log.Info("Loading config start...");
+            Program.config = new Config(err =>
+            {
+                log.Error(err, "Config loading error.");
+            });
+            log.Info("Service started");
 
             if (args != null && args.Length == 1 && args[0].Length > 1
                 && (args[0][0] == '-' || args[0][0] == '/'))

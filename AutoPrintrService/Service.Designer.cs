@@ -1,4 +1,4 @@
-﻿namespace AutoPrintrService
+﻿namespace AutoPrintr
 {
     partial class AutoPrintrService
     {

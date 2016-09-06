@@ -210,11 +210,15 @@ namespace AutoPrintr
             return false;
         }
 
+        /// <summary>
+        /// Check string version if it later, then current
+        /// </summary>
+        /// <param name="nver"></param>
+        /// <returns></returns>
         public static bool isNewerVersion(string nver)
         {
             return (new Version(nver)).CompareTo(version) == 1;
         }
-
 
     }
 }

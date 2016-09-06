@@ -12,7 +12,7 @@ using System.IO;
 using System.IO.Pipes;
 using AutoPrintr;
 
-namespace AutoPrintrService
+namespace AutoPrintr
 {
     public partial class AutoPrintrService : ServiceBase
     {
@@ -22,20 +22,21 @@ namespace AutoPrintrService
          
         void main()
         {
-            var server = new NamedPipeServerStream(PipeInterface.serverName);
-            server.WaitForConnection();
-            StreamReader reader = new StreamReader(server);
-            StreamWriter writer = new StreamWriter(server);
-            while (state)
-            {
-                var line = reader.ReadLine();
-                writer.WriteLine(String.Join("", line.Reverse()));
-                writer.Flush();
+            //var server = new NamedPipeServerStream(PipeInterface.serverName);
+            //server.WaitForConnection();
+            //StreamReader reader = new StreamReader(server);
+            //StreamWriter writer = new StreamWriter(server);
+            //while (state)
+            //{
+            //    var line = reader.ReadLine();
+            //    writer.WriteLine(String.Join("", line.Reverse()));
+            //    writer.Flush();
             
-                //Console.WriteLine("Work...");
-                //log.Debug("Work...");
-                //Thread.Sleep(1000);
-            }
+            //    //Console.WriteLine("Work...");
+            //    //log.Debug("Work...");
+            //    //Thread.Sleep(1000);
+            //}
+            Pipe.PrintersServer();
         }
 
         public AutoPrintrService()

@@ -127,7 +127,7 @@ namespace AutoPrintr
                 }
 
                 // Registers
-                foreach (LoginServer.Register r in LoginServer.registers)
+                foreach (Register r in LoginServer.registers)
                 {
                     Program.config.registers.Add(r);
                 }
