@@ -49,69 +49,73 @@ namespace AutoPrintr
             log.Info("/***************************************************/");
             Directory.CreateDirectory(tempDir);
             Directory.CreateDirectory(tempDnDir);
-            
+             
+            Console.WriteLine("App started");
+            Pipe.PrintersClient();
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            
-            AppDomain.CurrentDomain.ProcessExit += new EventHandler(OnProcessExit); 
-            
+
+            AppDomain.CurrentDomain.ProcessExit += new EventHandler(OnProcessExit);
+
             Program.window = new mainWin();
             Application.Run(Program.window);
 
-            if (args != null && args.Length == 1 && args[0].Length > 1
-                    && (args[0][0] == '-' || args[0][0] == '/'))
-            {
-                switch (args[0].Substring(1).ToLower())
-                {
-                    case "install":
-                    case "i":
-                        //if (Installer.install())
-                        //{
-                        //    Console.WriteLine("Programm installed");
-                        //}
-                        //else
-                        //{
-                        //    Console.WriteLine("Failed to install programm");
-                        //}
 
-                        break;
-                    case "uninstall":
-                    case "u":
-                        //if (Installer.uninstall())
-                        //{
-                        //    Console.WriteLine("Programm uninstalled");
-                        //}
-                        //else
-                        //{
-                        //    Console.WriteLine("Failed to uninstall programm");
-                        //}
+            //if (args != null && args.Length == 1 && args[0].Length > 1
+            //        && (args[0][0] == '-' || args[0][0] == '/'))
+            //{
+            //    switch (args[0].Substring(1).ToLower())
+            //    {
+            //        case "install":
+            //        case "i":
+            //            //if (Installer.install())
+            //            //{
+            //            //    Console.WriteLine("Programm installed");
+            //            //}
+            //            //else
+            //            //{
+            //            //    Console.WriteLine("Failed to install programm");
+            //            //}
 
-                        break;
-                    default:
-                        Console.WriteLine("Unrecognized parameters.\n\n    -i /i -install /install — install programm\n\n    -u /u -uninstall /uninstall — uninstall programm");
-                        break;
-                }
-            }
-            else
-            {
-                try
-                {
-                    //AppDomain.CurrentDomain.ProcessExit += (sender, e) => cpamon.stop();
-                    //cpamon.run();
-                }
-                catch (IOException ex)
-                {
-                    //log.Error("", ex);
-                    Console.WriteLine("IOException", ex);
-                    //cpamon.stop();
-                }
-                catch (Exception ex)
-                {
-                    //log.Fatal("Could not start polling service due to unknown error", ex);
-                    Console.WriteLine("Could not start programm due application error", ex);
-                    //cpamon.stop();
-                }
-            }
+            //            break;
+            //        case "uninstall":
+            //        case "u":
+            //            //if (Installer.uninstall())
+            //            //{
+            //            //    Console.WriteLine("Programm uninstalled");
+            //            //}
+            //            //else
+            //            //{
+            //            //    Console.WriteLine("Failed to uninstall programm");
+            //            //}
+
+            //            break;
+            //        default:
+            //            Console.WriteLine("Unrecognized parameters.\n\n    -i /i -install /install — install programm\n\n    -u /u -uninstall /uninstall — uninstall programm");
+            //            break;
+            //    }
+            //}
+            //else
+            //{
+            //    try
+            //    {
+            //        //AppDomain.CurrentDomain.ProcessExit += (sender, e) => cpamon.stop();
+            //        //cpamon.run();
+            //    }
+            //    catch (IOException ex)
+            //    {
+            //        //log.Error("", ex);
+            //        Console.WriteLine("IOException", ex);
+            //        //cpamon.stop();
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        //log.Fatal("Could not start polling service due to unknown error", ex);
+            //        Console.WriteLine("Could not start programm due application error", ex);
+            //        //cpamon.stop();
+            //    } 
+            //}
         }
 
         static void OnProcessExit(object sender, EventArgs e)

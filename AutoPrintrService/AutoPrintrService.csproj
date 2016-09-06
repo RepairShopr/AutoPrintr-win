@@ -7,12 +7,12 @@
     <ProjectGuid>{9CBCC237-BF87-4B16-8CDA-F0882741DD16}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AutoPrintrService</RootNamespace>
+    <RootNamespace>AutoPrintr</RootNamespace>
     <AssemblyName>AutoPrintrService</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <AssemblyVersion>1.0.0.14</AssemblyVersion>
+    <AssemblyVersion>0.9.720.0</AssemblyVersion>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -28,6 +28,12 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <PrimaryVersionType>AssemblyVersionAttribute</PrimaryVersionType>
+    <AssemblyInfoFilePath>Properties\AssemblyInfo.cs</AssemblyInfoFilePath>
+    <UpdateAssemblyVersion>True</UpdateAssemblyVersion>
+    <UpdateAssemblyFileVersion>False</UpdateAssemblyFileVersion>
+    <UpdateAssemblyInfoVersion>False</UpdateAssemblyInfoVersion>
+    <AssemblyVersionSettings>None.None.Increment.None</AssemblyVersionSettings>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -52,6 +58,10 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
       <HintPath>..\packages\NLog.4.3.7\lib\net45\NLog.dll</HintPath>
       <Private>True</Private>
@@ -59,6 +69,7 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Management" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -68,8 +79,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\AutoPrintr\sharedCode\Config.cs">
+      <Link>sharedCode\Config.cs</Link>
+    </Compile>
+    <Compile Include="..\AutoPrintr\sharedCode\LoginResponse.cs">
+      <Link>sharedCode\LoginResponse.cs</Link>
+    </Compile>
     <Compile Include="..\AutoPrintr\sharedCode\pipeInterface.cs">
       <Link>sharedCode\pipeInterface.cs</Link>
+    </Compile>
+    <Compile Include="..\AutoPrintr\sharedCode\PrintEngines.cs">
+      <Link>sharedCode\PrintEngines.cs</Link>
+    </Compile>
+    <Compile Include="..\AutoPrintr\sharedCode\Printers.cs">
+      <Link>sharedCode\Printers.cs</Link>
+    </Compile>
+    <Compile Include="..\AutoPrintr\sharedCode\Registers.cs">
+      <Link>sharedCode\Registers.cs</Link>
+    </Compile>
+    <Compile Include="..\AutoPrintr\sharedCode\user.cs">
+      <Link>sharedCode\user.cs</Link>
     </Compile>
     <Compile Include="ProjectInstaller.cs">
       <SubType>Component</SubType>

@@ -18,7 +18,7 @@ namespace AutoPrintr
         /// Create new combo box for selected printer
         /// </summary>
         /// <param name="printer"></param>
-        public RegisterDD(Printer printer, List<LoginServer.Register> rlist)
+        public RegisterDD(Printer printer, List<Register> rlist)
         {
             this.printer = printer;
             DropDownStyle = ComboBoxStyle.DropDownList;
@@ -40,14 +40,14 @@ namespace AutoPrintr
             Program.config.save();
         }
 
-        public void setItems(List<LoginServer.Register> rlist)
+        public void setItems(List<Register> rlist)
         {           
             Items.Clear();
             Items.Add("None");
             this.rlist.Clear();
             this.rlist.Add("None", 0);
             Text = "None";
-            foreach (LoginServer.Register r in rlist)
+            foreach (Register r in rlist)
             {
                 this.rlist.Add(r.name, r.id);
                 Items.Add(r.name);

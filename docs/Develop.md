@@ -187,9 +187,9 @@
   - [tempDnDir](#F-AutoPrintr-Program-tempDnDir 'AutoPrintr.Program.tempDnDir')
   - [window](#F-AutoPrintr-Program-window 'AutoPrintr.Program.window')
   - [Main()](#M-AutoPrintr-Program-Main-System-String[]- 'AutoPrintr.Program.Main(System.String[])')
-- [Register](#T-AutoPrintr-LoginServer-Register 'AutoPrintr.LoginServer.Register')
+- [Register](#T-AutoPrintr-Register 'AutoPrintr.Register')
 - [RegisterDD](#T-AutoPrintr-RegisterDD 'AutoPrintr.RegisterDD')
-  - [#ctor(printer)](#M-AutoPrintr-RegisterDD-#ctor-AutoPrintr-Printer,System-Collections-Generic-List{AutoPrintr-LoginServer-Register}- 'AutoPrintr.RegisterDD.#ctor(AutoPrintr.Printer,System.Collections.Generic.List{AutoPrintr.LoginServer.Register})')
+  - [#ctor(printer)](#M-AutoPrintr-RegisterDD-#ctor-AutoPrintr-Printer,System-Collections-Generic-List{AutoPrintr-Register}- 'AutoPrintr.RegisterDD.#ctor(AutoPrintr.Printer,System.Collections.Generic.List{AutoPrintr.Register})')
   - [printer](#F-AutoPrintr-RegisterDD-printer 'AutoPrintr.RegisterDD.printer')
   - [RegisterDD_TextChanged(sender,e)](#M-AutoPrintr-RegisterDD-RegisterDD_TextChanged-System-Object,System-EventArgs- 'AutoPrintr.RegisterDD.RegisterDD_TextChanged(System.Object,System.EventArgs)')
 - [Resources](#T-AutoPrintr-Properties-Resources 'AutoPrintr.Properties.Resources')
@@ -223,6 +223,7 @@
   - [DirEmpty(path)](#M-AutoPrintr-tools-DirEmpty-System-String- 'AutoPrintr.tools.DirEmpty(System.String)')
   - [GET(Url)](#M-AutoPrintr-tools-GET-System-String- 'AutoPrintr.tools.GET(System.String)')
   - [GetAllControls(container)](#M-AutoPrintr-tools-GetAllControls-System-Windows-Forms-Control- 'AutoPrintr.tools.GetAllControls(System.Windows.Forms.Control)')
+  - [isNewerVersion(nver)](#M-AutoPrintr-tools-isNewerVersion-System-String- 'AutoPrintr.tools.isNewerVersion(System.String)')
   - [randomFileName()](#M-AutoPrintr-tools-randomFileName 'AutoPrintr.tools.randomFileName')
   - [RGB2Color(s)](#M-AutoPrintr-tools-RGB2Color-System-String- 'AutoPrintr.tools.RGB2Color(System.String)')
   - [SetAllowUnsafeHeaderParsing20()](#M-AutoPrintr-tools-SetAllowUnsafeHeaderParsing20 'AutoPrintr.tools.SetAllowUnsafeHeaderParsing20')
@@ -234,6 +235,9 @@
   - [#ctor(job,row,index)](#M-AutoPrintr-JobsList-UIJob-#ctor-AutoPrintr-Job,System-Int32,System-Int32- 'AutoPrintr.JobsList.UIJob.#ctor(AutoPrintr.Job,System.Int32,System.Int32)')
   - [update(job)](#M-AutoPrintr-JobsList-UIJob-update-AutoPrintr-Job- 'AutoPrintr.JobsList.UIJob.update(AutoPrintr.Job)')
 - [updateCb](#T-AutoPrintr-JobsList-updateCb 'AutoPrintr.JobsList.updateCb')
+- [User](#T-AutoPrintr-User 'AutoPrintr.User')
+  - [IsAdministrator()](#M-AutoPrintr-User-IsAdministrator 'AutoPrintr.User.IsAdministrator')
+  - [IsSystem()](#M-AutoPrintr-User-IsSystem 'AutoPrintr.User.IsSystem')
 - [WinAutoSize](#T-AutoPrintr-WinAutoSize 'AutoPrintr.WinAutoSize')
   - [apply(win,controls)](#M-AutoPrintr-WinAutoSize-apply-AutoPrintr-mainWin,System-Windows-Forms-Control[]- 'AutoPrintr.WinAutoSize.apply(AutoPrintr.mainWin,System.Windows.Forms.Control[])')
   - [getClientLocation(win,control)](#M-AutoPrintr-WinAutoSize-getClientLocation-AutoPrintr-mainWin,System-Windows-Forms-Control- 'AutoPrintr.WinAutoSize.getClientLocation(AutoPrintr.mainWin,System.Windows.Forms.Control)')
@@ -2218,12 +2222,12 @@ Main entry point
 
 This method has no parameters.
 
-<a name='T-AutoPrintr-LoginServer-Register'></a>
-## Register [#](#T-AutoPrintr-LoginServer-Register 'Go To Here') [=](#contents 'Back To Contents')
+<a name='T-AutoPrintr-Register'></a>
+## Register [#](#T-AutoPrintr-Register 'Go To Here') [=](#contents 'Back To Contents')
 
 ##### Namespace
 
-AutoPrintr.LoginServer
+AutoPrintr
 
 ##### Summary
 
@@ -2240,8 +2244,8 @@ AutoPrintr
 
 Custom combo box for selecting register associated with printer
 
-<a name='M-AutoPrintr-RegisterDD-#ctor-AutoPrintr-Printer,System-Collections-Generic-List{AutoPrintr-LoginServer-Register}-'></a>
-### #ctor(printer) `constructor` [#](#M-AutoPrintr-RegisterDD-#ctor-AutoPrintr-Printer,System-Collections-Generic-List{AutoPrintr-LoginServer-Register}- 'Go To Here') [=](#contents 'Back To Contents')
+<a name='M-AutoPrintr-RegisterDD-#ctor-AutoPrintr-Printer,System-Collections-Generic-List{AutoPrintr-Register}-'></a>
+### #ctor(printer) `constructor` [#](#M-AutoPrintr-RegisterDD-#ctor-AutoPrintr-Printer,System-Collections-Generic-List{AutoPrintr-Register}- 'Go To Here') [=](#contents 'Back To Contents')
 
 ##### Summary
 
@@ -2595,6 +2599,23 @@ Get all UI controls
 | ---- | ---- | ----------- |
 | container | [System.Windows.Forms.Control](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Windows.Forms.Control 'System.Windows.Forms.Control') |  |
 
+<a name='M-AutoPrintr-tools-isNewerVersion-System-String-'></a>
+### isNewerVersion(nver) `method` [#](#M-AutoPrintr-tools-isNewerVersion-System-String- 'Go To Here') [=](#contents 'Back To Contents')
+
+##### Summary
+
+Check string version if it later, then current
+
+##### Returns
+
+
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| nver | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') |  |
+
 <a name='M-AutoPrintr-tools-randomFileName'></a>
 ### randomFileName() `method` [#](#M-AutoPrintr-tools-randomFileName 'Go To Here') [=](#contents 'Back To Contents')
 
@@ -2729,6 +2750,43 @@ Delegate for updating job in UI
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | uiJob | [T:AutoPrintr.JobsList.updateCb](#T-T-AutoPrintr-JobsList-updateCb 'T:AutoPrintr.JobsList.updateCb') |  |
+
+<a name='T-AutoPrintr-User'></a>
+## User [#](#T-AutoPrintr-User 'Go To Here') [=](#contents 'Back To Contents')
+
+##### Namespace
+
+AutoPrintr
+
+<a name='M-AutoPrintr-User-IsAdministrator'></a>
+### IsAdministrator() `method` [#](#M-AutoPrintr-User-IsAdministrator 'Go To Here') [=](#contents 'Back To Contents')
+
+##### Summary
+
+Check if user admin
+
+##### Returns
+
+
+
+##### Parameters
+
+This method has no parameters.
+
+<a name='M-AutoPrintr-User-IsSystem'></a>
+### IsSystem() `method` [#](#M-AutoPrintr-User-IsSystem 'Go To Here') [=](#contents 'Back To Contents')
+
+##### Summary
+
+Is system user
+
+##### Returns
+
+
+
+##### Parameters
+
+This method has no parameters.
 
 <a name='T-AutoPrintr-WinAutoSize'></a>
 ## WinAutoSize [#](#T-AutoPrintr-WinAutoSize 'Go To Here') [=](#contents 'Back To Contents')
