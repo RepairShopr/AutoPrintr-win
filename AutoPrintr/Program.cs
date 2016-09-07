@@ -37,6 +37,11 @@ namespace AutoPrintr
         public const string appInitString = "/       === Application initialization... ===       /";
 
         /// <summary>
+        /// Is service mode
+        /// </summary>
+        public static bool isService = false;
+
+        /// <summary>
         /// Main entry point
         /// </summary>
         [STAThread]
@@ -49,9 +54,13 @@ namespace AutoPrintr
             log.Info("/***************************************************/");
             Directory.CreateDirectory(tempDir);
             Directory.CreateDirectory(tempDnDir);
-             
-            Console.WriteLine("App started");
-            Pipe.PrintersClient();
+
+            //Console.WriteLine("Pipe.isAvailable: = {0}", Pipe.isAvailable());
+            //Pipe.PrintersClient();
+
+            //Console.WriteLine("Pipe.isAvailable 1");
+            //Pipe.isAvailable((f) => Console.WriteLine("Pipe.isAvailable result: {0}", f));
+            //Console.WriteLine("Pipe.isAvailable 2");
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

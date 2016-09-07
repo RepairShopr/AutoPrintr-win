@@ -48,6 +48,7 @@
   - [documentTitle](#F-AutoPrintr-Job-documentTitle 'AutoPrintr.Job.documentTitle')
   - [err](#F-AutoPrintr-Job-err 'AutoPrintr.Job.err')
   - [fileName](#F-AutoPrintr-Job-fileName 'AutoPrintr.Job.fileName')
+  - [id](#F-AutoPrintr-Job-id 'AutoPrintr.Job.id')
   - [localFileName](#F-AutoPrintr-Job-localFileName 'AutoPrintr.Job.localFileName')
   - [localFilePath](#F-AutoPrintr-Job-localFilePath 'AutoPrintr.Job.localFilePath')
   - [printer](#F-AutoPrintr-Job-printer 'AutoPrintr.Job.printer')
@@ -74,7 +75,6 @@
   - [newJobEvent](#F-AutoPrintr-Jobs-newJobEvent 'AutoPrintr.Jobs.newJobEvent')
   - [init(channel,onJob)](#M-AutoPrintr-Jobs-init-System-String,System-Action{System-Exception,AutoPrintr-Job}- 'AutoPrintr.Jobs.init(System.String,System.Action{System.Exception,AutoPrintr.Job})')
   - [msgValidate(msg)](#M-AutoPrintr-Jobs-msgValidate-System-Object- 'AutoPrintr.Jobs.msgValidate(System.Object)')
-- [JobsList](#T-AutoPrintr-Jobs-JobsList 'AutoPrintr.Jobs.JobsList')
 - [JobsList](#T-AutoPrintr-JobsList 'AutoPrintr.JobsList')
   - [#ctor()](#M-AutoPrintr-JobsList-#ctor 'AutoPrintr.JobsList.#ctor')
   - [components](#F-AutoPrintr-JobsList-components 'AutoPrintr.JobsList.components')
@@ -85,7 +85,7 @@
   - [addJobControls(uiJob)](#M-AutoPrintr-JobsList-addJobControls-AutoPrintr-JobsList-UIJob- 'AutoPrintr.JobsList.addJobControls(AutoPrintr.JobsList.UIJob)')
   - [Dispose(disposing)](#M-AutoPrintr-JobsList-Dispose-System-Boolean- 'AutoPrintr.JobsList.Dispose(System.Boolean)')
   - [InitializeComponent()](#M-AutoPrintr-JobsList-InitializeComponent 'AutoPrintr.JobsList.InitializeComponent')
-  - [update(uiJob,j)](#M-AutoPrintr-JobsList-update-AutoPrintr-JobsList-UIJob,AutoPrintr-Job- 'AutoPrintr.JobsList.update(AutoPrintr.JobsList.UIJob,AutoPrintr.Job)')
+  - [update(uiJob,job)](#M-AutoPrintr-JobsList-update-AutoPrintr-JobsList-UIJob,AutoPrintr-Job- 'AutoPrintr.JobsList.update(AutoPrintr.JobsList.UIJob,AutoPrintr.Job)')
 - [JobsListLabel](#T-AutoPrintr-JobsList-JobsListLabel 'AutoPrintr.JobsList.JobsListLabel')
   - [#ctor(text)](#M-AutoPrintr-JobsList-JobsListLabel-#ctor-System-String- 'AutoPrintr.JobsList.JobsListLabel.#ctor(System.String)')
 - [JobsServer](#T-AutoPrintr-JobsServer 'AutoPrintr.JobsServer')
@@ -183,13 +183,14 @@
 - [Program](#T-AutoPrintr-Program 'AutoPrintr.Program')
   - [appInitString](#F-AutoPrintr-Program-appInitString 'AutoPrintr.Program.appInitString')
   - [config](#F-AutoPrintr-Program-config 'AutoPrintr.Program.config')
+  - [isService](#F-AutoPrintr-Program-isService 'AutoPrintr.Program.isService')
   - [tempDir](#F-AutoPrintr-Program-tempDir 'AutoPrintr.Program.tempDir')
   - [tempDnDir](#F-AutoPrintr-Program-tempDnDir 'AutoPrintr.Program.tempDnDir')
   - [window](#F-AutoPrintr-Program-window 'AutoPrintr.Program.window')
   - [Main()](#M-AutoPrintr-Program-Main-System-String[]- 'AutoPrintr.Program.Main(System.String[])')
 - [Register](#T-AutoPrintr-Register 'AutoPrintr.Register')
 - [RegisterDD](#T-AutoPrintr-RegisterDD 'AutoPrintr.RegisterDD')
-  - [#ctor(printer)](#M-AutoPrintr-RegisterDD-#ctor-AutoPrintr-Printer,System-Collections-Generic-List{AutoPrintr-Register}- 'AutoPrintr.RegisterDD.#ctor(AutoPrintr.Printer,System.Collections.Generic.List{AutoPrintr.Register})')
+  - [#ctor(printer,rlist)](#M-AutoPrintr-RegisterDD-#ctor-AutoPrintr-Printer,System-Collections-Generic-Dictionary{System-Int32,AutoPrintr-Register}- 'AutoPrintr.RegisterDD.#ctor(AutoPrintr.Printer,System.Collections.Generic.Dictionary{System.Int32,AutoPrintr.Register})')
   - [printer](#F-AutoPrintr-RegisterDD-printer 'AutoPrintr.RegisterDD.printer')
   - [RegisterDD_TextChanged(sender,e)](#M-AutoPrintr-RegisterDD-RegisterDD_TextChanged-System-Object,System-EventArgs- 'AutoPrintr.RegisterDD.RegisterDD_TextChanged(System.Object,System.EventArgs)')
 - [Resources](#T-AutoPrintr-Properties-Resources 'AutoPrintr.Properties.Resources')
@@ -214,6 +215,7 @@
   - [config](#F-AutoPrintr-Skins-config 'AutoPrintr.Skins.config')
   - [file](#F-AutoPrintr-Skins-file 'AutoPrintr.Skins.file')
   - [fileExample](#F-AutoPrintr-Skins-fileExample 'AutoPrintr.Skins.fileExample')
+  - [GetAllControls(container)](#M-AutoPrintr-Skins-GetAllControls-System-Windows-Forms-Control- 'AutoPrintr.Skins.GetAllControls(System.Windows.Forms.Control)')
 - [tabelLabel](#T-AutoPrintr-tabelLabel 'AutoPrintr.tabelLabel')
 - [tools](#T-AutoPrintr-tools 'AutoPrintr.tools')
   - [shortVersion](#F-AutoPrintr-tools-shortVersion 'AutoPrintr.tools.shortVersion')
@@ -222,7 +224,6 @@
   - [Color2RGB(c)](#M-AutoPrintr-tools-Color2RGB-System-Drawing-Color- 'AutoPrintr.tools.Color2RGB(System.Drawing.Color)')
   - [DirEmpty(path)](#M-AutoPrintr-tools-DirEmpty-System-String- 'AutoPrintr.tools.DirEmpty(System.String)')
   - [GET(Url)](#M-AutoPrintr-tools-GET-System-String- 'AutoPrintr.tools.GET(System.String)')
-  - [GetAllControls(container)](#M-AutoPrintr-tools-GetAllControls-System-Windows-Forms-Control- 'AutoPrintr.tools.GetAllControls(System.Windows.Forms.Control)')
   - [isNewerVersion(nver)](#M-AutoPrintr-tools-isNewerVersion-System-String- 'AutoPrintr.tools.isNewerVersion(System.String)')
   - [randomFileName()](#M-AutoPrintr-tools-randomFileName 'AutoPrintr.tools.randomFileName')
   - [RGB2Color(s)](#M-AutoPrintr-tools-RGB2Color-System-String- 'AutoPrintr.tools.RGB2Color(System.String)')
@@ -766,6 +767,13 @@ Job error
 
 Only file name
 
+<a name='F-AutoPrintr-Job-id'></a>
+### id `constants` [#](#F-AutoPrintr-Job-id 'Go To Here') [=](#contents 'Back To Contents')
+
+##### Summary
+
+Job id
+
 <a name='F-AutoPrintr-Job-localFileName'></a>
 ### localFileName `constants` [#](#F-AutoPrintr-Job-localFileName 'Go To Here') [=](#contents 'Back To Contents')
 
@@ -1040,17 +1048,6 @@ Pusher msg validation
 | ---- | ---- | ----------- |
 | msg | [System.Object](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Object 'System.Object') | parsed msg object from pusher |
 
-<a name='T-AutoPrintr-Jobs-JobsList'></a>
-## JobsList [#](#T-AutoPrintr-Jobs-JobsList 'Go To Here') [=](#contents 'Back To Contents')
-
-##### Namespace
-
-AutoPrintr.Jobs
-
-##### Summary
-
-Class for jobs list operating: it shall be mapped to file also
-
 <a name='T-AutoPrintr-JobsList'></a>
 ## JobsList [#](#T-AutoPrintr-JobsList 'Go To Here') [=](#contents 'Back To Contents')
 
@@ -1158,7 +1155,7 @@ Add controls for job
 This method has no parameters.
 
 <a name='M-AutoPrintr-JobsList-update-AutoPrintr-JobsList-UIJob,AutoPrintr-Job-'></a>
-### update(uiJob,j) `method` [#](#M-AutoPrintr-JobsList-update-AutoPrintr-JobsList-UIJob,AutoPrintr-Job- 'Go To Here') [=](#contents 'Back To Contents')
+### update(uiJob,job) `method` [#](#M-AutoPrintr-JobsList-update-AutoPrintr-JobsList-UIJob,AutoPrintr-Job- 'Go To Here') [=](#contents 'Back To Contents')
 
 ##### Summary
 
@@ -1169,7 +1166,7 @@ Update job in UI
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | uiJob | [AutoPrintr.JobsList.UIJob](#T-AutoPrintr-JobsList-UIJob 'AutoPrintr.JobsList.UIJob') |  |
-| j | [AutoPrintr.Job](#T-AutoPrintr-Job 'AutoPrintr.Job') |  |
+| job | [AutoPrintr.Job](#T-AutoPrintr-Job 'AutoPrintr.Job') |  |
 
 <a name='T-AutoPrintr-JobsList-JobsListLabel'></a>
 ## JobsListLabel [#](#T-AutoPrintr-JobsList-JobsListLabel 'Go To Here') [=](#contents 'Back To Contents')
@@ -2190,6 +2187,13 @@ Application start log marker
 
 Application configuration
 
+<a name='F-AutoPrintr-Program-isService'></a>
+### isService `constants` [#](#F-AutoPrintr-Program-isService 'Go To Here') [=](#contents 'Back To Contents')
+
+##### Summary
+
+Is service mode
+
 <a name='F-AutoPrintr-Program-tempDir'></a>
 ### tempDir `constants` [#](#F-AutoPrintr-Program-tempDir 'Go To Here') [=](#contents 'Back To Contents')
 
@@ -2244,8 +2248,8 @@ AutoPrintr
 
 Custom combo box for selecting register associated with printer
 
-<a name='M-AutoPrintr-RegisterDD-#ctor-AutoPrintr-Printer,System-Collections-Generic-List{AutoPrintr-Register}-'></a>
-### #ctor(printer) `constructor` [#](#M-AutoPrintr-RegisterDD-#ctor-AutoPrintr-Printer,System-Collections-Generic-List{AutoPrintr-Register}- 'Go To Here') [=](#contents 'Back To Contents')
+<a name='M-AutoPrintr-RegisterDD-#ctor-AutoPrintr-Printer,System-Collections-Generic-Dictionary{System-Int32,AutoPrintr-Register}-'></a>
+### #ctor(printer,rlist) `constructor` [#](#M-AutoPrintr-RegisterDD-#ctor-AutoPrintr-Printer,System-Collections-Generic-Dictionary{System-Int32,AutoPrintr-Register}- 'Go To Here') [=](#contents 'Back To Contents')
 
 ##### Summary
 
@@ -2256,6 +2260,7 @@ Create new combo box for selected printer
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | printer | [AutoPrintr.Printer](#T-AutoPrintr-Printer 'AutoPrintr.Printer') |  |
+| rlist | [System.Collections.Generic.Dictionary{System.Int32,AutoPrintr.Register}](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Collections.Generic.Dictionary 'System.Collections.Generic.Dictionary{System.Int32,AutoPrintr.Register}') |  |
 
 <a name='F-AutoPrintr-RegisterDD-printer'></a>
 ### printer `constants` [#](#F-AutoPrintr-RegisterDD-printer 'Go To Here') [=](#contents 'Back To Contents')
@@ -2482,6 +2487,23 @@ Skin configuration file
 
 Skin configuration file
 
+<a name='M-AutoPrintr-Skins-GetAllControls-System-Windows-Forms-Control-'></a>
+### GetAllControls(container) `method` [#](#M-AutoPrintr-Skins-GetAllControls-System-Windows-Forms-Control- 'Go To Here') [=](#contents 'Back To Contents')
+
+##### Summary
+
+Get all UI controls
+
+##### Returns
+
+
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| container | [System.Windows.Forms.Control](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Windows.Forms.Control 'System.Windows.Forms.Control') |  |
+
 <a name='T-AutoPrintr-tabelLabel'></a>
 ## tabelLabel [#](#T-AutoPrintr-tabelLabel 'Go To Here') [=](#contents 'Back To Contents')
 
@@ -2581,23 +2603,6 @@ Get request to url
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | Url | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') |  |
-
-<a name='M-AutoPrintr-tools-GetAllControls-System-Windows-Forms-Control-'></a>
-### GetAllControls(container) `method` [#](#M-AutoPrintr-tools-GetAllControls-System-Windows-Forms-Control- 'Go To Here') [=](#contents 'Back To Contents')
-
-##### Summary
-
-Get all UI controls
-
-##### Returns
-
-
-
-##### Parameters
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| container | [System.Windows.Forms.Control](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Windows.Forms.Control 'System.Windows.Forms.Control') |  |
 
 <a name='M-AutoPrintr-tools-isNewerVersion-System-String-'></a>
 ### isNewerVersion(nver) `method` [#](#M-AutoPrintr-tools-isNewerVersion-System-String- 'Go To Here') [=](#contents 'Back To Contents')

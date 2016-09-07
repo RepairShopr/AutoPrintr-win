@@ -36,7 +36,9 @@ namespace AutoPrintr
             //    //log.Debug("Work...");
             //    //Thread.Sleep(1000);
             //}
-            Pipe.PrintersServer();
+
+            //Pipe.PrintersServer();
+            Server.init();
         }
 
         public AutoPrintrService()
@@ -57,7 +59,7 @@ namespace AutoPrintr
         public void stop()
         {
             state = false;
-            //workerThread.Abort();
+            workerThread.Abort();
         }
 
         protected override void OnStart(string[] args)

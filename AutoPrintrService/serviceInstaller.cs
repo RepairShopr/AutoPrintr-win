@@ -15,7 +15,10 @@ namespace AutoPrintr
         
         public static bool Install()
         {
-            try { ManagedInstallerClass.InstallHelper(new[] { exePath }); }
+            try { 
+                ManagedInstallerClass.InstallHelper(new[] { exePath });
+                //ServiceControl.start("AutoPrintrService", 10000);
+            }
             catch { return false; }
             return true;
         }

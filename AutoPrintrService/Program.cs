@@ -22,7 +22,7 @@ namespace AutoPrintr
         /// </summary>
         public static string tempDir = Path.Combine(Path.GetTempPath(), "AutoPrintr");
         /// <summary>
-        /// Temporary directory for fiels download
+        /// Temporary directory for files download
         /// </summary>
         public static string tempDnDir = Path.Combine(tempDir, "dn");
 
@@ -41,11 +41,7 @@ namespace AutoPrintr
         static void Main(string[] args)
         {
             //Console.WriteLine("Programm started");
-            log.Info("Loading config start...");
-            Program.config = new Config(err =>
-            {
-                log.Error(err, "Config loading error.");
-            });
+            
             log.Info("Service started");
 
             if (args != null && args.Length == 1 && args[0].Length > 1
