@@ -1,28 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.IO;
-using PusherClient;
+//using System.Linq;
 using System.Threading;
-using System.Reflection;
+using System.Windows.Forms;
+using System.Timers;
+//using System.IO;
+using PusherClient;
 using NLog;
-using System.Diagnostics;
-using System.Web;
-
-
- //Log levels:
- // - Fatal
- // - Error
- // - Warn
- // - Info
- // - Debug
- // - Trace
+//using System.Diagnostics;
 
 namespace AutoPrintr
 {
@@ -60,12 +45,6 @@ namespace AutoPrintr
                 log.Error(err, "Config loading error.");
             });
             
-            log.Info("Login tab initialization start...");
-            configTabInit();
-
-            log.Info("Printers tab initialization start...");
-            createPrintersUI();
-
             log.Info("Cheking update...");
             updateInit();
 
@@ -81,20 +60,14 @@ namespace AutoPrintr
         
         void mainWin_Shown(object sender, EventArgs e)
         {
+            log.Info("Login tab initialization start...");
+            configTabInit();
+
+            log.Info("Printers tab initialization start...");
+            createPrintersUI();
+
             log.Info("Log tab initialization start...");
             logTabInit();
-
-            log.Info("Cheking config for saved credentials...");
-            if (Program.config.channel.Length > 0)
-            {
-                srvConnect(Program.config.channel);
-                statusLogin.Text = "logged in";
-            }
-
-            if (Program.config.login.Length > 0)
-            {
-                login.Text = Program.config.login;
-            }
 
             log.Info("Skin initialization...");
             Skins.load();
@@ -107,15 +80,31 @@ namespace AutoPrintr
             log.Info("Application started...");
         }
 
+
+
         // -------------------------------------------------------------------
         /// <summary>
         /// Server connect
         /// </summary>
         public void srvConnect(string channel)
         {
+            Console.WriteLine("srvConnect, Program.isService= {0} ", Program.isService);
+            log.Info("Connecting to jobs server...");
+            if (Program.isService)
+            {
+                srvConnectService(channel);
+            }
+            else
+            {
+                srvConnectLocal(channel);
+            }
+        }
+
+        public void srvConnectLocal(string channel)
+        {
             log.Info("Connecting to jobs server...");
             List<Listener> msgWrokers = new List<Listener> {
-                Jobs.init(channel,  (ex, job) =>
+                Jobs.init(channel,  (ex, job, msg) =>
                 {
                     log.Info("New print job event. Job is: {0}", job);
                     jobsTable.add(job);
@@ -147,5 +136,66 @@ namespace AutoPrintr
             };
             JobsServer.connect(msgWrokers, onError, onStateChanged);
         }
+
+        public System.Timers.Timer srvDataTimer = null;
+
+        public void srvConnectService(string channel)
+        {
+            Console.WriteLine( "Server state: " + Pipe.call<string>("JobsServerState") );
+            if (srvDataTimer != null)
+            {
+                srvDataTimer.Stop();
+                srvDataTimer.Dispose();
+                srvDataTimer = null;
+            }
+
+            srvDataTimer = new System.Timers.Timer(1000.0);
+            srvDataTimer.Elapsed += new ElapsedEventHandler(timerHandler);
+            srvDataTimer.Start();            
+            Invoke(new setStatusCb(this.setStatus), new object[] { Pipe.call<ConnectionState>("JobsServerState").ToString() });
+        }
+
+        Dictionary<ulong, Job> jobs = new Dictionary<ulong, Job>();
+        
+        void timerHandler ( object sender, ElapsedEventArgs e){
+            // Jobs processing
+            getJobs();
+            getStatus();
+            //
+            //
+        }
+
+        void getJobs()
+        {
+            List<Job> jobsUpdate = Pipe.call<List<Job>>("Jobs");
+            Console.WriteLine("Jobs: {0}", jobsUpdate.Count);
+            Job job;
+            foreach (Job j in jobsUpdate)
+            {
+                if (jobs.TryGetValue(j.id, out job))
+                {
+                    jobsTable.update(job);
+                }
+                else
+                {
+                    Console.WriteLine("New print job event. Job is: '{0}'", job);
+                    log.Info("New print job event. Job is: {0}", job);
+                    jobsTable.add(job);
+                    jobs.Add(j.id, j);
+                }
+            }
+        }
+
+        void getStatus()
+        {
+            // Status processing
+            ConnectionState state = Pipe.call<ConnectionState>("JobsServerState");
+            if (state != JobsServer.state )
+            {
+                JobsServer.state = state;
+                Invoke(new setStatusCb(this.setStatus), new object[] { state.ToString() });
+            }
+        }
+
     }
 }

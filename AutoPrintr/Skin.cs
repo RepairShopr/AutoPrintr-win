@@ -96,7 +96,7 @@ namespace AutoPrintr
         {
             // Get all controls
             //var controls = getControls();
-            var controls = tools.GetAllControls(Program.window);
+            var controls = GetAllControls(Program.window);
             // Creating new skin
             config = new SkinConfig()
             {
@@ -149,7 +149,7 @@ namespace AutoPrintr
         public static void use()
         {            
             //var controls = getControls();
-            var controls = tools.GetAllControls(Program.window);
+            var controls = GetAllControls(Program.window);
             if (config.window != null)
             {
                 config.window.apply(Program.window);
@@ -398,111 +398,22 @@ namespace AutoPrintr
                 }
             }
         }
+        
+        /// <summary>
+        /// Get all UI controls
+        /// </summary>
+        /// <param name="container"></param>
+        /// <returns></returns>
+        public static IEnumerable<Control> GetAllControls(Control container)
+        {
+            List<Control> controlList = new List<Control>();
+            foreach (Control c in container.Controls)
+            {
+                controlList.AddRange(GetAllControls(c));
+                controlList.Add(c);
+            }
+            return controlList;
+        }
 
-
-
-
-
-
-
-        ///// <summary>
-        ///// Skin base for controls
-        ///// </summary>
-        //public class Skin
-        //{
-        //    public string BackColor = "FFFFFF";
-        //    public string FontColor = "000000";
-        //    public skinFont Font = new skinFont() { };
-        //    /// <summary>
-        //    /// Initialize skin
-        //    /// </summary>
-        //    /// <param name="control"></param>
-        //    public void init(Control control)
-        //    {
-        //        control.Tag = this;
-        //        if (BackColor != null) { control.BackColor = tools.RGB2Color(BackColor); }
-        //        if (FontColor != null) { control.ForeColor = tools.RGB2Color(FontColor); }
-        //        if (Font != null) { Font.use(control); }
-        //    }
-        //    //public Skin(){}
-        //}
-
-        //[JsonObject(MemberSerialization.OptIn)]
-        //public class SkinForControl : Skin
-        //{
-        //    [JsonProperty]
-        //    public string ControlName = null;
-        //    [JsonProperty]
-        //    public string ControlType = null;
-        //    //[JsonProperty]
-        //    //public string BackColor = "FFFFFF";
-        //    //[JsonProperty]
-        //    //public string FontColor = "000000";
-        //    //[JsonProperty]
-        //    //public skinFont Font = new skinFont() { };
-
-        //    /// <summary>
-        //    /// Initialize this skin
-        //    /// </summary>
-        //    /// <param name="control"></param>
-        //    public new void init(Control control)
-        //    {
-        //        base.init(control);                
-        //    }
-        //    //[JsonConstructor]
-        //    //public SkinSimple(){} 
-        //}
-
-
-
-
-
-
-        //[JsonObject(MemberSerialization.OptIn)]
-        //public class SkinGradient : Skin
-        //{
-        //    [JsonProperty]
-        //    public string ControlName = null;
-        //    [JsonProperty]
-        //    public string ControlType = null;
-        //    [JsonProperty]
-        //    public string TopColor = "FFFFFF";
-        //    [JsonProperty]
-        //    public string BottomColor = "D4D4D4";
-        //    [JsonProperty]
-        //    public string BorderColor = "A8A8A8";
-        //    [JsonProperty]
-        //    public string FontColor = "000000";
-        //    [JsonProperty]
-        //    public skinFont Font = new skinFont() { };
-
-        //    public new void init(Control control)
-        //    {
-        //        if (FontColor != null) { control.ForeColor = tools.RGB2Color(FontColor); }
-        //        if (Font != null) { Font.use(control);  }
-        //    }
-
-        //    void OnPaintBackground(PaintEventArgs e)
-        //    {
-        //        using (
-        //            LinearGradientBrush brush =
-        //                new LinearGradientBrush(
-        //                    this.ClientRectangle,
-        //                    topColor,
-        //                    bottomColor,
-        //                    90F
-        //                )
-        //        )
-        //        {
-        //            e.Graphics.FillRectangle(brush, this.ClientRectangle);
-        //        }
-        //        ControlPaint.DrawBorder(
-        //            e.Graphics,
-        //            this.ClientRectangle,
-        //            borderColor,
-        //            ButtonBorderStyle.Solid
-        //        );
-        //    }
-        //}
     }
 }

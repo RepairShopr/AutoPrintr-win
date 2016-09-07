@@ -36,15 +36,17 @@
             this.printersTab = new System.Windows.Forms.TabPage();
             this.printersTable = new System.Windows.Forms.TableLayoutPanel();
             this.loginTab = new System.Windows.Forms.TabPage();
+            this.otherSettings = new System.Windows.Forms.GroupBox();
+            this.serviceCheckBox = new System.Windows.Forms.CheckBox();
             this.configSave = new System.Windows.Forms.Button();
             this.locationGroupBox = new System.Windows.Forms.GroupBox();
             this.locationsList = new AutoPrintr.CheckBoxList();
             this.loginGroupBox = new System.Windows.Forms.GroupBox();
             this.loginLabel = new System.Windows.Forms.Label();
             this.submit = new System.Windows.Forms.Button();
-            this.login = new System.Windows.Forms.TextBox();
+            this.loginInput = new System.Windows.Forms.TextBox();
             this.passwordLabel = new System.Windows.Forms.Label();
-            this.password = new System.Windows.Forms.MaskedTextBox();
+            this.passwordInput = new System.Windows.Forms.MaskedTextBox();
             this.logTab = new System.Windows.Forms.TabPage();
             this.logLevelLabel = new System.Windows.Forms.Label();
             this.logLevelSelect = new System.Windows.Forms.ComboBox();
@@ -70,6 +72,7 @@
             this.jobsTab.SuspendLayout();
             this.printersTab.SuspendLayout();
             this.loginTab.SuspendLayout();
+            this.otherSettings.SuspendLayout();
             this.locationGroupBox.SuspendLayout();
             this.loginGroupBox.SuspendLayout();
             this.logTab.SuspendLayout();
@@ -115,12 +118,26 @@
             // 
             // loginTab
             // 
+            this.loginTab.Controls.Add(this.otherSettings);
             this.loginTab.Controls.Add(this.configSave);
             this.loginTab.Controls.Add(this.locationGroupBox);
             this.loginTab.Controls.Add(this.loginGroupBox);
             resources.ApplyResources(this.loginTab, "loginTab");
             this.loginTab.Name = "loginTab";
             this.loginTab.UseVisualStyleBackColor = true;
+            // 
+            // otherSettings
+            // 
+            this.otherSettings.Controls.Add(this.serviceCheckBox);
+            resources.ApplyResources(this.otherSettings, "otherSettings");
+            this.otherSettings.Name = "otherSettings";
+            this.otherSettings.TabStop = false;
+            // 
+            // serviceCheckBox
+            // 
+            resources.ApplyResources(this.serviceCheckBox, "serviceCheckBox");
+            this.serviceCheckBox.Name = "serviceCheckBox";
+            this.serviceCheckBox.UseVisualStyleBackColor = true;
             // 
             // configSave
             // 
@@ -144,9 +161,9 @@
             // 
             this.loginGroupBox.Controls.Add(this.loginLabel);
             this.loginGroupBox.Controls.Add(this.submit);
-            this.loginGroupBox.Controls.Add(this.login);
+            this.loginGroupBox.Controls.Add(this.loginInput);
             this.loginGroupBox.Controls.Add(this.passwordLabel);
-            this.loginGroupBox.Controls.Add(this.password);
+            this.loginGroupBox.Controls.Add(this.passwordInput);
             resources.ApplyResources(this.loginGroupBox, "loginGroupBox");
             this.loginGroupBox.Name = "loginGroupBox";
             this.loginGroupBox.TabStop = false;
@@ -163,21 +180,21 @@
             this.submit.UseVisualStyleBackColor = true;
             this.submit.Click += new System.EventHandler(this.submit_Click);
             // 
-            // login
+            // loginInput
             // 
-            resources.ApplyResources(this.login, "login");
-            this.login.Name = "login";
+            resources.ApplyResources(this.loginInput, "loginInput");
+            this.loginInput.Name = "loginInput";
             // 
             // passwordLabel
             // 
             resources.ApplyResources(this.passwordLabel, "passwordLabel");
             this.passwordLabel.Name = "passwordLabel";
             // 
-            // password
+            // passwordInput
             // 
-            resources.ApplyResources(this.password, "password");
-            this.password.Name = "password";
-            this.password.UseSystemPasswordChar = true;
+            resources.ApplyResources(this.passwordInput, "passwordInput");
+            this.passwordInput.Name = "passwordInput";
+            this.passwordInput.UseSystemPasswordChar = true;
             // 
             // logTab
             // 
@@ -324,6 +341,8 @@
             this.printersTab.ResumeLayout(false);
             this.printersTab.PerformLayout();
             this.loginTab.ResumeLayout(false);
+            this.otherSettings.ResumeLayout(false);
+            this.otherSettings.PerformLayout();
             this.locationGroupBox.ResumeLayout(false);
             this.loginGroupBox.ResumeLayout(false);
             this.loginGroupBox.PerformLayout();
@@ -343,9 +362,9 @@
         private System.Windows.Forms.TabControl tabs;
         private System.Windows.Forms.TabPage loginTab;
         private System.Windows.Forms.Label loginLabel;
-        private System.Windows.Forms.MaskedTextBox password;
+        private System.Windows.Forms.MaskedTextBox passwordInput;
         private System.Windows.Forms.Label passwordLabel;
-        private System.Windows.Forms.TextBox login;
+        private System.Windows.Forms.TextBox loginInput;
         private System.Windows.Forms.Button submit;
         private System.Windows.Forms.TabPage printersTab;
         private System.Windows.Forms.StatusStrip statusStrip;
@@ -354,7 +373,6 @@
         private System.Windows.Forms.ToolStripStatusLabel statusLogin;
         private System.Windows.Forms.GroupBox loginGroupBox;
         private System.Windows.Forms.ToolStripStatusLabel statusSeparator1;
-        private System.Windows.Forms.Button configSave;
         private System.Windows.Forms.ToolStripStatusLabel statusSeparator2;
         private System.Windows.Forms.ToolStripStatusLabel configSaveStatus;
         private System.Windows.Forms.GroupBox locationGroupBox;
@@ -376,6 +394,9 @@
         private System.Windows.Forms.ToolStripProgressBar progressBar;
         private System.Windows.Forms.ToolStripStatusLabel progressBarValue;
         private System.Windows.Forms.ToolStripStatusLabel statusSeparatorUpdate;
+        private System.Windows.Forms.GroupBox otherSettings;
+        private System.Windows.Forms.Button configSave;
+        private System.Windows.Forms.CheckBox serviceCheckBox;
     }
 }
 

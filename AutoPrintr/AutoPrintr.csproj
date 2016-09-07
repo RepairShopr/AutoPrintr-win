@@ -19,7 +19,7 @@
     <UpdateAssemblyFileVersion>False</UpdateAssemblyFileVersion>
     <UpdateAssemblyInfoVersion>False</UpdateAssemblyInfoVersion>
     <AssemblyVersionSettings>None.None.Increment.None</AssemblyVersionSettings>
-    <AssemblyVersion>0.9.713.0</AssemblyVersion>
+    <AssemblyVersion>0.9.772.0</AssemblyVersion>
     <AssemblyFileVersionSettings>
     </AssemblyFileVersionSettings>
     <AssemblyInfoVersionSettings>
@@ -87,6 +87,7 @@
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -130,10 +131,10 @@
     <Compile Include="controls\CheckBoxSlider.Designer.cs">
       <DependentUpon>CheckBoxSlider.cs</DependentUpon>
     </Compile>
-    <Compile Include="sharedCode\Config.cs" />
+    <Compile Include="modules\Config.cs" />
     <Compile Include="ControlExtentions.cs" />
-    <Compile Include="sharedCode\Credentials.cs" />
-    <Compile Include="sharedCode\Jobs.cs" />
+    <Compile Include="modules\Credentials.cs" />
+    <Compile Include="modules\Jobs.cs" />
     <Compile Include="mainWin\jobsTab\JobsList.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -142,7 +143,7 @@
     </Compile>
     <Compile Include="LogConfig.cs" />
     <Compile Include="LogWatcher.cs" />
-    <Compile Include="sharedCode\LoginServer.cs" />
+    <Compile Include="modules\LoginServer.cs" />
     <Compile Include="mainWin\printersTab\DocTypeCheckBox.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -161,8 +162,8 @@
     <Compile Include="mainWin\trayIcon.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="sharedCode\pipeInterface.cs" />
-    <Compile Include="sharedCode\PrintEngines.cs" />
+    <Compile Include="modules\pipeInterface.cs" />
+    <Compile Include="modules\PrintEngines.cs" />
     <Compile Include="mainWin\printersTab\PrinterDocumentControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -172,24 +173,25 @@
     <Compile Include="mainWin\printersTab\RegisterDD.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="sharedCode\Registers.cs" />
-    <Compile Include="sharedCode\user.cs" />
+    <Compile Include="modules\Registers.cs" />
+    <Compile Include="modules\ServiceControl.cs" />
+    <Compile Include="modules\user.cs" />
     <Compile Include="Skin.cs" />
-    <Compile Include="sharedCode\Srv.cs" />
-    <Compile Include="sharedCode\LoginResponse.cs" />
+    <Compile Include="modules\JobsServer.cs" />
+    <Compile Include="modules\LoginResponse.cs" />
     <Compile Include="mainWin\mainWin.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="mainWin\mainWin.Designer.cs">
       <DependentUpon>mainWin.cs</DependentUpon>
     </Compile>
-    <Compile Include="sharedCode\Printers.cs" />
+    <Compile Include="modules\Printers.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="controls\tabelLabel.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="sharedCode\tools.cs" />
+    <Compile Include="modules\tools.cs" />
     <Compile Include="mainWin\printersTab\TriggerCheckBox.cs">
       <SubType>UserControl</SubType>
     </Compile>

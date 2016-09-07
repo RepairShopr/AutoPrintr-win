@@ -12,7 +12,7 @@
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <AssemblyVersion>0.9.720.0</AssemblyVersion>
+    <AssemblyVersion>0.9.760.0</AssemblyVersion>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -66,7 +66,12 @@
       <HintPath>..\packages\NLog.4.3.7\lib\net45\NLog.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="PusherClient, Version=0.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\PusherClient.0.3.0\lib\net40\PusherClient.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -77,28 +82,47 @@
     <Reference Include="System.Data" />
     <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Xml" />
+    <Reference Include="WebSocket4Net, Version=0.12.0.0, Culture=neutral, PublicKeyToken=eb4e154b696bf72a, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebSocket4Net.0.13.1\lib\net45\WebSocket4Net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\AutoPrintr\sharedCode\Config.cs">
-      <Link>sharedCode\Config.cs</Link>
+    <Compile Include="..\AutoPrintr\modules\Config.cs">
+      <Link>modules\Config.cs</Link>
     </Compile>
-    <Compile Include="..\AutoPrintr\sharedCode\LoginResponse.cs">
-      <Link>sharedCode\LoginResponse.cs</Link>
+    <Compile Include="..\AutoPrintr\modules\Credentials.cs">
+      <Link>modules\Credentials.cs</Link>
     </Compile>
-    <Compile Include="..\AutoPrintr\sharedCode\pipeInterface.cs">
-      <Link>sharedCode\pipeInterface.cs</Link>
+    <Compile Include="..\AutoPrintr\modules\Jobs.cs">
+      <Link>modules\Jobs.cs</Link>
     </Compile>
-    <Compile Include="..\AutoPrintr\sharedCode\PrintEngines.cs">
-      <Link>sharedCode\PrintEngines.cs</Link>
+    <Compile Include="..\AutoPrintr\modules\JobsServer.cs">
+      <Link>modules\JobsServer.cs</Link>
     </Compile>
-    <Compile Include="..\AutoPrintr\sharedCode\Printers.cs">
-      <Link>sharedCode\Printers.cs</Link>
+    <Compile Include="..\AutoPrintr\modules\LoginResponse.cs">
+      <Link>modules\LoginResponse.cs</Link>
     </Compile>
-    <Compile Include="..\AutoPrintr\sharedCode\Registers.cs">
-      <Link>sharedCode\Registers.cs</Link>
+    <Compile Include="..\AutoPrintr\modules\pipeInterface.cs">
+      <Link>modules\pipeInterface.cs</Link>
     </Compile>
-    <Compile Include="..\AutoPrintr\sharedCode\user.cs">
-      <Link>sharedCode\user.cs</Link>
+    <Compile Include="..\AutoPrintr\modules\PrintEngines.cs">
+      <Link>modules\PrintEngines.cs</Link>
+    </Compile>
+    <Compile Include="..\AutoPrintr\modules\Printers.cs">
+      <Link>modules\Printers.cs</Link>
+    </Compile>
+    <Compile Include="..\AutoPrintr\modules\Registers.cs">
+      <Link>modules\Registers.cs</Link>
+    </Compile>
+    <Compile Include="..\AutoPrintr\modules\ServiceControl.cs">
+      <Link>modules\ServiceControl.cs</Link>
+    </Compile>
+    <Compile Include="..\AutoPrintr\modules\tools.cs">
+      <Link>modules\tools.cs</Link>
+    </Compile>
+    <Compile Include="..\AutoPrintr\modules\user.cs">
+      <Link>modules\user.cs</Link>
     </Compile>
     <Compile Include="ProjectInstaller.cs">
       <SubType>Component</SubType>
@@ -106,6 +130,7 @@
     <Compile Include="ProjectInstaller.Designer.cs">
       <DependentUpon>ProjectInstaller.cs</DependentUpon>
     </Compile>
+    <Compile Include="Server.cs" />
     <Compile Include="Service.cs">
       <SubType>Component</SubType>
     </Compile>

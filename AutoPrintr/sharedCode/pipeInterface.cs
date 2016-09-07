@@ -46,14 +46,14 @@ namespace AutoPrintr
 
         public static void PrintersServer()
         {
+            Printers.init();
             pipeServer srv = new pipeServer(
                 PrintersPipeName, 
                 (Action<pipeServer.conn>)( (cn) => {
                     Console.WriteLine("New connection: {0}", cn.id);
                     Console.WriteLine("Msg: {0}", cn.read<string>());
-                    
-                    //cn.send( Printers.get() );
-                    cn.send(new Msg() { Text = "msg text", Id = 123 });
+                    cn.send( Printers.get().Select(p => p.name).ToList() );
+                    //cn.send(new Msg() { Text = "msg text", Id = 123 });
                     //cn.send("msg text");
                 })
             );
@@ -66,12 +66,13 @@ namespace AutoPrintr
             //Console.WriteLine("Server respone 1: {0}", client.send("Test 1"));
             //Console.WriteLine("Server respone 2: {0}", client.send("Test 2"));
             Console.WriteLine("PrintersClient");
-            Console.WriteLine("Server respone: {0}", call<Msg>(PrintersPipeName, "Test"));
-            
-            //Console.WriteLine(
-            //    "Printers: {0}", 
-            //    String.Join(", ", call<List<string>>("Printers.get", "") )
-            //);
+            //Console.WriteLine("Server respone: {0}", call<Msg>(PrintersPipeName, "Test"));
+            //Console.WriteLine("Server respone: {0}", call<List<string>>(PrintersPipeName, ""));
+
+            Console.WriteLine(
+                "Printers: {0}",
+                String.Join(", ", call<List<string>>(PrintersPipeName, ""))
+            );
             //call<string, string>("Printers.get", "12345");
         }
 

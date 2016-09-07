@@ -2,67 +2,119 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace AutoPrintr
 {
     public partial class mainWin
     {
+        const string serviceName = "AutoPrintrService";
+        const string serviceExe = "AutoPrintrService.exe";
+        
         /// <summary>
         /// Configuration tab initialization
         /// </summary>
         public void configTabInit()
         {
+            //if (!ServiceControl.isInstalled(serviceName))
+            //{
+            //    Process p = Process.Start(serviceExe, "/i");
+            //    p.WaitForExit(30000);
+            //}
+            bool srvState = Pipe.isAvailable();
+            Console.WriteLine("srvState " + srvState);
+            Program.isService = srvState;
+            serviceCheckBox.Checked = srvState;
+            serviceCheckBox.Enabled = true;
+            serviceCheckBox.CheckedChanged += serviceCheckBox_CheckedChanged;
+
             // Login section
-            login.TextChanged += loginPass_TextChanged;
-            password.TextChanged += loginPass_TextChanged;
+            loginInput.TextChanged += loginPass_TextChanged;
+            passwordInput.TextChanged += loginPass_TextChanged;
 
             // Other section
-            configSave.Click += saveConfig_Click;
-            //locationList.Text = WinPrintr.Properties.Settings.Default.Location;
-            //pusherKey.Text = WinPrintr.Properties.Settings.Default.PucherKey;
-            //pusherKey.Text = Program.config.serverKey;
-            configSaveStatus.Text = "config loaded";
+            //configSave.Click += saveConfig_Click;
 
-            locationsList.SelectedChanged += config_TextChanged;
-            //pusherKey.TextChanged += config_TextChanged;
+            //configSaveStatus.Text = "config loaded";
+
+            //locationsList.SelectedChanged += config_TextChanged;
 
             log.Info("Cheking config for saved credentials...");
             if (Program.config.channel.Length == 0)
             {
                 tabs.SelectTab("loginTab");
             }
-        }
-
-        void config_TextChanged(object sender, EventArgs e)
-        {
-            if (!configSave.Enabled)
+            else
             {
-                configSave.Enabled = true;
+                Console.WriteLine("configTabInit srvConnect()");
+                srvConnect(Program.config.channel);
             }
-            configSaveStatus.Text = "config changed";
+            loginSetState();
+
+            locationsList.SelectedChanged += locationsList_SelectedChanged;
+
         }
 
-        void saveConfig_Click(object sender, EventArgs e)
+        void serviceCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            //saveConfig.Enabled = false; 
+            service(serviceCheckBox.Checked);
+        }
 
-            //Program.config.location = locationsList.SelectedItems.Cast<ListViewItem>(
-            //).Select( i => LoginServer.locations[i.Text] ).ToList();
+        bool isLoggedIn(){
+            return Program.config.channel.Length > 0;
+        }
 
+        public void loginSetState()
+        {
+            if (isLoggedIn())
+            {
+                //srvConnect(Program.config.channel);
+                statusLogin.Text = "logged in";
+                submit.Text = "Logout";
+                submit.Enabled = true;
+            } else {
+                statusLogin.Text = "not logged";
+                submit.Text = "Login";
+            }
+
+            if (Program.config.login.Length > 0)
+            {
+                loginInput.Text = Program.config.login;
+            }
+        }
+
+        void locationsList_SelectedChanged(object sender, EventArgs e)
+        {
             Program.config.locations =
                 locationsList.Selected.Cast<CheckBoxListItem>().Select(
                     i => ((Location)i.userData).id
                 ).ToList();
-            //Program.config.locations =
-            //    locationsList.Selected.Cast<CheckBoxListItem>().Select(
-            //        i => (Location)i.userData
-            //    ).ToList();
-            //Program.config.serverKey = pusherKey.Text;
             Program.config.save();
-            configSaveStatus.Text = "config saved";
-            loginTab.Focus();
-            configSave.Enabled = false;
         }
+
+        void config_TextChanged(object sender, EventArgs e)
+        {
+            //if (!configSave.Enabled)
+            //{
+            //    configSave.Enabled = true;
+            //}
+            //configSaveStatus.Text = "config changed";
+        }
+
+        //void saveConfig_Click(object sender, EventArgs e)
+        //{
+        //    //saveConfig.Enabled = false; 
+
+        //    //Program.config.locations =
+        //    //    locationsList.Selected.Cast<CheckBoxListItem>().Select(
+        //    //        i => ((Location)i.userData).id
+        //    //    ).ToList();
+
+        //    Program.config.save();
+        //    configSaveStatus.Text = "config saved";
+        //    loginTab.Focus();
+        //    configSave.Enabled = false;
+        //}
 
         void loginPass_TextChanged(object sender, EventArgs e)
         {
@@ -71,7 +123,7 @@ namespace AutoPrintr
 
         void loginPassCheck()
         {
-            if (login.Text.Length > 3 & password.Text.Length > 3)
+            if (loginInput.Text.Length > 0 & passwordInput.Text.Length > 0)
             {
                 if (!submit.Enabled)
                 {
@@ -80,7 +132,7 @@ namespace AutoPrintr
             }
             else
             {
-                if (submit.Enabled)
+                if (submit.Enabled & !isLoggedIn())
                 {
                     loginTab.Focus();
                     submit.Enabled = false;
@@ -102,16 +154,28 @@ namespace AutoPrintr
                 return;
             }
 
+            if (isLoggedIn())
+            {
+                JobsServer.disconnect();
+                Program.config.channel = "";
+                Program.config.login = "";
+                Program.config.save();
+                loginInput.Text = "";
+                passwordInput.Text = "";
+                loginSetState();
+                return;
+            }
+
             loginTab.Focus();
-            login.Enabled = false;
-            password.Enabled = false;
+            loginInput.Enabled = false;
+            passwordInput.Enabled = false;
             submit.Enabled = false;
             LoginResponse resp = null;
 
             log.Info("Connecting to login server...");
             try
             {
-                resp = LoginServer.login(login.Text, password.Text);
+                resp = LoginServer.login(loginInput.Text, passwordInput.Text);
             }
             catch (Exception err)
             {
@@ -127,21 +191,22 @@ namespace AutoPrintr
                 }
 
                 // Registers
-                foreach (Register r in LoginServer.registers)
-                {
-                    Program.config.registers.Add(r);
-                }
+                Registers.Add(LoginServer.registers);
+                //foreach (Register r in LoginServer.registers)
+                //{
+                //    Registers.Add(r);
+                //}
 
                 foreach (RegisterDD rdd in registersDD)
                 {
                     rdd.setItems(Program.config.registers);
                 }
 
-                Program.config.login = login.Text;
+                Program.config.login = loginInput.Text;
                 Program.config.channel = LoginServer.channel;
                 Program.config.availableLocations = LoginServer.locations;
                 Program.config.save();
-                configSave.Enabled = false;
+                //configSave.Enabled = false;
                 srvConnect(LoginServer.channel);
             }
             else
@@ -149,9 +214,10 @@ namespace AutoPrintr
                 log.Error("Login error: empty response");
             }
 
-            login.Enabled = true;
-            password.Enabled = true;
-            submit.Enabled = true;
+            loginInput.Enabled = true;
+            passwordInput.Enabled = true;
+            //submit.Enabled = true;
+            loginSetState();
         }
 
         /// <summary>
@@ -194,9 +260,46 @@ namespace AutoPrintr
                         }
                     }
                 }
-
             }
             return locs;
+        }
+
+
+        public void service(bool state)
+        {
+            //bool installed = ServiceControl.isInstalled(serviceName);
+            //if (!ServiceControl.isInstalled(serviceName))
+            //{                
+            //    
+            //}
+
+            if (state)
+            {
+                try
+                {
+                    //ServiceControl.start(serviceName, 5000);
+                }
+                catch (Exception ex)
+                {
+                    log.Error(ex, "Error while starting service");
+                    serviceCheckBox.Checked = false;
+                }                
+                //Process.Start( serviceExe, "/i" );
+            }
+            else
+            {
+                try
+                {
+                    //ServiceControl.stop(serviceName, 5000);
+                }
+                catch (Exception ex)
+                {
+                    log.Error(ex, "Error while stopping service");
+                    serviceCheckBox.Checked = true;
+                }       
+                
+                //Process.Start( serviceExe, "/u" );
+            }
         }
     }
 }
