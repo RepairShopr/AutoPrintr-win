@@ -109,7 +109,10 @@ namespace AutoPrintr
             items.Add(row, uiJob);            
         }
 
-
+        /// <summary>
+        /// Update job in UI
+        /// </summary>
+        /// <param name="job"></param>
         public void update(Job job)
         {
             UIJob uijob;

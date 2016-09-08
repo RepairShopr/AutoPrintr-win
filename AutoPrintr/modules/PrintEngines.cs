@@ -4,6 +4,7 @@ using System.Diagnostics;
 using Microsoft.Win32;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.IO;
 
 namespace AutoPrintr
 {
@@ -20,6 +21,9 @@ namespace AutoPrintr
     /// </summary>
     static class PrintEngines
     {
+        private static NLog.Logger log = NLog.LogManager.GetCurrentClassLogger();
+        
+        
         /// <summary>
         /// Dictionary for converting engine name to engine instance
         /// </summary>
@@ -35,10 +39,38 @@ namespace AutoPrintr
         public static PrintEngine SumatraPDF = new PrintEngine("Sumatra PDF Reader",
             ((printerName, filePath, documentName) => 
             {
-                Process.Start(
-                    "SumatraPDF.exe",
-                    string.Format("-silent -exit-on-print -print-to \"{0}\" \"{1}\"", printerName, filePath)
-                );
+                string app = Path.Combine(Program.localPath, "SumatraPDF.exe");
+                string args = string.Format("-silent -exit-on-print -print-to \"{0}\" \"{1}\"", printerName, filePath);
+                if (User.IsSystem())
+                {
+                    Process p = new Process();
+                    p.StartInfo = new ProcessStartInfo()
+                    {
+                        CreateNoWindow = true,
+                        WindowStyle = ProcessWindowStyle.Hidden,
+                        FileName = app,
+                        Arguments = args
+                    };
+                    if (User.IsSystem())
+                    {
+                        p.StartInfo.UserName = Program.config.serviceLogin;
+                        p.StartInfo.Password = tools.secureString(tools.Decrypt(Program.config.servicePass));
+                        p.StartInfo.Domain = Program.config.serviceDomain;
+                        p.StartInfo.LoadUserProfile = true;
+                    }
+                    p.Start();
+                    //Process.Start(
+                    //    app, args,
+                    //    Program.config.serviceLogin,
+                    //    tools.secureString(tools.Decrypt(Program.config.servicePass)),
+                    //    Program.config.serviceDomain
+                    //);
+                }
+                else
+                {
+                    Process.Start(app, args);
+                }
+                            
             })){};
 
         /// <summary>
@@ -46,14 +78,44 @@ namespace AutoPrintr
         /// </summary>
         public static PrintEngine AcrobatReader = new PrintEngine("Acrobat Reader",
             ((printerName, filePath, documentName) =>
-            {
-                Process.Start(
-                    Registry.LocalMachine.OpenSubKey(
+            {                
+                string app = Registry.LocalMachine.OpenSubKey(
                         @"SOFTWARE\Microsoft\Windows\CurrentVersion" +
                         @"\App Paths\AcroRd32.exe"
-                    ).GetValue("").ToString(),
-                    string.Format("/h /t \"{0}\" \"{1}\"", filePath, printerName)
-                );
+                    ).GetValue("").ToString()
+                ;
+                string args = string.Format("/h /t \"{0}\" \"{1}\"", filePath, printerName);
+
+                if (User.IsSystem())
+                {
+                    Process p = new Process();
+                    p.StartInfo = new ProcessStartInfo()
+                    {
+                        CreateNoWindow = true,
+                        WindowStyle = ProcessWindowStyle.Hidden,
+                        FileName = app,
+                        Arguments = args
+                    };
+                    if (User.IsSystem())
+                    {
+                        p.StartInfo.UserName = Program.config.serviceLogin;
+                        p.StartInfo.Password = tools.secureString(tools.Decrypt(Program.config.servicePass));
+                        p.StartInfo.Domain = Program.config.serviceDomain;
+                        p.StartInfo.LoadUserProfile = true;
+                    }
+                    p.Start();
+                    //Process.Start(
+                    //    app, args,
+                    //    Program.config.serviceLogin,
+                    //    tools.secureString(tools.Decrypt(Program.config.servicePass)),
+                    //    Program.config.serviceDomain
+                    //);
+                }
+                else
+                {
+                    Process.Start(app, args);
+                }
+
             })){};
 
         /// <summary>
@@ -71,6 +133,13 @@ namespace AutoPrintr
                     FileName = filePath,
                     Arguments = "\"" + printerName + "\""
                 };
+                if (User.IsSystem())
+                {
+                    p.StartInfo.UserName = Program.config.serviceLogin;
+                    p.StartInfo.Password = tools.secureString(tools.Decrypt(Program.config.servicePass));
+                    p.StartInfo.Domain = Program.config.serviceDomain;
+                    p.StartInfo.LoadUserProfile = true;
+                }
                 p.Start();
             })){};
 

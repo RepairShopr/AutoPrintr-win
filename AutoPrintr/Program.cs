@@ -25,7 +25,11 @@ namespace AutoPrintr
         /// <summary>
         /// Temporary directory
         /// </summary>
-        public static string tempDir = Path.Combine(Path.GetTempPath(), "AutoPrintr");
+        public static string tempDir = Path.Combine(
+            Environment.GetEnvironmentVariable("TEMP", EnvironmentVariableTarget.Machine)
+            , "AutoPrintr"
+        );
+
         /// <summary>
         /// Temporary directory for fiels download
         /// </summary>
@@ -41,6 +45,11 @@ namespace AutoPrintr
         /// </summary>
         public static bool isService = false;
 
+        /// <summary>
+        /// Path to home directory
+        /// </summary>
+        public static string localPath = AppDomain.CurrentDomain.BaseDirectory;
+        
         /// <summary>
         /// Main entry point
         /// </summary>

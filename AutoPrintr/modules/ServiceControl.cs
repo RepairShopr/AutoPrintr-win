@@ -49,5 +49,32 @@ namespace AutoPrintr
             }
             return false;
         }
+
+        public static bool isRunning(string name)
+        {
+            bool installed = isInstalled(name);
+            if (installed)
+            {
+                ServiceController sc = new ServiceController(name);
+                return sc.Status == ServiceControllerStatus.Running;
+            }
+            return false;
+
+            //switch (sc.Status)
+            //{
+            //    case ServiceControllerStatus.Running:
+            //        return "Running";
+            //    case ServiceControllerStatus.Stopped:
+            //        return "Stopped";
+            //    case ServiceControllerStatus.Paused:
+            //        return "Paused";
+            //    case ServiceControllerStatus.StopPending:
+            //        return "Stopping";
+            //    case ServiceControllerStatus.StartPending:
+            //        return "Starting";
+            //    default:
+            //        return "Status Changing";
+            //}
+        }
     }
 }

@@ -50,7 +50,7 @@ namespace AutoPrintr
         
         public void start()
         {
-            state = true;
+            //state = true;
             workerThread.Start();
             //main();
         }
@@ -58,7 +58,8 @@ namespace AutoPrintr
 
         public void stop()
         {
-            state = false;
+            //state = false;
+            Server.stop();
             workerThread.Abort();
         }
 

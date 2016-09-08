@@ -19,6 +19,12 @@ namespace AutoPrintr
         /// User's login
         /// </summary>
         public string login = "";
+
+        public string serviceLogin = "";
+        public string servicePass = "";
+        public string serviceDomain = "";
+        public bool loadUserProfile = false;
+
         /// <summary>
         /// Selected locations
         /// </summary>
@@ -67,7 +73,7 @@ namespace AutoPrintr
     /// </summary>
     public class Config : Settings
     {
-        private const string configFile = "config.json";
+        private static string configFile = Path.Combine(Program.localPath, "config.json");
         //private Action<Exception> onError;
         private static NLog.Logger log = NLog.LogManager.GetCurrentClassLogger();
         
@@ -107,6 +113,11 @@ namespace AutoPrintr
                     printers = config.printers;
                     availableLocations = config.availableLocations;
                     registers = config.registers;
+
+                    serviceLogin = config.serviceLogin;
+                    servicePass = config.servicePass;
+                    serviceDomain = config.serviceDomain;
+                    loadUserProfile = config.loadUserProfile;
                 }
                 else
                 {
