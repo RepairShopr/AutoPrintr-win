@@ -36,8 +36,16 @@
             this.printersTab = new System.Windows.Forms.TabPage();
             this.printersTable = new System.Windows.Forms.TableLayoutPanel();
             this.loginTab = new System.Windows.Forms.TabPage();
-            this.otherSettings = new System.Windows.Forms.GroupBox();
-            this.serviceCheckBox = new System.Windows.Forms.CheckBox();
+            this.serviceSettings = new System.Windows.Forms.GroupBox();
+            this.serviceSaveBtn = new System.Windows.Forms.Button();
+            this.serviceTestBtn = new System.Windows.Forms.Button();
+            this.passwordInputService = new System.Windows.Forms.MaskedTextBox();
+            this.usernameInput = new System.Windows.Forms.TextBox();
+            this.domainInput = new System.Windows.Forms.TextBox();
+            this.serviceUserLoginLabel = new System.Windows.Forms.Label();
+            this.serviceUserPasswordLabel = new System.Windows.Forms.Label();
+            this.serviceUserDomainLabel = new System.Windows.Forms.Label();
+            this.serviceEnabledCheckBox = new System.Windows.Forms.CheckBox();
             this.configSave = new System.Windows.Forms.Button();
             this.locationGroupBox = new System.Windows.Forms.GroupBox();
             this.locationsList = new AutoPrintr.CheckBoxList();
@@ -68,11 +76,12 @@
             this.progressBarValue = new System.Windows.Forms.ToolStripStatusLabel();
             this.trayIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.checkBoxList1 = new AutoPrintr.CheckBoxList();
+            this.loadUserProfileCheckBox = new System.Windows.Forms.CheckBox();
             this.tabs.SuspendLayout();
             this.jobsTab.SuspendLayout();
             this.printersTab.SuspendLayout();
             this.loginTab.SuspendLayout();
-            this.otherSettings.SuspendLayout();
+            this.serviceSettings.SuspendLayout();
             this.locationGroupBox.SuspendLayout();
             this.loginGroupBox.SuspendLayout();
             this.logTab.SuspendLayout();
@@ -118,7 +127,7 @@
             // 
             // loginTab
             // 
-            this.loginTab.Controls.Add(this.otherSettings);
+            this.loginTab.Controls.Add(this.serviceSettings);
             this.loginTab.Controls.Add(this.configSave);
             this.loginTab.Controls.Add(this.locationGroupBox);
             this.loginTab.Controls.Add(this.loginGroupBox);
@@ -126,18 +135,70 @@
             this.loginTab.Name = "loginTab";
             this.loginTab.UseVisualStyleBackColor = true;
             // 
-            // otherSettings
+            // serviceSettings
             // 
-            this.otherSettings.Controls.Add(this.serviceCheckBox);
-            resources.ApplyResources(this.otherSettings, "otherSettings");
-            this.otherSettings.Name = "otherSettings";
-            this.otherSettings.TabStop = false;
+            this.serviceSettings.Controls.Add(this.loadUserProfileCheckBox);
+            this.serviceSettings.Controls.Add(this.serviceSaveBtn);
+            this.serviceSettings.Controls.Add(this.serviceTestBtn);
+            this.serviceSettings.Controls.Add(this.passwordInputService);
+            this.serviceSettings.Controls.Add(this.usernameInput);
+            this.serviceSettings.Controls.Add(this.domainInput);
+            this.serviceSettings.Controls.Add(this.serviceUserLoginLabel);
+            this.serviceSettings.Controls.Add(this.serviceUserPasswordLabel);
+            this.serviceSettings.Controls.Add(this.serviceUserDomainLabel);
+            this.serviceSettings.Controls.Add(this.serviceEnabledCheckBox);
+            resources.ApplyResources(this.serviceSettings, "serviceSettings");
+            this.serviceSettings.Name = "serviceSettings";
+            this.serviceSettings.TabStop = false;
             // 
-            // serviceCheckBox
+            // serviceSaveBtn
             // 
-            resources.ApplyResources(this.serviceCheckBox, "serviceCheckBox");
-            this.serviceCheckBox.Name = "serviceCheckBox";
-            this.serviceCheckBox.UseVisualStyleBackColor = true;
+            resources.ApplyResources(this.serviceSaveBtn, "serviceSaveBtn");
+            this.serviceSaveBtn.Name = "serviceSaveBtn";
+            this.serviceSaveBtn.UseVisualStyleBackColor = true;
+            // 
+            // serviceTestBtn
+            // 
+            resources.ApplyResources(this.serviceTestBtn, "serviceTestBtn");
+            this.serviceTestBtn.Name = "serviceTestBtn";
+            this.serviceTestBtn.UseVisualStyleBackColor = true;
+            // 
+            // passwordInputService
+            // 
+            resources.ApplyResources(this.passwordInputService, "passwordInputService");
+            this.passwordInputService.Name = "passwordInputService";
+            this.passwordInputService.UseSystemPasswordChar = true;
+            // 
+            // usernameInput
+            // 
+            resources.ApplyResources(this.usernameInput, "usernameInput");
+            this.usernameInput.Name = "usernameInput";
+            // 
+            // domainInput
+            // 
+            resources.ApplyResources(this.domainInput, "domainInput");
+            this.domainInput.Name = "domainInput";
+            // 
+            // serviceUserLoginLabel
+            // 
+            resources.ApplyResources(this.serviceUserLoginLabel, "serviceUserLoginLabel");
+            this.serviceUserLoginLabel.Name = "serviceUserLoginLabel";
+            // 
+            // serviceUserPasswordLabel
+            // 
+            resources.ApplyResources(this.serviceUserPasswordLabel, "serviceUserPasswordLabel");
+            this.serviceUserPasswordLabel.Name = "serviceUserPasswordLabel";
+            // 
+            // serviceUserDomainLabel
+            // 
+            resources.ApplyResources(this.serviceUserDomainLabel, "serviceUserDomainLabel");
+            this.serviceUserDomainLabel.Name = "serviceUserDomainLabel";
+            // 
+            // serviceEnabledCheckBox
+            // 
+            resources.ApplyResources(this.serviceEnabledCheckBox, "serviceEnabledCheckBox");
+            this.serviceEnabledCheckBox.Name = "serviceEnabledCheckBox";
+            this.serviceEnabledCheckBox.UseVisualStyleBackColor = true;
             // 
             // configSave
             // 
@@ -327,6 +388,12 @@
             resources.ApplyResources(this.checkBoxList1, "checkBoxList1");
             this.checkBoxList1.Name = "checkBoxList1";
             // 
+            // loadUserProfileCheckBox
+            // 
+            resources.ApplyResources(this.loadUserProfileCheckBox, "loadUserProfileCheckBox");
+            this.loadUserProfileCheckBox.Name = "loadUserProfileCheckBox";
+            this.loadUserProfileCheckBox.UseVisualStyleBackColor = true;
+            // 
             // mainWin
             // 
             resources.ApplyResources(this, "$this");
@@ -341,8 +408,8 @@
             this.printersTab.ResumeLayout(false);
             this.printersTab.PerformLayout();
             this.loginTab.ResumeLayout(false);
-            this.otherSettings.ResumeLayout(false);
-            this.otherSettings.PerformLayout();
+            this.serviceSettings.ResumeLayout(false);
+            this.serviceSettings.PerformLayout();
             this.locationGroupBox.ResumeLayout(false);
             this.loginGroupBox.ResumeLayout(false);
             this.loginGroupBox.PerformLayout();
@@ -394,9 +461,18 @@
         private System.Windows.Forms.ToolStripProgressBar progressBar;
         private System.Windows.Forms.ToolStripStatusLabel progressBarValue;
         private System.Windows.Forms.ToolStripStatusLabel statusSeparatorUpdate;
-        private System.Windows.Forms.GroupBox otherSettings;
+        private System.Windows.Forms.GroupBox serviceSettings;
         private System.Windows.Forms.Button configSave;
-        private System.Windows.Forms.CheckBox serviceCheckBox;
+        private System.Windows.Forms.CheckBox serviceEnabledCheckBox;
+        private System.Windows.Forms.Button serviceTestBtn;
+        private System.Windows.Forms.MaskedTextBox passwordInputService;
+        private System.Windows.Forms.TextBox usernameInput;
+        private System.Windows.Forms.TextBox domainInput;
+        private System.Windows.Forms.Label serviceUserLoginLabel;
+        private System.Windows.Forms.Label serviceUserPasswordLabel;
+        private System.Windows.Forms.Label serviceUserDomainLabel;
+        private System.Windows.Forms.Button serviceSaveBtn;
+        private System.Windows.Forms.CheckBox loadUserProfileCheckBox;
     }
 }
 

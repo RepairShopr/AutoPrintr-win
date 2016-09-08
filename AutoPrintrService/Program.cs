@@ -20,12 +20,20 @@ namespace AutoPrintr
         /// <summary>
         /// Temporary directory
         /// </summary>
-        public static string tempDir = Path.Combine(Path.GetTempPath(), "AutoPrintr");
+        public static string tempDir = Path.Combine(
+            Environment.GetEnvironmentVariable("TEMP", EnvironmentVariableTarget.Machine)
+            , "AutoPrintr"
+        );
         /// <summary>
         /// Temporary directory for files download
         /// </summary>
         public static string tempDnDir = Path.Combine(tempDir, "dn");
 
+        /// <summary>
+        /// Path to home directory
+        /// </summary>
+        public static string localPath = AppDomain.CurrentDomain.BaseDirectory;
+        
         ///// <summary>
         ///// Главная точка входа для приложения.
         ///// </summary>

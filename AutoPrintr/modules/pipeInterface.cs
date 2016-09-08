@@ -9,6 +9,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using System.IO.Pipes;
 using Newtonsoft.Json;
+using NamedPipeWrapper;
 //using System.Reflection;
 //using AutoPrintr;
 
@@ -17,131 +18,82 @@ namespace AutoPrintr
     static public class Pipe
     {
         private static NLog.Logger log = NLog.LogManager.GetCurrentClassLogger();
-        private static string topName = "AutoPrintr";
+        private static string pipeName = "AutoPrintr";
         private static int connectTimeout = 1000;
-        static public bool isAvailable()
+
+        //static public bool isAvailable()
+        //{
+        //    string r = call<string>("");
+        //    Console.WriteLine("Ping! '{0}', {1}", r, r == null);
+        //    return r == "pong";
+        //}
+
+        //static public void isAvailable(Action<bool> cb)
+        //{
+        //    Task.Factory.StartNew(() => cb( call<string>("") == "pong" ) );
+        //}
+        static Action<List<Job>> jobsCallback;
+        static Action<string> stateCallback;
+        static NamedPipeClient<string> client;
+
+        public static void clientStart(Action<List<Job>> jobsCb, Action<string> stateCb)
         {
-            string r = call<string>("");
-            Console.WriteLine("Ping! '{0}', {1}", r, r == null);
-            return r == "pong";
-        }
-
-        static public void isAvailable(Action<bool> cb)
-        {
-            Task.Factory.StartNew(() => cb( call<string>("") == "pong" ) );
-        }
-
-        public static OUT call<OUT>(string pipeName, object data = null)
-        {
-            NamedPipeClientStream stream = new NamedPipeClientStream(topName + pipeName);
-            try
-            {
-                stream.Connect(connectTimeout);
-            }
-            catch (Exception)
-            {
-                return default(OUT);
-            }
-            
-            JsonSerializer serializer = new JsonSerializer();
-
-            if (data != null) 
-            {
-                var streamWriter = new StreamWriter(stream, Encoding.UTF8);
-                var jsonWriter = new JsonTextWriter(streamWriter);
-                serializer.Serialize(jsonWriter, data);
-                jsonWriter.Flush();
-            }
-            
-            var streamReader = new StreamReader(stream, Encoding.UTF8);
-            var jsonReader = new JsonTextReader(streamReader);
-            OUT result = serializer.Deserialize<OUT>(jsonReader);
-
-            stream.Close();
-            return result;
-        }
-
-        public class server
-        {
-            public bool state = true;
-            public string name;
-            ulong cliendID = 0;
-            Action<conn> onConn;
-
-            public server(string pipeName, Action<conn> onConn)
-            {
-                this.onConn = onConn;
-                this.name = pipeName;
-                connect();
-            }
-
-            void connect()
-            {
-                NamedPipeServerStream stream = new NamedPipeServerStream(
-                    topName + name,
-                    PipeDirection.InOut,
-                    10,
-                    PipeTransmissionMode.Byte,
-                    PipeOptions.Asynchronous
-                );
-                stream.BeginWaitForConnection(
-                    new AsyncCallback(WaitForConnectionCallBack)
-                    , stream
-                );
-            }
-
-            private void WaitForConnectionCallBack(IAsyncResult iar)
-            { 
-                NamedPipeServerStream stream = (NamedPipeServerStream)iar.AsyncState;
-                stream.EndWaitForConnection(iar);
-                onConn(new conn(cliendID++, stream));
-                stream.Close();
-                stream = null;                
-                connect();
-            }   
-            
-        }
-
-        public class conn
-        {
-            public ulong id;
-            NamedPipeServerStream stream;
-
-            public conn(ulong id, NamedPipeServerStream stream)
-            {
-                this.id = id;
-                this.stream = stream;
-            }
-
-            public void send(object data)
-            {
-                Console.WriteLine("send <{0}>", data);
-                JsonSerializer serializer = new JsonSerializer();
-
-                var streamWriter = new StreamWriter(stream, Encoding.UTF8);
-                var jsonWriter = new JsonTextWriter(streamWriter);
-                serializer.Serialize(jsonWriter, data);
-                jsonWriter.Flush();
-            }
-
-            //public void send<T>(T data)
+            clientStop();
+            jobsCallback = jobsCb;
+            stateCallback = stateCb;
+            client = new NamedPipeClient<string>("AutoPrintr");
+            client.AutoReconnect = true;
+            client.ServerMessage += client_ServerMessage;
+            client.Error += client_Error;
+            //delegate(NamedPipeConnection<ServerData, ServerData> conn, ServerData message)
             //{
-            //    //formatter.Serialize(stream, msg);
-            //    //serverStream.Flush();
-            //    JsonSerializer serializer = new JsonSerializer();
+            //    Console.WriteLine("Server says: {0}", message);
+            //};
 
-            //    var streamWriter = new StreamWriter(stream, Encoding.UTF8);
-            //    var jsonWriter = new JsonTextWriter(streamWriter);
-            //    serializer.Serialize(jsonWriter, data);
-            //}
+            // Start up the client asynchronously and connect to the specified server pipe.
+            // This method will return immediately while the client runs in a separate background thread.
+            
+            client.Start();
+        }
 
-            public T read<T>()
+        static void client_Error(Exception exception)
+        {
+            log.Error(exception, "Service connection error");
+        }
+
+        static void client_ServerMessage(NamedPipeConnection<string, string> connection, string message)
+        {
+            Console.WriteLine("Server msg. State {0}", message);
+            ServerData data = JsonConvert.DeserializeObject<ServerData>(message);
+            if (jobsCallback != null)
             {
-                JsonSerializer serializer = new JsonSerializer();
-                var streamReader = new StreamReader(stream, Encoding.UTF8);
-                var jsonReader = new JsonTextReader(streamReader);
-                return serializer.Deserialize<T>(jsonReader);
+                jobsCallback(data.jobs);
+            }
+            if (stateCallback != null)
+            {
+                stateCallback(data.state);
             }
         }
+
+        public static void clientStop()
+        {
+            if (client != null)
+            {
+                client.ServerMessage -= client_ServerMessage;
+                client.Error -= client_Error;
+                client.Stop();
+                client = null;
+            }
+            jobsCallback = null;
+            stateCallback = null;
+        }
+    }
+
+    [Serializable]
+    public class ServerData
+    {
+        public List<Job> jobs = new List<Job>();
+        public string state = "N/A";
+        public ulong job2print = 0;
     }
 }

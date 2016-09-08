@@ -99,14 +99,17 @@ namespace AutoPrintr
 
         public static void disconnect()
         {
-            foreach (Channel c in JobsServer.channels)
+            if (pusher != null)
             {
-                c.Unsubscribe();
+                foreach (Channel c in JobsServer.channels)
+                {
+                    c.Unsubscribe();
+                }
+                pusher.Disconnect();
+                pusher.ConnectionStateChanged -= onStateChanged_handler;
+                pusher.Error -= onError_handler;
+                pusher = null;
             }
-            pusher.Disconnect();
-            pusher.ConnectionStateChanged -= onStateChanged_handler;
-            pusher.Error -= onError_handler;
-            pusher = null;
         }
     }
 

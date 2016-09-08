@@ -71,7 +71,6 @@
   - [ToString()](#M-AutoPrintr-Job-ToString 'AutoPrintr.Job.ToString')
 - [JobMsg](#T-AutoPrintr-JobMsg 'AutoPrintr.JobMsg')
 - [Jobs](#T-AutoPrintr-Jobs 'AutoPrintr.Jobs')
-  - [list](#F-AutoPrintr-Jobs-list 'AutoPrintr.Jobs.list')
   - [newJobEvent](#F-AutoPrintr-Jobs-newJobEvent 'AutoPrintr.Jobs.newJobEvent')
   - [init(channel,onJob)](#M-AutoPrintr-Jobs-init-System-String,System-Action{System-Exception,AutoPrintr-Job}- 'AutoPrintr.Jobs.init(System.String,System.Action{System.Exception,AutoPrintr.Job})')
   - [msgValidate(msg)](#M-AutoPrintr-Jobs-msgValidate-System-Object- 'AutoPrintr.Jobs.msgValidate(System.Object)')
@@ -86,6 +85,7 @@
   - [Dispose(disposing)](#M-AutoPrintr-JobsList-Dispose-System-Boolean- 'AutoPrintr.JobsList.Dispose(System.Boolean)')
   - [InitializeComponent()](#M-AutoPrintr-JobsList-InitializeComponent 'AutoPrintr.JobsList.InitializeComponent')
   - [update(uiJob,job)](#M-AutoPrintr-JobsList-update-AutoPrintr-JobsList-UIJob,AutoPrintr-Job- 'AutoPrintr.JobsList.update(AutoPrintr.JobsList.UIJob,AutoPrintr.Job)')
+  - [update(job)](#M-AutoPrintr-JobsList-update-AutoPrintr-Job- 'AutoPrintr.JobsList.update(AutoPrintr.Job)')
 - [JobsListLabel](#T-AutoPrintr-JobsList-JobsListLabel 'AutoPrintr.JobsList.JobsListLabel')
   - [#ctor(text)](#M-AutoPrintr-JobsList-JobsListLabel-#ctor-System-String- 'AutoPrintr.JobsList.JobsListLabel.#ctor(System.String)')
 - [JobsServer](#T-AutoPrintr-JobsServer 'AutoPrintr.JobsServer')
@@ -184,6 +184,7 @@
   - [appInitString](#F-AutoPrintr-Program-appInitString 'AutoPrintr.Program.appInitString')
   - [config](#F-AutoPrintr-Program-config 'AutoPrintr.Program.config')
   - [isService](#F-AutoPrintr-Program-isService 'AutoPrintr.Program.isService')
+  - [localPath](#F-AutoPrintr-Program-localPath 'AutoPrintr.Program.localPath')
   - [tempDir](#F-AutoPrintr-Program-tempDir 'AutoPrintr.Program.tempDir')
   - [tempDnDir](#F-AutoPrintr-Program-tempDnDir 'AutoPrintr.Program.tempDnDir')
   - [window](#F-AutoPrintr-Program-window 'AutoPrintr.Program.window')
@@ -222,11 +223,14 @@
   - [version](#F-AutoPrintr-tools-version 'AutoPrintr.tools.version')
   - [BytesToString(byteCount)](#M-AutoPrintr-tools-BytesToString-System-Int64- 'AutoPrintr.tools.BytesToString(System.Int64)')
   - [Color2RGB(c)](#M-AutoPrintr-tools-Color2RGB-System-Drawing-Color- 'AutoPrintr.tools.Color2RGB(System.Drawing.Color)')
+  - [Decrypt(cipher)](#M-AutoPrintr-tools-Decrypt-System-String- 'AutoPrintr.tools.Decrypt(System.String)')
   - [DirEmpty(path)](#M-AutoPrintr-tools-DirEmpty-System-String- 'AutoPrintr.tools.DirEmpty(System.String)')
+  - [Encrypt(plainText)](#M-AutoPrintr-tools-Encrypt-System-String- 'AutoPrintr.tools.Encrypt(System.String)')
   - [GET(Url)](#M-AutoPrintr-tools-GET-System-String- 'AutoPrintr.tools.GET(System.String)')
   - [isNewerVersion(nver)](#M-AutoPrintr-tools-isNewerVersion-System-String- 'AutoPrintr.tools.isNewerVersion(System.String)')
   - [randomFileName()](#M-AutoPrintr-tools-randomFileName 'AutoPrintr.tools.randomFileName')
   - [RGB2Color(s)](#M-AutoPrintr-tools-RGB2Color-System-String- 'AutoPrintr.tools.RGB2Color(System.String)')
+  - [secureString(str)](#M-AutoPrintr-tools-secureString-System-String- 'AutoPrintr.tools.secureString(System.String)')
   - [SetAllowUnsafeHeaderParsing20()](#M-AutoPrintr-tools-SetAllowUnsafeHeaderParsing20 'AutoPrintr.tools.SetAllowUnsafeHeaderParsing20')
 - [TriggerCheckBox](#T-AutoPrintr-TriggerCheckBox 'AutoPrintr.TriggerCheckBox')
   - [docType](#F-AutoPrintr-TriggerCheckBox-docType 'AutoPrintr.TriggerCheckBox.docType')
@@ -999,13 +1003,6 @@ AutoPrintr
 
 General jobs actions
 
-<a name='F-AutoPrintr-Jobs-list'></a>
-### list `constants` [#](#F-AutoPrintr-Jobs-list 'Go To Here') [=](#contents 'Back To Contents')
-
-##### Summary
-
-Jobs list
-
 <a name='F-AutoPrintr-Jobs-newJobEvent'></a>
 ### newJobEvent `constants` [#](#F-AutoPrintr-Jobs-newJobEvent 'Go To Here') [=](#contents 'Back To Contents')
 
@@ -1166,6 +1163,19 @@ Update job in UI
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | uiJob | [AutoPrintr.JobsList.UIJob](#T-AutoPrintr-JobsList-UIJob 'AutoPrintr.JobsList.UIJob') |  |
+| job | [AutoPrintr.Job](#T-AutoPrintr-Job 'AutoPrintr.Job') |  |
+
+<a name='M-AutoPrintr-JobsList-update-AutoPrintr-Job-'></a>
+### update(job) `method` [#](#M-AutoPrintr-JobsList-update-AutoPrintr-Job- 'Go To Here') [=](#contents 'Back To Contents')
+
+##### Summary
+
+Update job in UI
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
 | job | [AutoPrintr.Job](#T-AutoPrintr-Job 'AutoPrintr.Job') |  |
 
 <a name='T-AutoPrintr-JobsList-JobsListLabel'></a>
@@ -2194,6 +2204,13 @@ Application configuration
 
 Is service mode
 
+<a name='F-AutoPrintr-Program-localPath'></a>
+### localPath `constants` [#](#F-AutoPrintr-Program-localPath 'Go To Here') [=](#contents 'Back To Contents')
+
+##### Summary
+
+Path to home directory
+
 <a name='F-AutoPrintr-Program-tempDir'></a>
 ### tempDir `constants` [#](#F-AutoPrintr-Program-tempDir 'Go To Here') [=](#contents 'Back To Contents')
 
@@ -2574,6 +2591,33 @@ Hex string color
 | ---- | ---- | ----------- |
 | c | [System.Drawing.Color](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Drawing.Color 'System.Drawing.Color') | Color |
 
+<a name='M-AutoPrintr-tools-Decrypt-System-String-'></a>
+### Decrypt(cipher) `method` [#](#M-AutoPrintr-tools-Decrypt-System-String- 'Go To Here') [=](#contents 'Back To Contents')
+
+##### Summary
+
+Decrypts a given string.
+
+##### Returns
+
+The decrypted string.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| cipher | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') | A base64 encoded string that was created through the [Encrypt](#M-AutoPrintr-tools-Encrypt-System-String- 'AutoPrintr.tools.Encrypt(System.String)') or [](#!-Encrypt-SecureString- 'Encrypt(SecureString)') extension methods. |
+
+##### Exceptions
+
+| Name | Description |
+| ---- | ----------- |
+| [System.ArgumentNullException](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.ArgumentNullException 'System.ArgumentNullException') | If `cipher` is a null reference. |
+
+##### Remarks
+
+Keep in mind that the decrypted string remains in memory and makes your application vulnerable per se. If runtime protection is essential, [SecureString](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Security.SecureString 'System.Security.SecureString') should be used.
+
 <a name='M-AutoPrintr-tools-DirEmpty-System-String-'></a>
 ### DirEmpty(path) `method` [#](#M-AutoPrintr-tools-DirEmpty-System-String- 'Go To Here') [=](#contents 'Back To Contents')
 
@@ -2586,6 +2630,33 @@ Remove all fiels from directory
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | path | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') |  |
+
+<a name='M-AutoPrintr-tools-Encrypt-System-String-'></a>
+### Encrypt(plainText) `method` [#](#M-AutoPrintr-tools-Encrypt-System-String- 'Go To Here') [=](#contents 'Back To Contents')
+
+##### Summary
+
+Encrypts a given password and returns the encrypted data as a base64 string.
+
+##### Returns
+
+A base64 encoded string that represents the encrypted binary data.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| plainText | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') | An unencrypted string that needs to be secured. |
+
+##### Exceptions
+
+| Name | Description |
+| ---- | ----------- |
+| [System.ArgumentNullException](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.ArgumentNullException 'System.ArgumentNullException') | If `plainText` is a null reference. |
+
+##### Remarks
+
+This solution is not really secure as we are keeping strings in memory. If runtime protection is essential, [SecureString](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Security.SecureString 'System.Security.SecureString') should be used.
 
 <a name='M-AutoPrintr-tools-GET-System-String-'></a>
 ### GET(Url) `method` [#](#M-AutoPrintr-tools-GET-System-String- 'Go To Here') [=](#contents 'Back To Contents')
@@ -2652,6 +2723,23 @@ Color
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | s | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') | Hex string color |
+
+<a name='M-AutoPrintr-tools-secureString-System-String-'></a>
+### secureString(str) `method` [#](#M-AutoPrintr-tools-secureString-System-String- 'Go To Here') [=](#contents 'Back To Contents')
+
+##### Summary
+
+Convert string to secure string
+
+##### Returns
+
+
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| str | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') |  |
 
 <a name='M-AutoPrintr-tools-SetAllowUnsafeHeaderParsing20'></a>
 ### SetAllowUnsafeHeaderParsing20() `method` [#](#M-AutoPrintr-tools-SetAllowUnsafeHeaderParsing20 'Go To Here') [=](#contents 'Back To Contents')

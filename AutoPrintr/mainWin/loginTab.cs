@@ -16,23 +16,33 @@ namespace AutoPrintr
         /// </summary>
         public void configTabInit()
         {
-            //if (!ServiceControl.isInstalled(serviceName))
-            //{
-            //    Process p = Process.Start(serviceExe, "/i");
-            //    p.WaitForExit(30000);
-            //}
-            bool srvState = Pipe.isAvailable();
+            if (!ServiceControl.isInstalled(serviceName))
+            {
+                Process p = Process.Start(new ProcessStartInfo() { 
+                    FileName = serviceExe,
+                    Arguments = "/i",                
+                    WindowStyle = ProcessWindowStyle.Hidden
+                });
+                p.WaitForExit(30000);
+            }
+            bool srvState = ServiceControl.isRunning(serviceName);
+            //bool srvState = true;
             Console.WriteLine("srvState " + srvState);
             Program.isService = srvState;
-            serviceCheckBox.Checked = srvState;
-            serviceCheckBox.Enabled = true;
-            serviceCheckBox.CheckedChanged += serviceCheckBox_CheckedChanged;
+            serviceEnabledCheckBox.Checked = srvState;
+            serviceEnabledCheckBox.Enabled = true;
+            serviceEnabledCheckBox.CheckedChanged += serviceCheckBox_CheckedChanged;
 
             // Login section
             loginInput.TextChanged += loginPass_TextChanged;
             passwordInput.TextChanged += loginPass_TextChanged;
+            
+            // Service section
+            usernameInput.Text = Program.config.serviceLogin;
+            passwordInputService.Text = "";
+            domainInput.Text = Program.config.serviceDomain;
+            loadUserProfileCheckBox.Checked = Program.config.loadUserProfile;
 
-            // Other section
             //configSave.Click += saveConfig_Click;
 
             //configSaveStatus.Text = "config loaded";
@@ -53,11 +63,52 @@ namespace AutoPrintr
 
             locationsList.SelectedChanged += locationsList_SelectedChanged;
 
+            serviceSaveBtn.Click += serviceSaveBtn_Click;
+            serviceTestBtn.Click += serviceTestBtn_Click;
+            loadUserProfileCheckBox.CheckedChanged += loadUserProfileCheckBox_CheckedChanged;
+        }
+
+        void loadUserProfileCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.config.loadUserProfile = loadUserProfileCheckBox.Checked;
+            Program.config.save();
+        }
+
+        void serviceTestBtn_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var pass = passwordInputService.Text;
+                //if ((pass.Length == 0) && (Program.config.servicePass != null) && (Program.config.servicePass.Length > 0))
+                //{
+                //    pass = tools.Decrypt(Program.config.servicePass);
+                //}
+                Process.Start(
+                    "calc.exe",
+                    usernameInput.Text,
+                    tools.secureString(pass),
+                    domainInput.Text
+                );
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Test error:\n" + ex.Message);
+            }
+        }
+
+        void serviceSaveBtn_Click(object sender, EventArgs e)
+        {            
+            Program.config.serviceLogin = usernameInput.Text;
+            Program.config.servicePass = tools.Encrypt(passwordInputService.Text);
+            Program.config.serviceDomain = domainInput.Text;
+            Program.config.loadUserProfile = loadUserProfileCheckBox.Checked;
+            Program.config.save();
         }
 
         void serviceCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            service(serviceCheckBox.Checked);
+            Program.isService = serviceEnabledCheckBox.Checked;
+            service(serviceEnabledCheckBox.Checked);
         }
 
         bool isLoggedIn(){
@@ -277,29 +328,37 @@ namespace AutoPrintr
             {
                 try
                 {
-                    //ServiceControl.start(serviceName, 5000);
+                    ServiceControl.start(serviceName, 5000);
+                    JobsServer.disconnect();
+                    if (Program.config.channel.Length > 0)
+                    {
+                        srvConnect(Program.config.channel);
+                    }
                 }
                 catch (Exception ex)
                 {
                     log.Error(ex, "Error while starting service");
-                    serviceCheckBox.Checked = false;
-                }                
-                //Process.Start( serviceExe, "/i" );
+                    serviceEnabledCheckBox.Checked = false;
+                }
             }
             else
             {
                 try
                 {
-                    //ServiceControl.stop(serviceName, 5000);
+                    ServiceControl.stop(serviceName, 5000);
+                    if (Program.config.channel.Length > 0)
+                    {
+                        srvConnect(Program.config.channel);
+                    }
                 }
                 catch (Exception ex)
                 {
                     log.Error(ex, "Error while stopping service");
-                    serviceCheckBox.Checked = true;
-                }       
-                
-                //Process.Start( serviceExe, "/u" );
+                    serviceEnabledCheckBox.Checked = true;
+                }
             }
         }
+
+
     }
 }

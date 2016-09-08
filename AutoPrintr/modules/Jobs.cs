@@ -18,7 +18,7 @@ namespace AutoPrintr
         /// <summary>
         /// Jobs list
         /// </summary>
-        static public List<Job> list = new List<Job>();
+        //static public List<Job> list = new List<Job>();
 
         /// <summary>
         /// Constant with new print job event name from Pusher
@@ -172,7 +172,7 @@ namespace AutoPrintr
                 else
                 {
                     onJob(new Exception("Wrong job format. Get: " + msg.ToString()), null);
-                }               
+                }
             });
         }
 
@@ -302,6 +302,10 @@ namespace AutoPrintr
         /// List of associated with this job printers
         /// </summary>
         public Printer printer;
+
+        [JsonProperty]
+        public string printerName = "";
+
         /// <summary>
         /// Job error
         /// </summary>
@@ -323,7 +327,6 @@ namespace AutoPrintr
         [JsonProperty]
         public int qty = 1;
 
-        [JsonProperty]
         public DocType docType;
 
         /// <summary>
@@ -395,19 +398,18 @@ namespace AutoPrintr
             // Job printing
             // Looks like more optimal solution will be sending job to "Printers" class and it will decise print job or not... Just idea...
             try
-            {       
-         
+            {      
                 if ( 
                     (printer.triggerGet(docType) == false) & 
                     (autoprinted == true)
                 )
-                {
-                    
+                {                    
                     Skipped(quantity());
                     cb(null);
                 }
                 else
                 {
+                    //Console.WriteLine("File path for print: {0} | {1} | {2}", localFilePath, fileName, document);
                     printer.print(localFilePath, fileName, document);
                     Printed();
                     cb(null);
@@ -432,14 +434,11 @@ namespace AutoPrintr
         public void init()
         {
             this.url = new Uri(file);
-            this.fileName = Path.GetFileName(this.url.LocalPath);
-            this.documentTitle = DocumentTypes.toTitle(document);
-
-            // Generate local file path with partial random name
-            this.localFileName = tools.randomFileName() + "_" + fileName;
-            this.localFilePath = Path.Combine(Program.tempDnDir, this.localFileName);
-
-            docType = DocumentTypes.ToDocumentType(this.document).type;
+            this.docType = DocumentTypes.ToDocumentType(this.document).type;
+            if (printerName.Length > 0)
+            {
+                this.printer = Printers.fromName(this.printerName);
+            }
         }
 
         /// <summary>
@@ -464,7 +463,14 @@ namespace AutoPrintr
             this.location = location;
             this.autoprinted = autoprinted;
             this.register = register;
-            init();            
+
+            init();
+
+            // Generate local file path with partial random name
+            this.fileName = Path.GetFileName(this.url.LocalPath);
+            this.localFileName = tools.randomFileName() + "_" + fileName; 
+            this.documentTitle = DocumentTypes.toTitle(document);
+            this.localFilePath = Path.Combine(Program.tempDnDir, this.localFileName);
         }
 
         public Job() { }
@@ -553,5 +559,13 @@ namespace AutoPrintr
 		    }
 	    }
 
+        public void Dispose()
+        {
+            foreach (EventHandler<Job> d in onChange.GetInvocationList())
+            {
+                onChange -= d;
+            }
+            File.Delete(this.localFilePath);
+        }
     }
 }

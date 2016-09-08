@@ -1,9 +1,9 @@
 ; example1.nsi
 ;
 ; This script is perhaps one of the simplest NSIs you can make. All of the
-; optional settings are left to their default settings. The installer simply 
+; optional settings are left to their default settings. The installer simply
 ; prompts the user asking them where to install, and drops a copy of example1.nsi
-; there. 
+; there.
 
 ;--------------------------------
 ; saving version.txt file
@@ -44,18 +44,18 @@ LicenseData "..\LICENSE"
 ; Exch $0 ;file to write to
 ; Exch
 ; Exch $1 ;text to write
- 
+
 ;   FileOpen $0 $0 a #open file
 ;   FileSeek $0 0 END #go to end
 ;   FileWrite $0 $1 #write to file
 ;   FileClose $0
- 
+
 ; Pop $1
 ; Pop $0
 ; FunctionEnd
 
-; Push `` ;text to write to file 
-; Push `version.txt` ;file to write to 
+; Push `` ;text to write to file
+; Push `version.txt` ;file to write to
 ; Call WriteToFile
 
 Function saveVersion
@@ -92,19 +92,23 @@ Section "" ;No components page, name is not important
     SetOverwrite off
     File ..\AutoPrintr\bin\Release\AutoPrintr.exe.config
     SetOverwrite on
+
     ; All other files
+    File ..\AutoPrintrService\bin\Release\AutoPrintrService.exe
+    File ..\AutoPrintrService\bin\Release\AutoPrintrService.exe.config
     File ..\AutoPrintr\bin\Release\AutoPrintr.exe
     File ..\AutoPrintr\bin\Release\PusherClient.dll
     File ..\AutoPrintr\bin\Release\WebSocket4Net.dll
     File ..\AutoPrintr\bin\Release\Newtonsoft.Json.dll
     File ..\AutoPrintr\bin\Release\NLog.dll
+    File ..\AutoPrintr\bin\Release\NamedPipeWrapper.dll
     File ..\resources\skin.json
     File ..\resources\NLog.config
     File ..\resources\SumatraPDF.exe
 
     ;create desktop shortcut
     CreateShortCut "$DESKTOP\AutoPrintr.lnk" "$INSTDIR\AutoPrintr.exe" ""
- 
+
     ;create start-menu items
     CreateDirectory "$SMPROGRAMS\AutoPrintr"
     CreateShortCut "$SMPROGRAMS\AutoPrintr\Uninstall.lnk" "$INSTDIR\Uninstall.exe" "" "$INSTDIR\Uninstall.exe" 0
@@ -133,6 +137,7 @@ Section "Uninstall"
     SetOutPath $TEMP
 
     nsExec::Exec 'cmd /C "Taskkill /F /IM AutoPrintr.exe"'
+    nsExec::Exec 'cmd /C "$SMPROGRAMS\AutoPrintr\AutoPrintrService.exe /u"'
     Sleep 1500
     ; Remove files and uninstaller
     Delete $INSTDIR\*
