@@ -125,30 +125,11 @@
   <data name="jobsTab.AutoScroll" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="jobsTable.AutoScroll" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="jobsTable.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="jobsTable.AutoSizeMode" type="System.Windows.Forms.AutoSizeMode, System.Windows.Forms">
-    <value>GrowAndShrink</value>
-  </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="jobsTable.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 4</value>
-  </data>
-  <data name="jobsTable.Size" type="System.Drawing.Size, System.Drawing">
-    <value>913, 28</value>
-  </data>
-  <data name="jobsTable.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
   <data name="&gt;&gt;jobsTable.Name" xml:space="preserve">
     <value>jobsTable</value>
   </data>
   <data name="&gt;&gt;jobsTable.Type" xml:space="preserve">
-    <value>AutoPrintr.JobsList, AutoPrintr, Version=0.9.802.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>AutoPrintr.JobsList, AutoPrintr, Version=0.9.849.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;jobsTable.Parent" xml:space="preserve">
     <value>jobsTab</value>
@@ -156,6 +137,7 @@
   <data name="&gt;&gt;jobsTable.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="jobsTab.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 22</value>
   </data>
@@ -182,30 +164,6 @@
   </data>
   <data name="printersTab.AutoScroll" type="System.Boolean, mscorlib">
     <value>True</value>
-  </data>
-  <data name="printersTable.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="printersTable.AutoSizeMode" type="System.Windows.Forms.AutoSizeMode, System.Windows.Forms">
-    <value>GrowAndShrink</value>
-  </data>
-  <data name="printersTable.CellBorderStyle" type="System.Windows.Forms.TableLayoutPanelCellBorderStyle, System.Windows.Forms">
-    <value>Single</value>
-  </data>
-  <data name="printersTable.ColumnCount" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="printersTable.Location" type="System.Drawing.Point, System.Drawing">
-    <value>7, 6</value>
-  </data>
-  <data name="printersTable.RowCount" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="printersTable.Size" type="System.Drawing.Size, System.Drawing">
-    <value>2, 2</value>
-  </data>
-  <data name="printersTable.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
   </data>
   <data name="&gt;&gt;printersTable.Name" xml:space="preserve">
     <value>printersTable</value>
@@ -249,41 +207,488 @@
   <data name="&gt;&gt;printersTab.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="loadUserProfileCheckBox.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="loadUserProfileCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="loadUserProfileCheckBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>163, 98</value>
-  </data>
-  <data name="loadUserProfileCheckBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>107, 17</value>
-  </data>
-  <data name="loadUserProfileCheckBox.TabIndex" type="System.Int32, mscorlib">
-    <value>14</value>
-  </data>
-  <data name="loadUserProfileCheckBox.Text" xml:space="preserve">
-    <value>Load User Profile</value>
-  </data>
-  <data name="&gt;&gt;loadUserProfileCheckBox.Name" xml:space="preserve">
-    <value>loadUserProfileCheckBox</value>
-  </data>
-  <data name="&gt;&gt;loadUserProfileCheckBox.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;loadUserProfileCheckBox.Parent" xml:space="preserve">
+  <data name="&gt;&gt;serviceSettings.Name" xml:space="preserve">
     <value>serviceSettings</value>
   </data>
-  <data name="&gt;&gt;loadUserProfileCheckBox.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;serviceSettings.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;serviceSettings.Parent" xml:space="preserve">
+    <value>loginTab</value>
+  </data>
+  <data name="&gt;&gt;serviceSettings.ZOrder" xml:space="preserve">
     <value>0</value>
+  </data>
+  <data name="&gt;&gt;locationGroupBox.Name" xml:space="preserve">
+    <value>locationGroupBox</value>
+  </data>
+  <data name="&gt;&gt;locationGroupBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;locationGroupBox.Parent" xml:space="preserve">
+    <value>loginTab</value>
+  </data>
+  <data name="&gt;&gt;locationGroupBox.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;loginGroupBox.Name" xml:space="preserve">
+    <value>loginGroupBox</value>
+  </data>
+  <data name="&gt;&gt;loginGroupBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;loginGroupBox.Parent" xml:space="preserve">
+    <value>loginTab</value>
+  </data>
+  <data name="&gt;&gt;loginGroupBox.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="loginTab.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 22</value>
+  </data>
+  <data name="loginTab.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
+  </data>
+  <data name="loginTab.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1082, 487</value>
+  </data>
+  <data name="loginTab.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="loginTab.Text" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="&gt;&gt;loginTab.Name" xml:space="preserve">
+    <value>loginTab</value>
+  </data>
+  <data name="&gt;&gt;loginTab.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;loginTab.Parent" xml:space="preserve">
+    <value>tabs</value>
+  </data>
+  <data name="&gt;&gt;loginTab.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="logTab.AutoScroll" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;logLevelLabel.Name" xml:space="preserve">
+    <value>logLevelLabel</value>
+  </data>
+  <data name="&gt;&gt;logLevelLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;logLevelLabel.Parent" xml:space="preserve">
+    <value>logTab</value>
+  </data>
+  <data name="&gt;&gt;logLevelLabel.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;logLevelSelect.Name" xml:space="preserve">
+    <value>logLevelSelect</value>
+  </data>
+  <data name="&gt;&gt;logLevelSelect.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;logLevelSelect.Parent" xml:space="preserve">
+    <value>logTab</value>
+  </data>
+  <data name="&gt;&gt;logLevelSelect.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;logTextBox.Name" xml:space="preserve">
+    <value>logTextBox</value>
+  </data>
+  <data name="&gt;&gt;logTextBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RichTextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;logTextBox.Parent" xml:space="preserve">
+    <value>logTab</value>
+  </data>
+  <data name="&gt;&gt;logTextBox.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="logTab.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 22</value>
+  </data>
+  <data name="logTab.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1082, 487</value>
+  </data>
+  <data name="logTab.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="logTab.Text" xml:space="preserve">
+    <value>Log</value>
+  </data>
+  <data name="&gt;&gt;logTab.Name" xml:space="preserve">
+    <value>logTab</value>
+  </data>
+  <data name="&gt;&gt;logTab.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;logTab.Parent" xml:space="preserve">
+    <value>tabs</value>
+  </data>
+  <data name="&gt;&gt;logTab.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;licenseText.Name" xml:space="preserve">
+    <value>licenseText</value>
+  </data>
+  <data name="&gt;&gt;licenseText.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RichTextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;licenseText.Parent" xml:space="preserve">
+    <value>aboutTab</value>
+  </data>
+  <data name="&gt;&gt;licenseText.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;helpButton.Name" xml:space="preserve">
+    <value>helpButton</value>
+  </data>
+  <data name="&gt;&gt;helpButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;helpButton.Parent" xml:space="preserve">
+    <value>aboutTab</value>
+  </data>
+  <data name="&gt;&gt;helpButton.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;versionLabel.Name" xml:space="preserve">
+    <value>versionLabel</value>
+  </data>
+  <data name="&gt;&gt;versionLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;versionLabel.Parent" xml:space="preserve">
+    <value>aboutTab</value>
+  </data>
+  <data name="&gt;&gt;versionLabel.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="aboutTab.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 22</value>
+  </data>
+  <data name="aboutTab.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1082, 487</value>
+  </data>
+  <data name="aboutTab.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="aboutTab.Text" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="&gt;&gt;aboutTab.Name" xml:space="preserve">
+    <value>aboutTab</value>
+  </data>
+  <data name="&gt;&gt;aboutTab.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;aboutTab.Parent" xml:space="preserve">
+    <value>tabs</value>
+  </data>
+  <data name="&gt;&gt;aboutTab.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="tabs.Location" type="System.Drawing.Point, System.Drawing">
+    <value>1, 1</value>
+  </data>
+  <data name="tabs.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>1, 1, 1, 1</value>
+  </data>
+  <data name="tabs.Padding" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="tabs.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1090, 513</value>
+  </data>
+  <data name="tabs.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;tabs.Name" xml:space="preserve">
+    <value>tabs</value>
+  </data>
+  <data name="&gt;&gt;tabs.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabControl, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tabs.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;tabs.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="jobsTable.AutoScroll" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="jobsTable.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="jobsTable.AutoSizeMode" type="System.Windows.Forms.AutoSizeMode, System.Windows.Forms">
+    <value>GrowAndShrink</value>
+  </data>
+  <data name="jobsTable.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 4</value>
+  </data>
+  <data name="jobsTable.Size" type="System.Drawing.Size, System.Drawing">
+    <value>913, 28</value>
+  </data>
+  <data name="jobsTable.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;jobsTable.Name" xml:space="preserve">
+    <value>jobsTable</value>
+  </data>
+  <data name="&gt;&gt;jobsTable.Type" xml:space="preserve">
+    <value>AutoPrintr.JobsList, AutoPrintr, Version=0.9.849.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;jobsTable.Parent" xml:space="preserve">
+    <value>jobsTab</value>
+  </data>
+  <data name="&gt;&gt;jobsTable.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="printersTable.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="printersTable.AutoSizeMode" type="System.Windows.Forms.AutoSizeMode, System.Windows.Forms">
+    <value>GrowAndShrink</value>
+  </data>
+  <data name="printersTable.CellBorderStyle" type="System.Windows.Forms.TableLayoutPanelCellBorderStyle, System.Windows.Forms">
+    <value>Single</value>
+  </data>
+  <data name="printersTable.ColumnCount" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="printersTable.Location" type="System.Drawing.Point, System.Drawing">
+    <value>7, 6</value>
+  </data>
+  <data name="printersTable.RowCount" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="printersTable.Size" type="System.Drawing.Size, System.Drawing">
+    <value>2, 2</value>
+  </data>
+  <data name="printersTable.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;printersTable.Name" xml:space="preserve">
+    <value>printersTable</value>
+  </data>
+  <data name="&gt;&gt;printersTable.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;printersTable.Parent" xml:space="preserve">
+    <value>printersTab</value>
+  </data>
+  <data name="&gt;&gt;printersTable.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="printersTable.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls /&gt;&lt;Columns Styles="AutoSize,0,Absolute,20,Absolute,20,Absolute,20" /&gt;&lt;Rows Styles="AutoSize,0" /&gt;&lt;/TableLayoutSettings&gt;</value>
+  </data>
+  <data name="&gt;&gt;label1.Name" xml:space="preserve">
+    <value>label1</value>
+  </data>
+  <data name="&gt;&gt;label1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label1.Parent" xml:space="preserve">
+    <value>serviceSettings</value>
+  </data>
+  <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;autorunModeDD.Name" xml:space="preserve">
+    <value>autorunModeDD</value>
+  </data>
+  <data name="&gt;&gt;autorunModeDD.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;autorunModeDD.Parent" xml:space="preserve">
+    <value>serviceSettings</value>
+  </data>
+  <data name="&gt;&gt;autorunModeDD.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;serviceSaveBtn.Name" xml:space="preserve">
+    <value>serviceSaveBtn</value>
+  </data>
+  <data name="&gt;&gt;serviceSaveBtn.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;serviceSaveBtn.Parent" xml:space="preserve">
+    <value>serviceSettings</value>
+  </data>
+  <data name="&gt;&gt;serviceSaveBtn.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;serviceTestBtn.Name" xml:space="preserve">
+    <value>serviceTestBtn</value>
+  </data>
+  <data name="&gt;&gt;serviceTestBtn.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;serviceTestBtn.Parent" xml:space="preserve">
+    <value>serviceSettings</value>
+  </data>
+  <data name="&gt;&gt;serviceTestBtn.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;passwordInputService.Name" xml:space="preserve">
+    <value>passwordInputService</value>
+  </data>
+  <data name="&gt;&gt;passwordInputService.Type" xml:space="preserve">
+    <value>System.Windows.Forms.MaskedTextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;passwordInputService.Parent" xml:space="preserve">
+    <value>serviceSettings</value>
+  </data>
+  <data name="&gt;&gt;passwordInputService.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;usernameInput.Name" xml:space="preserve">
+    <value>usernameInput</value>
+  </data>
+  <data name="&gt;&gt;usernameInput.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;usernameInput.Parent" xml:space="preserve">
+    <value>serviceSettings</value>
+  </data>
+  <data name="&gt;&gt;usernameInput.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;domainInput.Name" xml:space="preserve">
+    <value>domainInput</value>
+  </data>
+  <data name="&gt;&gt;domainInput.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;domainInput.Parent" xml:space="preserve">
+    <value>serviceSettings</value>
+  </data>
+  <data name="&gt;&gt;domainInput.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;serviceUserLoginLabel.Name" xml:space="preserve">
+    <value>serviceUserLoginLabel</value>
+  </data>
+  <data name="&gt;&gt;serviceUserLoginLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;serviceUserLoginLabel.Parent" xml:space="preserve">
+    <value>serviceSettings</value>
+  </data>
+  <data name="&gt;&gt;serviceUserLoginLabel.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="&gt;&gt;serviceUserPasswordLabel.Name" xml:space="preserve">
+    <value>serviceUserPasswordLabel</value>
+  </data>
+  <data name="&gt;&gt;serviceUserPasswordLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;serviceUserPasswordLabel.Parent" xml:space="preserve">
+    <value>serviceSettings</value>
+  </data>
+  <data name="&gt;&gt;serviceUserPasswordLabel.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="&gt;&gt;serviceUserDomainLabel.Name" xml:space="preserve">
+    <value>serviceUserDomainLabel</value>
+  </data>
+  <data name="&gt;&gt;serviceUserDomainLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;serviceUserDomainLabel.Parent" xml:space="preserve">
+    <value>serviceSettings</value>
+  </data>
+  <data name="&gt;&gt;serviceUserDomainLabel.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="serviceSettings.Location" type="System.Drawing.Point, System.Drawing">
+    <value>489, 6</value>
+  </data>
+  <data name="serviceSettings.Size" type="System.Drawing.Size, System.Drawing">
+    <value>285, 160</value>
+  </data>
+  <data name="serviceSettings.TabIndex" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
+  <data name="serviceSettings.Text" xml:space="preserve">
+    <value>Autorun</value>
+  </data>
+  <data name="&gt;&gt;serviceSettings.Name" xml:space="preserve">
+    <value>serviceSettings</value>
+  </data>
+  <data name="&gt;&gt;serviceSettings.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;serviceSettings.Parent" xml:space="preserve">
+    <value>loginTab</value>
+  </data>
+  <data name="&gt;&gt;serviceSettings.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="label1.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>13, 22</value>
+  </data>
+  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>73, 13</value>
+  </data>
+  <data name="label1.TabIndex" type="System.Int32, mscorlib">
+    <value>15</value>
+  </data>
+  <data name="label1.Text" xml:space="preserve">
+    <value>Autorun mode</value>
+  </data>
+  <data name="&gt;&gt;label1.Name" xml:space="preserve">
+    <value>label1</value>
+  </data>
+  <data name="&gt;&gt;label1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label1.Parent" xml:space="preserve">
+    <value>serviceSettings</value>
+  </data>
+  <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="autorunModeDD.Location" type="System.Drawing.Point, System.Drawing">
+    <value>104, 19</value>
+  </data>
+  <data name="autorunModeDD.Size" type="System.Drawing.Size, System.Drawing">
+    <value>166, 21</value>
+  </data>
+  <data name="autorunModeDD.TabIndex" type="System.Int32, mscorlib">
+    <value>14</value>
+  </data>
+  <data name="&gt;&gt;autorunModeDD.Name" xml:space="preserve">
+    <value>autorunModeDD</value>
+  </data>
+  <data name="&gt;&gt;autorunModeDD.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;autorunModeDD.Parent" xml:space="preserve">
+    <value>serviceSettings</value>
+  </data>
+  <data name="&gt;&gt;autorunModeDD.ZOrder" xml:space="preserve">
+    <value>1</value>
   </data>
   <data name="serviceSaveBtn.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
   <data name="serviceSaveBtn.Location" type="System.Drawing.Point, System.Drawing">
-    <value>190, 121</value>
+    <value>190, 123</value>
   </data>
   <data name="serviceSaveBtn.Size" type="System.Drawing.Size, System.Drawing">
     <value>80, 23</value>
@@ -304,13 +709,13 @@
     <value>serviceSettings</value>
   </data>
   <data name="&gt;&gt;serviceSaveBtn.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="serviceTestBtn.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
   <data name="serviceTestBtn.Location" type="System.Drawing.Point, System.Drawing">
-    <value>104, 121</value>
+    <value>104, 123</value>
   </data>
   <data name="serviceTestBtn.Size" type="System.Drawing.Size, System.Drawing">
     <value>80, 23</value>
@@ -320,6 +725,9 @@
   </data>
   <data name="serviceTestBtn.Text" xml:space="preserve">
     <value>Test</value>
+  </data>
+  <data name="serviceTestBtn.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
   </data>
   <data name="&gt;&gt;serviceTestBtn.Name" xml:space="preserve">
     <value>serviceTestBtn</value>
@@ -331,16 +739,19 @@
     <value>serviceSettings</value>
   </data>
   <data name="&gt;&gt;serviceTestBtn.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="passwordInputService.Location" type="System.Drawing.Point, System.Drawing">
-    <value>104, 72</value>
+    <value>104, 97</value>
   </data>
   <data name="passwordInputService.Size" type="System.Drawing.Size, System.Drawing">
     <value>166, 20</value>
   </data>
   <data name="passwordInputService.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
+  </data>
+  <data name="passwordInputService.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
   </data>
   <data name="&gt;&gt;passwordInputService.Name" xml:space="preserve">
     <value>passwordInputService</value>
@@ -352,10 +763,10 @@
     <value>serviceSettings</value>
   </data>
   <data name="&gt;&gt;passwordInputService.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
   <data name="usernameInput.Location" type="System.Drawing.Point, System.Drawing">
-    <value>104, 45</value>
+    <value>104, 71</value>
   </data>
   <data name="usernameInput.ScrollBars" type="System.Windows.Forms.ScrollBars, System.Windows.Forms">
     <value>Horizontal</value>
@@ -365,6 +776,9 @@
   </data>
   <data name="usernameInput.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
+  </data>
+  <data name="usernameInput.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
   </data>
   <data name="&gt;&gt;usernameInput.Name" xml:space="preserve">
     <value>usernameInput</value>
@@ -376,10 +790,10 @@
     <value>serviceSettings</value>
   </data>
   <data name="&gt;&gt;usernameInput.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>5</value>
   </data>
   <data name="domainInput.Location" type="System.Drawing.Point, System.Drawing">
-    <value>104, 19</value>
+    <value>104, 45</value>
   </data>
   <data name="domainInput.ScrollBars" type="System.Windows.Forms.ScrollBars, System.Windows.Forms">
     <value>Horizontal</value>
@@ -389,6 +803,9 @@
   </data>
   <data name="domainInput.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
+  </data>
+  <data name="domainInput.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
   </data>
   <data name="&gt;&gt;domainInput.Name" xml:space="preserve">
     <value>domainInput</value>
@@ -400,7 +817,7 @@
     <value>serviceSettings</value>
   </data>
   <data name="&gt;&gt;domainInput.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>6</value>
   </data>
   <data name="serviceUserLoginLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -409,7 +826,7 @@
     <value>NoControl</value>
   </data>
   <data name="serviceUserLoginLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 48</value>
+    <value>13, 72</value>
   </data>
   <data name="serviceUserLoginLabel.Size" type="System.Drawing.Size, System.Drawing">
     <value>55, 13</value>
@@ -419,6 +836,9 @@
   </data>
   <data name="serviceUserLoginLabel.Text" xml:space="preserve">
     <value>Username</value>
+  </data>
+  <data name="serviceUserLoginLabel.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
   </data>
   <data name="&gt;&gt;serviceUserLoginLabel.Name" xml:space="preserve">
     <value>serviceUserLoginLabel</value>
@@ -430,7 +850,7 @@
     <value>serviceSettings</value>
   </data>
   <data name="&gt;&gt;serviceUserLoginLabel.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>7</value>
   </data>
   <data name="serviceUserPasswordLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -439,7 +859,7 @@
     <value>NoControl</value>
   </data>
   <data name="serviceUserPasswordLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 75</value>
+    <value>13, 98</value>
   </data>
   <data name="serviceUserPasswordLabel.Size" type="System.Drawing.Size, System.Drawing">
     <value>56, 13</value>
@@ -449,6 +869,9 @@
   </data>
   <data name="serviceUserPasswordLabel.Text" xml:space="preserve">
     <value>Password:</value>
+  </data>
+  <data name="serviceUserPasswordLabel.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
   </data>
   <data name="&gt;&gt;serviceUserPasswordLabel.Name" xml:space="preserve">
     <value>serviceUserPasswordLabel</value>
@@ -460,7 +883,7 @@
     <value>serviceSettings</value>
   </data>
   <data name="&gt;&gt;serviceUserPasswordLabel.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>8</value>
   </data>
   <data name="serviceUserDomainLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -469,7 +892,7 @@
     <value>NoControl</value>
   </data>
   <data name="serviceUserDomainLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 22</value>
+    <value>13, 46</value>
   </data>
   <data name="serviceUserDomainLabel.Size" type="System.Drawing.Size, System.Drawing">
     <value>43, 13</value>
@@ -479,6 +902,9 @@
   </data>
   <data name="serviceUserDomainLabel.Text" xml:space="preserve">
     <value>Domain</value>
+  </data>
+  <data name="serviceUserDomainLabel.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
   </data>
   <data name="&gt;&gt;serviceUserDomainLabel.Name" xml:space="preserve">
     <value>serviceUserDomainLabel</value>
@@ -490,93 +916,42 @@
     <value>serviceSettings</value>
   </data>
   <data name="&gt;&gt;serviceUserDomainLabel.ZOrder" xml:space="preserve">
-    <value>8</value>
-  </data>
-  <data name="serviceEnabledCheckBox.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="serviceEnabledCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="serviceEnabledCheckBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>15, 98</value>
-  </data>
-  <data name="serviceEnabledCheckBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>65, 17</value>
-  </data>
-  <data name="serviceEnabledCheckBox.TabIndex" type="System.Int32, mscorlib">
-    <value>10</value>
-  </data>
-  <data name="serviceEnabledCheckBox.Text" xml:space="preserve">
-    <value>Enabled</value>
-  </data>
-  <data name="&gt;&gt;serviceEnabledCheckBox.Name" xml:space="preserve">
-    <value>serviceEnabledCheckBox</value>
-  </data>
-  <data name="&gt;&gt;serviceEnabledCheckBox.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;serviceEnabledCheckBox.Parent" xml:space="preserve">
-    <value>serviceSettings</value>
-  </data>
-  <data name="&gt;&gt;serviceEnabledCheckBox.ZOrder" xml:space="preserve">
     <value>9</value>
   </data>
-  <data name="serviceSettings.Location" type="System.Drawing.Point, System.Drawing">
-    <value>489, 6</value>
+  <data name="&gt;&gt;locationsList.Name" xml:space="preserve">
+    <value>locationsList</value>
   </data>
-  <data name="serviceSettings.Size" type="System.Drawing.Size, System.Drawing">
-    <value>285, 151</value>
+  <data name="&gt;&gt;locationsList.Type" xml:space="preserve">
+    <value>AutoPrintr.CheckBoxList, AutoPrintr, Version=0.9.849.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
-  <data name="serviceSettings.TabIndex" type="System.Int32, mscorlib">
-    <value>10</value>
+  <data name="&gt;&gt;locationsList.Parent" xml:space="preserve">
+    <value>locationGroupBox</value>
   </data>
-  <data name="serviceSettings.Text" xml:space="preserve">
-    <value>Service</value>
-  </data>
-  <data name="&gt;&gt;serviceSettings.Name" xml:space="preserve">
-    <value>serviceSettings</value>
-  </data>
-  <data name="&gt;&gt;serviceSettings.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;serviceSettings.Parent" xml:space="preserve">
-    <value>loginTab</value>
-  </data>
-  <data name="&gt;&gt;serviceSettings.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;locationsList.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="configSave.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
+  <data name="locationGroupBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>258, 6</value>
   </data>
-  <data name="configSave.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
+  <data name="locationGroupBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>225, 160</value>
   </data>
-  <data name="configSave.Location" type="System.Drawing.Point, System.Drawing">
-    <value>13, 163</value>
+  <data name="locationGroupBox.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
   </data>
-  <data name="configSave.Size" type="System.Drawing.Size, System.Drawing">
-    <value>80, 23</value>
+  <data name="locationGroupBox.Text" xml:space="preserve">
+    <value>Location</value>
   </data>
-  <data name="configSave.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
+  <data name="&gt;&gt;locationGroupBox.Name" xml:space="preserve">
+    <value>locationGroupBox</value>
   </data>
-  <data name="configSave.Text" xml:space="preserve">
-    <value>Save</value>
+  <data name="&gt;&gt;locationGroupBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="configSave.Visible" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="&gt;&gt;configSave.Name" xml:space="preserve">
-    <value>configSave</value>
-  </data>
-  <data name="&gt;&gt;configSave.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;configSave.Parent" xml:space="preserve">
+  <data name="&gt;&gt;locationGroupBox.Parent" xml:space="preserve">
     <value>loginTab</value>
   </data>
-  <data name="&gt;&gt;configSave.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;locationGroupBox.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
   <data name="locationsList.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
@@ -595,7 +970,7 @@
     <value>20, 20</value>
   </data>
   <data name="locationsList.Size" type="System.Drawing.Size, System.Drawing">
-    <value>213, 131</value>
+    <value>213, 140</value>
   </data>
   <data name="locationsList.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -604,7 +979,7 @@
     <value>locationsList</value>
   </data>
   <data name="&gt;&gt;locationsList.Type" xml:space="preserve">
-    <value>AutoPrintr.CheckBoxList, AutoPrintr, Version=0.9.802.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>AutoPrintr.CheckBoxList, AutoPrintr, Version=0.9.849.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;locationsList.Parent" xml:space="preserve">
     <value>locationGroupBox</value>
@@ -612,28 +987,88 @@
   <data name="&gt;&gt;locationsList.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="locationGroupBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>258, 6</value>
+  <data name="&gt;&gt;loginLabel.Name" xml:space="preserve">
+    <value>loginLabel</value>
   </data>
-  <data name="locationGroupBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>225, 151</value>
+  <data name="&gt;&gt;loginLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="locationGroupBox.TabIndex" type="System.Int32, mscorlib">
-    <value>8</value>
+  <data name="&gt;&gt;loginLabel.Parent" xml:space="preserve">
+    <value>loginGroupBox</value>
   </data>
-  <data name="locationGroupBox.Text" xml:space="preserve">
-    <value>Location</value>
+  <data name="&gt;&gt;loginLabel.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
-  <data name="&gt;&gt;locationGroupBox.Name" xml:space="preserve">
-    <value>locationGroupBox</value>
+  <data name="&gt;&gt;submit.Name" xml:space="preserve">
+    <value>submit</value>
   </data>
-  <data name="&gt;&gt;locationGroupBox.Type" xml:space="preserve">
+  <data name="&gt;&gt;submit.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;submit.Parent" xml:space="preserve">
+    <value>loginGroupBox</value>
+  </data>
+  <data name="&gt;&gt;submit.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;loginInput.Name" xml:space="preserve">
+    <value>loginInput</value>
+  </data>
+  <data name="&gt;&gt;loginInput.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;loginInput.Parent" xml:space="preserve">
+    <value>loginGroupBox</value>
+  </data>
+  <data name="&gt;&gt;loginInput.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;passwordLabel.Name" xml:space="preserve">
+    <value>passwordLabel</value>
+  </data>
+  <data name="&gt;&gt;passwordLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;passwordLabel.Parent" xml:space="preserve">
+    <value>loginGroupBox</value>
+  </data>
+  <data name="&gt;&gt;passwordLabel.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;passwordInput.Name" xml:space="preserve">
+    <value>passwordInput</value>
+  </data>
+  <data name="&gt;&gt;passwordInput.Type" xml:space="preserve">
+    <value>System.Windows.Forms.MaskedTextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;passwordInput.Parent" xml:space="preserve">
+    <value>loginGroupBox</value>
+  </data>
+  <data name="&gt;&gt;passwordInput.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="loginGroupBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>7, 6</value>
+  </data>
+  <data name="loginGroupBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>245, 160</value>
+  </data>
+  <data name="loginGroupBox.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="loginGroupBox.Text" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="&gt;&gt;loginGroupBox.Name" xml:space="preserve">
+    <value>loginGroupBox</value>
+  </data>
+  <data name="&gt;&gt;loginGroupBox.Type" xml:space="preserve">
     <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;locationGroupBox.Parent" xml:space="preserve">
+  <data name="&gt;&gt;loginGroupBox.Parent" xml:space="preserve">
     <value>loginTab</value>
   </data>
-  <data name="&gt;&gt;locationGroupBox.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;loginGroupBox.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
   <data name="loginLabel.AutoSize" type="System.Boolean, mscorlib">
@@ -673,7 +1108,7 @@
     <value>NoControl</value>
   </data>
   <data name="submit.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 121</value>
+    <value>6, 131</value>
   </data>
   <data name="submit.Size" type="System.Drawing.Size, System.Drawing">
     <value>233, 23</value>
@@ -771,60 +1206,6 @@
   <data name="&gt;&gt;passwordInput.ZOrder" xml:space="preserve">
     <value>4</value>
   </data>
-  <data name="loginGroupBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>7, 6</value>
-  </data>
-  <data name="loginGroupBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>245, 151</value>
-  </data>
-  <data name="loginGroupBox.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
-  </data>
-  <data name="loginGroupBox.Text" xml:space="preserve">
-    <value>Login</value>
-  </data>
-  <data name="&gt;&gt;loginGroupBox.Name" xml:space="preserve">
-    <value>loginGroupBox</value>
-  </data>
-  <data name="&gt;&gt;loginGroupBox.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;loginGroupBox.Parent" xml:space="preserve">
-    <value>loginTab</value>
-  </data>
-  <data name="&gt;&gt;loginGroupBox.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="loginTab.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 22</value>
-  </data>
-  <data name="loginTab.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 3, 3, 3</value>
-  </data>
-  <data name="loginTab.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1082, 487</value>
-  </data>
-  <data name="loginTab.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="loginTab.Text" xml:space="preserve">
-    <value>Login</value>
-  </data>
-  <data name="&gt;&gt;loginTab.Name" xml:space="preserve">
-    <value>loginTab</value>
-  </data>
-  <data name="&gt;&gt;loginTab.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;loginTab.Parent" xml:space="preserve">
-    <value>tabs</value>
-  </data>
-  <data name="&gt;&gt;loginTab.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="logTab.AutoScroll" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
   <data name="logLevelLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -905,30 +1286,6 @@
   </data>
   <data name="&gt;&gt;logTextBox.ZOrder" xml:space="preserve">
     <value>2</value>
-  </data>
-  <data name="logTab.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 22</value>
-  </data>
-  <data name="logTab.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1082, 487</value>
-  </data>
-  <data name="logTab.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
-  </data>
-  <data name="logTab.Text" xml:space="preserve">
-    <value>Log</value>
-  </data>
-  <data name="&gt;&gt;logTab.Name" xml:space="preserve">
-    <value>logTab</value>
-  </data>
-  <data name="&gt;&gt;logTab.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;logTab.Parent" xml:space="preserve">
-    <value>tabs</value>
-  </data>
-  <data name="&gt;&gt;logTab.ZOrder" xml:space="preserve">
-    <value>3</value>
   </data>
   <data name="licenseText.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Bottom, Left, Right</value>
@@ -1022,57 +1379,6 @@
   </data>
   <data name="&gt;&gt;versionLabel.ZOrder" xml:space="preserve">
     <value>2</value>
-  </data>
-  <data name="aboutTab.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 22</value>
-  </data>
-  <data name="aboutTab.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1082, 487</value>
-  </data>
-  <data name="aboutTab.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="aboutTab.Text" xml:space="preserve">
-    <value>About</value>
-  </data>
-  <data name="&gt;&gt;aboutTab.Name" xml:space="preserve">
-    <value>aboutTab</value>
-  </data>
-  <data name="&gt;&gt;aboutTab.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;aboutTab.Parent" xml:space="preserve">
-    <value>tabs</value>
-  </data>
-  <data name="&gt;&gt;aboutTab.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="tabs.Location" type="System.Drawing.Point, System.Drawing">
-    <value>1, 1</value>
-  </data>
-  <data name="tabs.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>1, 1, 1, 1</value>
-  </data>
-  <data name="tabs.Padding" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="tabs.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1090, 513</value>
-  </data>
-  <data name="tabs.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;tabs.Name" xml:space="preserve">
-    <value>tabs</value>
-  </data>
-  <data name="&gt;&gt;tabs.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TabControl, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tabs.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;tabs.ZOrder" xml:space="preserve">
-    <value>1</value>
   </data>
   <metadata name="statusStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
@@ -2085,7 +2391,7 @@
     <value>checkBoxList1</value>
   </data>
   <data name="&gt;&gt;checkBoxList1.Type" xml:space="preserve">
-    <value>AutoPrintr.CheckBoxList, AutoPrintr, Version=0.9.802.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>AutoPrintr.CheckBoxList, AutoPrintr, Version=0.9.849.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>

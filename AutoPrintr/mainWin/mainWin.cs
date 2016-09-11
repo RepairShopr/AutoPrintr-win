@@ -79,6 +79,13 @@ namespace AutoPrintr
             }
 
             log.Info("Application started...");
+            if (Program.isSilent)
+            {
+                trayIconState(true);
+            } else {
+                this.ShowInTaskbar = true;
+                trayIconState(false);
+            }
         }
 
 

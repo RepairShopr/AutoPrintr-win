@@ -5,13 +5,13 @@ using System.Runtime.InteropServices;
 // Управление общими сведениями о сборке осуществляется с помощью 
 // набора атрибутов. Измените значения этих атрибутов, чтобы изменить сведения,
 // связанные со сборкой.
-[assembly: AssemblyTitle("WinPrintr")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("AutoPrintr")]
+[assembly: AssemblyDescription("Automatically print to the desired printer (instantly) - by http://www.repairshopr.com/")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("WinPrintr")]
-[assembly: AssemblyCopyright("Copyright ©  2016")]
-[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCompany("RepairShopr")]
+[assembly: AssemblyProduct("AutoPrintr")]
+[assembly: AssemblyCopyright("Copyright © RepairShopr 2016")]
+[assembly: AssemblyTrademark("RepairShopr")]
 [assembly: AssemblyCulture("")]
 
 // Параметр ComVisible со значением FALSE делает типы в сборке невидимыми 
@@ -32,4 +32,4 @@ using System.Runtime.InteropServices;
 // Можно задать все значения или принять номера сборки и редакции по умолчанию 
 // используя "*", как показано ниже:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("0.9.813.0")]
+[assembly: AssemblyVersion("0.9.851.0")]

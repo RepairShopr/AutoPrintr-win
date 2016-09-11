@@ -49,7 +49,12 @@ namespace AutoPrintr
         /// Path to home directory
         /// </summary>
         public static string localPath = AppDomain.CurrentDomain.BaseDirectory;
-        
+
+        /// <summary>
+        /// Silent mode for start with tray icon only
+        /// </summary>
+        public static bool isSilent = false;
+
         /// <summary>
         /// Main entry point
         /// </summary>
@@ -76,44 +81,26 @@ namespace AutoPrintr
 
             AppDomain.CurrentDomain.ProcessExit += new EventHandler(OnProcessExit);
 
+            if (args != null && args.Length == 1 && args[0].Length > 1
+                    && (args[0][0] == '-' || args[0][0] == '/'))
+            {
+                //MessageBox.Show(args.Length.ToString() + " " + args[0].Substring(1).ToLower());
+                switch (args[0].Substring(1).ToLower())
+                {
+                    case "silent":
+                    case "s":
+                        //MessageBox.Show("silent");
+                        Program.isSilent = true;
+                        break;
+                    default:
+                        Console.WriteLine("Unrecognized parameters.\n\n    -s /s -silent /silent — start minimized with tray icon");
+                        return;
+                }
+            }            
+
             Program.window = new mainWin();
             Application.Run(Program.window);
 
-
-            //if (args != null && args.Length == 1 && args[0].Length > 1
-            //        && (args[0][0] == '-' || args[0][0] == '/'))
-            //{
-            //    switch (args[0].Substring(1).ToLower())
-            //    {
-            //        case "install":
-            //        case "i":
-            //            //if (Installer.install())
-            //            //{
-            //            //    Console.WriteLine("Programm installed");
-            //            //}
-            //            //else
-            //            //{
-            //            //    Console.WriteLine("Failed to install programm");
-            //            //}
-
-            //            break;
-            //        case "uninstall":
-            //        case "u":
-            //            //if (Installer.uninstall())
-            //            //{
-            //            //    Console.WriteLine("Programm uninstalled");
-            //            //}
-            //            //else
-            //            //{
-            //            //    Console.WriteLine("Failed to uninstall programm");
-            //            //}
-
-            //            break;
-            //        default:
-            //            Console.WriteLine("Unrecognized parameters.\n\n    -i /i -install /install — install programm\n\n    -u /u -uninstall /uninstall — uninstall programm");
-            //            break;
-            //    }
-            //}
             //else
             //{
             //    try
