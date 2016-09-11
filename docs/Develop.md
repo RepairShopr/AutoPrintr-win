@@ -184,6 +184,7 @@
   - [appInitString](#F-AutoPrintr-Program-appInitString 'AutoPrintr.Program.appInitString')
   - [config](#F-AutoPrintr-Program-config 'AutoPrintr.Program.config')
   - [isService](#F-AutoPrintr-Program-isService 'AutoPrintr.Program.isService')
+  - [isSilent](#F-AutoPrintr-Program-isSilent 'AutoPrintr.Program.isSilent')
   - [localPath](#F-AutoPrintr-Program-localPath 'AutoPrintr.Program.localPath')
   - [tempDir](#F-AutoPrintr-Program-tempDir 'AutoPrintr.Program.tempDir')
   - [tempDnDir](#F-AutoPrintr-Program-tempDnDir 'AutoPrintr.Program.tempDnDir')
@@ -2203,6 +2204,13 @@ Application configuration
 ##### Summary
 
 Is service mode
+
+<a name='F-AutoPrintr-Program-isSilent'></a>
+### isSilent `constants` [#](#F-AutoPrintr-Program-isSilent 'Go To Here') [=](#contents 'Back To Contents')
+
+##### Summary
+
+Silent mode for start with tray icon only
 
 <a name='F-AutoPrintr-Program-localPath'></a>
 ### localPath `constants` [#](#F-AutoPrintr-Program-localPath 'Go To Here') [=](#contents 'Back To Contents')

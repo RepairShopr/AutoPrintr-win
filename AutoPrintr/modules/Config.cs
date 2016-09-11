@@ -20,10 +20,11 @@ namespace AutoPrintr
         /// </summary>
         public string login = "";
 
+
         public string serviceLogin = "";
         public string servicePass = "";
         public string serviceDomain = "";
-        public bool loadUserProfile = false;
+        //public bool loadUserProfile = false;
 
         /// <summary>
         /// Selected locations
@@ -117,7 +118,7 @@ namespace AutoPrintr
                     serviceLogin = config.serviceLogin;
                     servicePass = config.servicePass;
                     serviceDomain = config.serviceDomain;
-                    loadUserProfile = config.loadUserProfile;
+                    //loadUserProfile = config.loadUserProfile;
                 }
                 else
                 {

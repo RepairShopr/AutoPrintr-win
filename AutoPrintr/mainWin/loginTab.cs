@@ -29,9 +29,16 @@ namespace AutoPrintr
             //bool srvState = true;
             Console.WriteLine("srvState " + srvState);
             Program.isService = srvState;
-            serviceEnabledCheckBox.Checked = srvState;
-            serviceEnabledCheckBox.Enabled = true;
-            serviceEnabledCheckBox.CheckedChanged += serviceCheckBox_CheckedChanged;
+
+            //serviceEnabledCheckBox.Checked = srvState;
+            //serviceEnabledCheckBox.Enabled = true;
+            //serviceEnabledCheckBox.CheckedChanged += serviceCheckBox_CheckedChanged;
+            foreach (var kv in AutorunStringType)
+            {
+                autorunModeDD.Items.Add(kv.Key);
+            }
+            autorunModeDD.TextChanged += autorunModeDD_TextChanged;
+            autorunModeDD.Text = AutorunTypeString[getAutorunMode()];
 
             // Login section
             loginInput.TextChanged += loginPass_TextChanged;
@@ -41,13 +48,13 @@ namespace AutoPrintr
             usernameInput.Text = Program.config.serviceLogin;
             passwordInputService.Text = "";
             domainInput.Text = Program.config.serviceDomain;
-            loadUserProfileCheckBox.Checked = Program.config.loadUserProfile;
 
-            //configSave.Click += saveConfig_Click;
+            domainInput.TextChanged += credentials_TextChanged;
+            usernameInput.TextChanged += credentials_TextChanged;
+            passwordInputService.TextChanged += credentials_TextChanged;
 
-            //configSaveStatus.Text = "config loaded";
+            //loadUserProfileCheckBox.Checked = Program.config.loadUserProfile;
 
-            //locationsList.SelectedChanged += config_TextChanged;
 
             log.Info("Cheking config for saved credentials...");
             if (Program.config.channel.Length == 0)
@@ -65,14 +72,114 @@ namespace AutoPrintr
 
             serviceSaveBtn.Click += serviceSaveBtn_Click;
             serviceTestBtn.Click += serviceTestBtn_Click;
-            loadUserProfileCheckBox.CheckedChanged += loadUserProfileCheckBox_CheckedChanged;
+            //loadUserProfileCheckBox.CheckedChanged += loadUserProfileCheckBox_CheckedChanged;
         }
 
-        void loadUserProfileCheckBox_CheckedChanged(object sender, EventArgs e)
+        void credentials_TextChanged(object sender, EventArgs e)
         {
-            Program.config.loadUserProfile = loadUserProfileCheckBox.Checked;
-            Program.config.save();
+            serviceSaveBtn.Enabled =
+                domainInput.Text.Length != 0 &
+                usernameInput.Text.Length != 0 &
+                passwordInputService.Text.Length != 0
+            ;            
         }
+
+        void autorunModeDD_TextChanged(object sender, EventArgs e)
+        {
+            setAutorunMode(autorunModeDD.Text);
+        }
+
+        //void loadUserProfileCheckBox_CheckedChanged(object sender, EventArgs e)
+        //{
+        //    Program.config.loadUserProfile = loadUserProfileCheckBox.Checked;
+        //    Program.config.save();
+        //}
+
+        public enum AutorunTypes : byte
+        {
+            Disabled,
+            CurrentUser,
+            AllUsers,
+            Service
+        }
+
+        public Dictionary<string, AutorunTypes> AutorunStringType = new Dictionary<string, AutorunTypes>()
+        {
+            {"Disabled", AutorunTypes.Disabled },
+            {"Current User", AutorunTypes.CurrentUser },
+            {"All Users", AutorunTypes.AllUsers },
+            {"Service", AutorunTypes.Service },
+        };
+
+        public Dictionary<AutorunTypes, string> AutorunTypeString = new Dictionary<AutorunTypes, string>()
+        {
+            {AutorunTypes.Disabled, "Disabled" },
+            {AutorunTypes.CurrentUser, "Current User" },
+            {AutorunTypes.AllUsers, "All Users" },
+            {AutorunTypes.Service, "Service" },
+        };
+
+
+        public AutorunTypes getAutorunMode()
+        {
+            if (ServiceControl.isRunning(serviceName))
+            {
+                return AutorunTypes.Service;
+            }
+            return AutorunTypes.Disabled;
+        }
+
+        public void setAutorunMode(string mode)
+        {
+            setAutorunMode(AutorunStringType[mode]);
+        }
+
+        void serviceOn()
+        {
+            credentials_TextChanged(null, null);
+            serviceUserDomainLabel.Visible = true;
+            serviceUserLoginLabel.Visible = true;
+            serviceUserPasswordLabel.Visible = true;
+            domainInput.Visible = true;
+            usernameInput.Visible = true;
+            passwordInputService.Visible = true;
+            serviceTestBtn.Visible = true;
+        }
+
+        void serviceOff()
+        {
+            serviceSaveBtn.Enabled = true;
+            serviceUserDomainLabel.Visible = false;
+            serviceUserLoginLabel.Visible = false;
+            serviceUserPasswordLabel.Visible = false;
+            domainInput.Visible = false;
+            usernameInput.Visible = false;
+            passwordInputService.Visible = false;
+            serviceTestBtn.Visible = false;
+        }
+
+        public void setAutorunMode(AutorunTypes mode)
+        {
+            autorunModeDD.Text = AutorunTypeString[mode];
+            switch (mode)
+            {
+                case AutorunTypes.Disabled:
+                    serviceOff();
+                    break;
+                case AutorunTypes.CurrentUser:
+                    serviceOff();
+                    break;
+                case AutorunTypes.AllUsers:
+                    serviceOff();
+                    break;
+                case AutorunTypes.Service:
+                    serviceOn();
+                    break;
+                default:
+                    break;
+            }
+        }
+
 
         void serviceTestBtn_Click(object sender, EventArgs e)
         {
@@ -97,19 +204,63 @@ namespace AutoPrintr
         }
 
         void serviceSaveBtn_Click(object sender, EventArgs e)
-        {            
+        {
+            if (!User.IsAdministrator())
+            {
+                MessageBox.Show("Can't activate autorun - you shall be Administrator");
+                return;
+            }
+            switch (AutorunStringType[autorunModeDD.Text])
+            {
+                case AutorunTypes.Disabled:
+                    service(false);
+                    StartupManager.removeFromAllUserStartup();
+                    StartupManager.removeFromCurrentUserStartup();
+                    configSaveStatus.Text = "Autorun disabled";
+                    break;
+
+                case AutorunTypes.CurrentUser:
+                    service(false);
+                    StartupManager.removeFromAllUserStartup();
+                    StartupManager.addToCurrentUserStartup(" /s");
+                    configSaveStatus.Text = "Autorun - current user";
+                    break;
+
+                case AutorunTypes.AllUsers:
+                    service(false);
+                    StartupManager.addToAllUserStartup(" /s");
+                    StartupManager.removeFromCurrentUserStartup();
+                    configSaveStatus.Text = "Autorun - all users";
+                    break;
+
+                case AutorunTypes.Service:
+                    StartupManager.removeFromAllUserStartup();
+                    StartupManager.removeFromCurrentUserStartup();
+                    enableService();
+                    service(true);
+                    configSaveStatus.Text = "Autorun - service";
+                    break;
+
+                default:
+                    break;
+            }            
+        }
+
+
+        void enableService()
+        {
             Program.config.serviceLogin = usernameInput.Text;
             Program.config.servicePass = tools.Encrypt(passwordInputService.Text);
             Program.config.serviceDomain = domainInput.Text;
-            Program.config.loadUserProfile = loadUserProfileCheckBox.Checked;
+            //Program.config.loadUserProfile = loadUserProfileCheckBox.Checked;
             Program.config.save();
         }
 
-        void serviceCheckBox_CheckedChanged(object sender, EventArgs e)
-        {
-            Program.isService = serviceEnabledCheckBox.Checked;
-            service(serviceEnabledCheckBox.Checked);
-        }
+        //void serviceCheckBox_CheckedChanged(object sender, EventArgs e)
+        //{
+        //    Program.isService = serviceEnabledCheckBox.Checked;
+        //    service(serviceEnabledCheckBox.Checked);
+        //}
 
         bool isLoggedIn(){
             return Program.config.channel.Length > 0;
@@ -143,14 +294,14 @@ namespace AutoPrintr
             Program.config.save();
         }
 
-        void config_TextChanged(object sender, EventArgs e)
-        {
+        //void config_TextChanged(object sender, EventArgs e)
+        //{
             //if (!configSave.Enabled)
             //{
             //    configSave.Enabled = true;
             //}
             //configSaveStatus.Text = "config changed";
-        }
+        //}
 
         //void saveConfig_Click(object sender, EventArgs e)
         //{
@@ -318,16 +469,15 @@ namespace AutoPrintr
 
         public void service(bool state)
         {
-            //bool installed = ServiceControl.isInstalled(serviceName);
-            //if (!ServiceControl.isInstalled(serviceName))
-            //{                
-            //    
-            //}
-
+            bool isRunning = ServiceControl.isRunning(serviceName);
             if (state)
             {
                 try
                 {
+                    if (isRunning)
+                    {
+                        ServiceControl.stop(serviceName, 5000);
+                    }
                     ServiceControl.start(serviceName, 5000);
                     JobsServer.disconnect();
                     if (Program.config.channel.Length > 0)
@@ -338,10 +488,10 @@ namespace AutoPrintr
                 catch (Exception ex)
                 {
                     log.Error(ex, "Error while starting service");
-                    serviceEnabledCheckBox.Checked = false;
+                    //serviceEnabledCheckBox.Checked = false;
                 }
             }
-            else
+            else if (isRunning)
             {
                 try
                 {
@@ -354,7 +504,7 @@ namespace AutoPrintr
                 catch (Exception ex)
                 {
                     log.Error(ex, "Error while stopping service");
-                    serviceEnabledCheckBox.Checked = true;
+                    //serviceEnabledCheckBox.Checked = true;
                 }
             }
         }

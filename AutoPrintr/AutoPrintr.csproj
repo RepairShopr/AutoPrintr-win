@@ -19,7 +19,7 @@
     <UpdateAssemblyFileVersion>False</UpdateAssemblyFileVersion>
     <UpdateAssemblyInfoVersion>False</UpdateAssemblyInfoVersion>
     <AssemblyVersionSettings>None.None.Increment.None</AssemblyVersionSettings>
-    <AssemblyVersion>0.9.813.0</AssemblyVersion>
+    <AssemblyVersion>0.9.851.0</AssemblyVersion>
     <AssemblyFileVersionSettings>
     </AssemblyFileVersionSettings>
     <AssemblyInfoVersionSettings>
@@ -200,6 +200,7 @@
     <Compile Include="mainWin\printersTab\TriggerCheckBox.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="StartupManager.cs" />
     <Compile Include="WinAutoSize.cs" />
     <Content Include="AutoPrintr.ico" />
     <Content Include="Printer_icon_256.ico" />
