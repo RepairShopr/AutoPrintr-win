@@ -18,7 +18,7 @@ namespace AutoPrintr
     static public class Pipe
     {
         private static NLog.Logger log = NLog.LogManager.GetCurrentClassLogger();
-        private static string pipeName = "AutoPrintr";
+        public static string name = "AutoPrintr";
         private static int connectTimeout = 1000;
 
         //static public bool isAvailable()
@@ -41,7 +41,7 @@ namespace AutoPrintr
             clientStop();
             jobsCallback = jobsCb;
             stateCallback = stateCb;
-            client = new NamedPipeClient<string>("AutoPrintr");
+            client = new NamedPipeClient<string>(name);
             client.AutoReconnect = true;
             client.ServerMessage += client_ServerMessage;
             client.Error += client_Error;

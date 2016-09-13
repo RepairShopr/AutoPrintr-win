@@ -17,6 +17,7 @@
   - [SetToolTip(tt,text)](#M-AutoPrintr-CheckBoxSlider-SetToolTip-System-Windows-Forms-ToolTip,System-String- 'AutoPrintr.CheckBoxSlider.SetToolTip(System.Windows.Forms.ToolTip,System.String)')
 - [Config](#T-AutoPrintr-Config 'AutoPrintr.Config')
   - [#ctor(onError)](#M-AutoPrintr-Config-#ctor-System-Action{System-Exception}- 'AutoPrintr.Config.#ctor(System.Action{System.Exception})')
+  - [file](#F-AutoPrintr-Config-file 'AutoPrintr.Config.file')
   - [load()](#M-AutoPrintr-Config-load 'AutoPrintr.Config.load')
   - [save()](#M-AutoPrintr-Config-save 'AutoPrintr.Config.save')
 - [Converter](#T-AutoPrintr-PrintEngines-Converter 'AutoPrintr.PrintEngines.Converter')
@@ -198,6 +199,8 @@
 - [Resources](#T-AutoPrintr-Properties-Resources 'AutoPrintr.Properties.Resources')
   - [Culture](#P-AutoPrintr-Properties-Resources-Culture 'AutoPrintr.Properties.Resources.Culture')
   - [ResourceManager](#P-AutoPrintr-Properties-Resources-ResourceManager 'AutoPrintr.Properties.Resources.ResourceManager')
+- [ServiceControl](#T-AutoPrintr-ServiceControl 'AutoPrintr.ServiceControl')
+  - [startType(serviceName,startType)](#M-AutoPrintr-ServiceControl-startType-System-String,AutoPrintr-ServiceControl-StartupTypes- 'AutoPrintr.ServiceControl.startType(System.String,AutoPrintr.ServiceControl.StartupTypes)')
 - [setStatusCb](#T-AutoPrintr-mainWin-setStatusCb 'AutoPrintr.mainWin.setStatusCb')
 - [Settings](#T-AutoPrintr-Settings 'AutoPrintr.Settings')
   - [availableLocations](#F-AutoPrintr-Settings-availableLocations 'AutoPrintr.Settings.availableLocations')
@@ -421,6 +424,13 @@ New config instance
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | onError | [System.Action{System.Exception}](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Action 'System.Action{System.Exception}') |  |
+
+<a name='F-AutoPrintr-Config-file'></a>
+### file `constants` [#](#F-AutoPrintr-Config-file 'Go To Here') [=](#contents 'Back To Contents')
+
+##### Summary
+
+Filename for config
 
 <a name='M-AutoPrintr-Config-load'></a>
 ### load() `method` [#](#M-AutoPrintr-Config-load 'Go To Here') [=](#contents 'Back To Contents')
@@ -2332,6 +2342,27 @@ AutoPrintr.Properties
 ##### Summary
 
 Возвращает кэшированный экземпляр ResourceManager, использованный этим классом.
+
+<a name='T-AutoPrintr-ServiceControl'></a>
+## ServiceControl [#](#T-AutoPrintr-ServiceControl 'Go To Here') [=](#contents 'Back To Contents')
+
+##### Namespace
+
+AutoPrintr
+
+<a name='M-AutoPrintr-ServiceControl-startType-System-String,AutoPrintr-ServiceControl-StartupTypes-'></a>
+### startType(serviceName,startType) `method` [#](#M-AutoPrintr-ServiceControl-startType-System-String,AutoPrintr-ServiceControl-StartupTypes- 'Go To Here') [=](#contents 'Back To Contents')
+
+##### Summary
+
+Set service start type
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| serviceName | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') |  |
+| startType | [AutoPrintr.ServiceControl.StartupTypes](#T-AutoPrintr-ServiceControl-StartupTypes 'AutoPrintr.ServiceControl.StartupTypes') |  |
 
 <a name='T-AutoPrintr-mainWin-setStatusCb'></a>
 ## setStatusCb [#](#T-AutoPrintr-mainWin-setStatusCb 'Go To Here') [=](#contents 'Back To Contents')
