@@ -14,6 +14,11 @@ namespace AutoPrintr
         private static NLog.Logger log = NLog.LogManager.GetCurrentClassLogger();
 
         /// <summary>
+        /// Path to home directory
+        /// </summary>
+        public static string localPath = AppDomain.CurrentDomain.BaseDirectory;
+
+        /// <summary>
         /// Application configuration
         /// </summary>
         public static Config config;
@@ -28,12 +33,7 @@ namespace AutoPrintr
         /// Temporary directory for files download
         /// </summary>
         public static string tempDnDir = Path.Combine(tempDir, "dn");
-
-        /// <summary>
-        /// Path to home directory
-        /// </summary>
-        public static string localPath = AppDomain.CurrentDomain.BaseDirectory;
-        
+                
         ///// <summary>
         ///// Главная точка входа для приложения.
         ///// </summary>
@@ -50,7 +50,7 @@ namespace AutoPrintr
         {
             //Console.WriteLine("Programm started");
             
-            log.Info("Service started");
+            log.Info("Service initialized");
 
             if (args != null && args.Length == 1 && args[0].Length > 1
                 && (args[0][0] == '-' || args[0][0] == '/'))

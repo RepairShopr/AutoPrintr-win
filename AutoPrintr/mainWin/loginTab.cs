@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using System.Diagnostics;
+using System.Threading;
 
 namespace AutoPrintr
 {
@@ -209,53 +210,68 @@ namespace AutoPrintr
 
         void serviceSaveBtn_Click(object sender, EventArgs e)
         {
+            configSaveStatus.Text = "Processing autorun command...";
             serviceSaveBtn.Enabled = false;
+            Thread.Sleep(10);
             if (!User.IsAdministrator())
             {
                 MessageBox.Show("Can't activate autorun - you should be an Administrator.");
                 return;
             }
-            switch (AutorunStringType[autorunModeDD.Text])
+
+            try
             {
-                case AutorunTypes.Disabled:
-                    configSaveStatus.Text = "Disabling autorun...";
-                    service(false);
-                    StartupManager.removeFromAllUserStartup();
-                    StartupManager.removeFromCurrentUserStartup();
-                    //configSaveStatus.Text = "Autorun disabled";
-                    configSaveStatus.Text = "Autorun is disabled";
-                    break;
 
-                case AutorunTypes.CurrentUser:
-                    configSaveStatus.Text = "Enabling autorun for user...";
-                    service(false);
-                    StartupManager.removeFromAllUserStartup();
-                    StartupManager.addToCurrentUserStartup(" /s");
-                    //configSaveStatus.Text = "Autorun - current user";
-                    configSaveStatus.Text = "Autorun enabled for user";
-                    break;
+                switch (AutorunStringType[autorunModeDD.Text])
+                {
+                    case AutorunTypes.Disabled:
+                        configSaveStatus.Text = "Disabling autorun...";
+                        Thread.Sleep(10);
+                        service(false);
+                        StartupManager.removeFromAllUserStartup();
+                        StartupManager.removeFromCurrentUserStartup();
+                        //configSaveStatus.Text = "Autorun disabled";
+                        configSaveStatus.Text = "Autorun is disabled";
+                        break;
 
-                case AutorunTypes.AllUsers:
-                    configSaveStatus.Text = "Enabling autorun for all users...";
-                    service(false);
-                    StartupManager.addToAllUserStartup(" /s");
-                    StartupManager.removeFromCurrentUserStartup();
-                    //configSaveStatus.Text = "Autorun - all users";
-                    configSaveStatus.Text = "Autorun enabled for all users";
-                    break;
+                    case AutorunTypes.CurrentUser:
+                        configSaveStatus.Text = "Enabling autorun for user...";
+                        Thread.Sleep(10);
+                        service(false);
+                        StartupManager.removeFromAllUserStartup();
+                        StartupManager.addToCurrentUserStartup(" /s");
+                        //configSaveStatus.Text = "Autorun - current user";
+                        configSaveStatus.Text = "Autorun enabled for user";
+                        break;
 
-                case AutorunTypes.Service:
-                    configSaveStatus.Text = "Enabling service...";
-                    StartupManager.removeFromAllUserStartup();
-                    StartupManager.removeFromCurrentUserStartup();
-                    //enableService();
-                    service(true);
-                    //configSaveStatus.Text = "Autorun - service";
-                    configSaveStatus.Text = "Service is enabled";
-                    break;
+                    case AutorunTypes.AllUsers:
+                        configSaveStatus.Text = "Enabling autorun for all users...";
+                        Thread.Sleep(10);
+                        service(false);
+                        StartupManager.addToAllUserStartup(" /s");
+                        StartupManager.removeFromCurrentUserStartup();
+                        //configSaveStatus.Text = "Autorun - all users";
+                        configSaveStatus.Text = "Autorun enabled for all users";
+                        break;
 
-                default:
-                    break;
+                    case AutorunTypes.Service:
+                        configSaveStatus.Text = "Enabling service...";
+                        Thread.Sleep(10);
+                        StartupManager.removeFromAllUserStartup();
+                        StartupManager.removeFromCurrentUserStartup();
+                        //enableService();
+                        service(true);
+                        //configSaveStatus.Text = "Autorun - service";
+                        configSaveStatus.Text = "Service is enabled";
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error while processing autorun: " + ex.Message);
             }
         }
 
