@@ -55,6 +55,7 @@ FunctionEnd
     Function ${un}stopApp
         DetailPrint "Stoping AutoPrintr.exe"
         ExecWait 'cmd /C "Taskkill /F /IM AutoPrintr.exe"'
+        Sleep 1000
         ; nsExec::Exec 'cmd /C "Taskkill /F /IM AutoPrintr.exe"'
         ; FindProcDLL::FindProc ${AppName}
         ; ${If} $R0 == 1
@@ -169,7 +170,7 @@ Function startServiceIfNeed
         DetailPrint "Installing service"
         ExecWait '"$INSTDIR\AutoPrintrService.exe" /i'
         ; nsExec::Exec 'cmd /C "$INSTDIR\AutoPrintrService.exe /i"'
-        ; Sleep 3000
+        Sleep 1000
         DetailPrint "Starting service"
         SimpleSC::StartService ${ServiceName} "" 30
         Pop $0 ; returns an errorcode (<>0) otherwise success (0)
@@ -225,7 +226,7 @@ Section "" ;No components page, name is not important
     call saveVersion
 
     ; nsExec::Exec 'cmd /C "Taskkill /F /IM AutoPrintr.exe"'
-    ; Sleep 1500
+    Sleep 1000
     ; Set output path to the installation directory.
     SetOutPath $INSTDIR
 
@@ -287,7 +288,7 @@ Section "Uninstall"
     ExecWait '"$INSTDIR\AutoPrintrService.exe" /u'
     ; nsExec::Exec 'cmd /C "$INSTDIR\AutoPrintrService.exe /u"'
     ; FindProcDLL::WaitProcEnd "AutoPrintrService.exe" -1
-    ; Sleep 3000
+    Sleep 1000
     ; Remove files and uninstaller
     Delete $INSTDIR\*
 
