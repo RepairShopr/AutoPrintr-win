@@ -19,6 +19,12 @@ namespace AutoPrintr
         /// User's login
         /// </summary>
         public string login = "";
+        
+        //public string serviceLogin = "";
+        //public string servicePass = "";
+        //public string serviceDomain = "";
+        //public bool loadUserProfile = false;
+
         /// <summary>
         /// Selected locations
         /// </summary>
@@ -30,7 +36,8 @@ namespace AutoPrintr
         /// <summary>
         /// Registers list
         /// </summary>
-        public List<LoginServer.Register> registers = new List<LoginServer.Register>();
+        public Dictionary<int, Register> registers = new Dictionary<int, Register>();
+        //public List<Register> registers = new List<Register>();
 
         /// <summary>
         /// Printers configurations
@@ -66,7 +73,11 @@ namespace AutoPrintr
     /// </summary>
     public class Config : Settings
     {
-        private const string configFile = "config.json";
+        /// <summary>
+        /// Filename for config
+        /// </summary>
+        public  static string file = "config.json";
+        private static string configFile = Path.Combine(Program.localPath, file);
         //private Action<Exception> onError;
         private static NLog.Logger log = NLog.LogManager.GetCurrentClassLogger();
         
@@ -106,6 +117,11 @@ namespace AutoPrintr
                     printers = config.printers;
                     availableLocations = config.availableLocations;
                     registers = config.registers;
+
+                    //serviceLogin = config.serviceLogin;
+                    //servicePass = config.servicePass;
+                    //serviceDomain = config.serviceDomain;
+                    //loadUserProfile = config.loadUserProfile;
                 }
                 else
                 {
@@ -121,7 +137,7 @@ namespace AutoPrintr
                 log.Error(err, "Can't load configuration.");
             }
         }
-
+        
         /// <summary>
         /// New config instance
         /// </summary>
@@ -129,12 +145,12 @@ namespace AutoPrintr
         public Config(Action<Exception> onError)
         {
             //this.onError = onError;
-            load();
+            load(); 
         }
 
         public override string ToString()
         {
             return JsonConvert.SerializeObject(this, Formatting.Indented);
         }
-    } 
+    }
 }

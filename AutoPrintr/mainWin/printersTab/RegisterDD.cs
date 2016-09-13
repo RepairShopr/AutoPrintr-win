@@ -14,11 +14,14 @@ namespace AutoPrintr
         /// </summary>
         public Printer printer;
         Dictionary<string, int> rlist = new Dictionary<string, int>(){};
+
+
         /// <summary>
         /// Create new combo box for selected printer
         /// </summary>
         /// <param name="printer"></param>
-        public RegisterDD(Printer printer, List<LoginServer.Register> rlist)
+        /// <param name="rlist"></param>
+        public RegisterDD(Printer printer, Dictionary<int, Register> rlist)
         {
             this.printer = printer;
             DropDownStyle = ComboBoxStyle.DropDownList;
@@ -40,17 +43,17 @@ namespace AutoPrintr
             Program.config.save();
         }
 
-        public void setItems(List<LoginServer.Register> rlist)
+        public void setItems(Dictionary<int, Register> rlist)
         {           
             Items.Clear();
             Items.Add("None");
             this.rlist.Clear();
             this.rlist.Add("None", 0);
             Text = "None";
-            foreach (LoginServer.Register r in rlist)
+            foreach(var r in rlist)
             {
-                this.rlist.Add(r.name, r.id);
-                Items.Add(r.name);
+                this.rlist.Add(r.Value.name, r.Value.id);
+                Items.Add(r.Value.name);
                 //if (printer.register != 0 & printer.register == r.id)
                 //{
 

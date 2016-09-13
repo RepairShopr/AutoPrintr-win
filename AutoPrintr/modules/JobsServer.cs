@@ -9,6 +9,7 @@ namespace AutoPrintr
     /// </summary>
     static class JobsServer
     {
+        private static NLog.Logger log = NLog.LogManager.GetCurrentClassLogger();
         /// <summary>
         /// List of channels
         /// </summary>
@@ -22,6 +23,12 @@ namespace AutoPrintr
         /// </summary>
         private static Pusher pusher = null;
 
+        private static List<Listener> listeners;
+        private static Action<PusherException> onError;
+        private static Action<String> onStateChanged;
+
+        private static bool isConnecting = false;
+
         /// <summary>
         /// Connect to jobs server
         /// </summary>
@@ -33,34 +40,77 @@ namespace AutoPrintr
             Action<PusherException> onError,
             Action<String> onStateChanged
         ){
+            if (isConnecting)
+            {
+                return;
+            }
+            isConnecting = true;
             // Disconnect pusher, if it already connected
+            //log.Info("Pusher connect 0");
             if (pusher != null)
             {
-                pusher.Disconnect();
-                pusher = null;
+                Console.WriteLine("Pusher connect disconnect()");
+                disconnect();
             }
-            // Create new pusher instanc
+
+            //log.Info("Pusher connect 1");
+            JobsServer.listeners = listeners;
+            JobsServer.onError = onError;
+            JobsServer.onStateChanged = onStateChanged;
+
+            // Create new pusher instance
             pusher = new Pusher(Credentials.SrvXT, new PusherOptions());
             // Set pusher connection changed event handler
-            pusher.ConnectionStateChanged += (object sender, ConnectionState state) =>
-            {
-                JobsServer.state = state;
-                onStateChanged(state.ToString());
-            };
+            pusher.ConnectionStateChanged += onStateChanged_handler;
             // Set error event handler
-            pusher.Error += (object sender, PusherException error) => onError(error);
+            pusher.Error += onError_handler;
 
+            //log.Info("Pusher connect 3");
             // Subscribe listeners to they channels
             Channel c;
             foreach(Listener l in listeners)
             {
+                //log.Info("    Pusher connect 3.1");
                 c = pusher.Subscribe(l.channel);
                 c.Bind(l.evt, l.onMessage);
                 channels.Add(c);
             }
+
+            //log.Info("Pusher connect 4");
             // Connect to pusher
             pusher.Connect();
-        }        
+
+        }
+
+        static void onStateChanged_handler(object sender, ConnectionState state)
+        {
+            JobsServer.state = state;
+            JobsServer.onStateChanged(state.ToString());
+            if (state == ConnectionState.Connected | state == ConnectionState.Failed | state == ConnectionState.Unavailable)
+            {
+                isConnecting = false;
+            }
+        }
+
+        static void onError_handler(object sender, PusherException error)
+        {
+            JobsServer.onError(error);
+        }
+
+        public static void disconnect()
+        {
+            if (pusher != null)
+            {
+                foreach (Channel c in JobsServer.channels)
+                {
+                    c.Unsubscribe();
+                }
+                pusher.Disconnect();
+                pusher.ConnectionStateChanged -= onStateChanged_handler;
+                pusher.Error -= onError_handler;
+                pusher = null;
+            }
+        }
     }
 
     /// <summary>

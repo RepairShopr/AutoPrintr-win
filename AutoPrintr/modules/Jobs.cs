@@ -4,7 +4,7 @@ using System.IO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Net;
-using System.Windows.Forms;
+//using System.Windows.Forms;
 
 namespace AutoPrintr
 {
@@ -18,7 +18,7 @@ namespace AutoPrintr
         /// <summary>
         /// Jobs list
         /// </summary>
-        static public List<Job> list = new List<Job>();
+        //static public List<Job> list = new List<Job>();
 
         /// <summary>
         /// Constant with new print job event name from Pusher
@@ -172,31 +172,31 @@ namespace AutoPrintr
                 else
                 {
                     onJob(new Exception("Wrong job format. Get: " + msg.ToString()), null);
-                }               
+                }
             });
         }
 
-        /// <summary>
-        /// Class for jobs list operating: it shall be mapped to file also
-        /// </summary>
-        public class JobsList
-        {
-            string file = "jobs.json";
-            public Job Add(Job job)
-            {
-                return job;
-            }
+        ///// <summary>
+        ///// Class for jobs list operating: it shall be mapped to file also
+        ///// </summary>
+        //public class JobsList
+        //{
+        //    string file = "jobs.json";
+        //    public Job Add(Job job)
+        //    {
+        //        return job;
+        //    }
 
-            public void Remove(Job job)
-            {
+        //    public void Remove(Job job)
+        //    {
                 
-            }
+        //    }
 
-            public JobsList(string file)
-            {
-                this.file = file;
-            }
-        }
+        //    public JobsList(string file)
+        //    {
+        //        this.file = file;
+        //    }
+        //}
 
         public static void clearFiles()
         {
@@ -209,13 +209,20 @@ namespace AutoPrintr
     /// <summary>
     /// Job msg class. This class is used for parsing JSON.
     /// </summary>
+    [JsonObject(MemberSerialization.OptIn)]
     public class JobMsg
     {
+        [JsonProperty]
         public string type = "";
+        [JsonProperty]
         public int location = 0;
+        [JsonProperty]
         public string file = "";
+        [JsonProperty]
         public string document = "";
+        [JsonProperty]
         public bool autoprinted;
+        [JsonProperty]
         public int register = 0;
   //      "autoprinted": false,
   //"register": null,
@@ -249,31 +256,43 @@ namespace AutoPrintr
     /// <summary>
     /// Job presentation class
     /// </summary>
+    [JsonObject(MemberSerialization.OptIn)]
     public class Job : JobMsg
     {
         /// <summary>
+        /// Job id
+        /// </summary>
+        [JsonProperty]
+        public ulong id = 0;
+        /// <summary>
         /// Job download progress in percents
         /// </summary>
+        [JsonProperty]
         public int progress = 0;
         /// <summary>
         /// Job download progress in bytes
         /// </summary>
+        [JsonProperty]
         public long recived = 0;
         /// <summary>
         /// Full path to local file, where job file will be downloaded. Have random additional string.
         /// </summary>
+        [JsonProperty]
         public string localFilePath = "";
         /// <summary>
         /// Local file name
         /// </summary>
+        [JsonProperty]
         public string localFileName = "";
         /// <summary>
         /// Only file name
         /// </summary>
+        [JsonProperty]
         public string fileName = "";
         /// <summary>
         /// Document title - human redable job document type.
         /// </summary>
+        [JsonProperty]
         public string documentTitle = "";
         /// <summary>
         /// Job file url parsed to URI object
@@ -283,6 +302,10 @@ namespace AutoPrintr
         /// List of associated with this job printers
         /// </summary>
         public Printer printer;
+
+        [JsonProperty]
+        public string printerName = "";
+
         /// <summary>
         /// Job error
         /// </summary>
@@ -290,6 +313,7 @@ namespace AutoPrintr
         /// <summary>
         /// Job state
         /// </summary>
+        [JsonProperty]
         public JobState state = JobState.New;
         public string stateDetails = "";
         /// <summary>
@@ -300,6 +324,7 @@ namespace AutoPrintr
         /// <summary>
         /// Qauntity
         /// </summary>
+        [JsonProperty]
         public int qty = 1;
 
         public DocType docType;
@@ -373,19 +398,18 @@ namespace AutoPrintr
             // Job printing
             // Looks like more optimal solution will be sending job to "Printers" class and it will decise print job or not... Just idea...
             try
-            {       
-         
+            {      
                 if ( 
                     (printer.triggerGet(docType) == false) & 
                     (autoprinted == true)
                 )
-                {
-                    
+                {                    
                     Skipped(quantity());
                     cb(null);
                 }
                 else
                 {
+                    //Console.WriteLine("File path for print: {0} | {1} | {2}", localFilePath, fileName, document);
                     printer.print(localFilePath, fileName, document);
                     Printed();
                     cb(null);
@@ -406,6 +430,17 @@ namespace AutoPrintr
         {
             return printer.quantity[document];
         }
+
+        public void init()
+        {
+            this.url = new Uri(file);
+            this.docType = DocumentTypes.ToDocumentType(this.document).type;
+            if (printerName.Length > 0)
+            {
+                this.printer = Printers.fromName(this.printerName);
+            }
+        }
+
         /// <summary>
         /// New job consturctor
         /// </summary>
@@ -429,16 +464,17 @@ namespace AutoPrintr
             this.autoprinted = autoprinted;
             this.register = register;
 
-            this.url = new Uri(file);
-            this.fileName = Path.GetFileName(this.url.LocalPath);
-            this.documentTitle = DocumentTypes.toTitle(document);
+            init();
 
             // Generate local file path with partial random name
-            this.localFileName = tools.randomFileName() + "_" + fileName;
+            this.fileName = Path.GetFileName(this.url.LocalPath);
+            this.localFileName = tools.randomFileName() + "_" + fileName; 
+            this.documentTitle = DocumentTypes.toTitle(document);
             this.localFilePath = Path.Combine(Program.tempDnDir, this.localFileName);
-
-            docType = DocumentTypes.ToDocumentType(this.document).type;
         }
+
+        public Job() { }
+
         /// <summary>
         /// Converting job to string
         /// </summary>
@@ -522,5 +558,14 @@ namespace AutoPrintr
                 onChange(null, this);
 		    }
 	    }
+
+        public void Dispose()
+        {
+            foreach (EventHandler<Job> d in onChange.GetInvocationList())
+            {
+                onChange -= d;
+            }
+            File.Delete(this.localFilePath);
+        }
     }
 }

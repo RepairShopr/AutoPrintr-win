@@ -11,7 +11,7 @@ namespace AutoPrintr
     /// <summary>
     /// Static class for printers management
     /// </summary>
-    static class Printers
+    public static class Printers
     {
         private static NLog.Logger log = NLog.LogManager.GetCurrentClassLogger();
 
@@ -43,7 +43,7 @@ namespace AutoPrintr
                     pList.Add(new Printer(printerName));
                 }
             }
-            // Sorted text list are alsways betterm then unsorted
+            // Sorted text list are alsways better then unsorted
             pList.Sort((a, b) => a.name.CompareTo(b.name));
             // Saving printers to config
             Program.config.printers = pList;            
@@ -102,6 +102,18 @@ namespace AutoPrintr
                 }
             }
             return l;
+        }
+
+        public static Printer fromName(string name)
+        {
+            foreach (Printer p in Program.config.printers)
+            {
+                if (p.name == name)
+                {
+                    return p;
+                }
+            }
+            return null;
         }
     }
 

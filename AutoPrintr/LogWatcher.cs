@@ -24,7 +24,7 @@ namespace AutoPrintr
         {
             // Create a new FileSystemWatcher and set its properties.
             FileSystemWatcher watcher = new FileSystemWatcher();
-            watcher.Path = AppDomain.CurrentDomain.BaseDirectory;
+            watcher.Path = Program.localPath;
             /* Watch for changes in LastAccess and LastWrite times, and 
                 the renaming of files or directories. */
             watcher.NotifyFilter = NotifyFilters.LastAccess | NotifyFilters.LastWrite;
@@ -48,8 +48,12 @@ namespace AutoPrintr
             {
                 //LogWatcher.text = File.ReadAllText(file, Encoding.ASCII);
                 //var logFile = (string)null;
-                using (var fileStream = new FileStream(file, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
-                {
+                using (var fileStream = new FileStream(
+                    Path.Combine(Program.localPath, file)
+                    , FileMode.Open
+                    , FileAccess.Read
+                    , FileShare.ReadWrite
+                )) {
                     using (var reader = new StreamReader(fileStream))
                     {
                         LogWatcher.text = reader.ReadToEnd();
