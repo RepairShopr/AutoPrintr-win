@@ -19,11 +19,10 @@ namespace AutoPrintr
         /// User's login
         /// </summary>
         public string login = "";
-
-
-        public string serviceLogin = "";
-        public string servicePass = "";
-        public string serviceDomain = "";
+        
+        //public string serviceLogin = "";
+        //public string servicePass = "";
+        //public string serviceDomain = "";
         //public bool loadUserProfile = false;
 
         /// <summary>
@@ -74,7 +73,11 @@ namespace AutoPrintr
     /// </summary>
     public class Config : Settings
     {
-        private static string configFile = Path.Combine(Program.localPath, "config.json");
+        /// <summary>
+        /// Filename for config
+        /// </summary>
+        public  static string file = "config.json";
+        private static string configFile = Path.Combine(Program.localPath, file);
         //private Action<Exception> onError;
         private static NLog.Logger log = NLog.LogManager.GetCurrentClassLogger();
         
@@ -115,9 +118,9 @@ namespace AutoPrintr
                     availableLocations = config.availableLocations;
                     registers = config.registers;
 
-                    serviceLogin = config.serviceLogin;
-                    servicePass = config.servicePass;
-                    serviceDomain = config.serviceDomain;
+                    //serviceLogin = config.serviceLogin;
+                    //servicePass = config.servicePass;
+                    //serviceDomain = config.serviceDomain;
                     //loadUserProfile = config.loadUserProfile;
                 }
                 else
@@ -134,7 +137,7 @@ namespace AutoPrintr
                 log.Error(err, "Can't load configuration.");
             }
         }
-
+        
         /// <summary>
         /// New config instance
         /// </summary>
@@ -142,12 +145,12 @@ namespace AutoPrintr
         public Config(Action<Exception> onError)
         {
             //this.onError = onError;
-            load();
+            load(); 
         }
 
         public override string ToString()
         {
             return JsonConvert.SerializeObject(this, Formatting.Indented);
         }
-    } 
+    }
 }

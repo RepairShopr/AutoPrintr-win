@@ -41,35 +41,24 @@ namespace AutoPrintr
             {
                 string app = Path.Combine(Program.localPath, "SumatraPDF.exe");
                 string args = string.Format("-silent -exit-on-print -print-to \"{0}\" \"{1}\"", printerName, filePath);
-                if (User.IsSystem())
+
+                Process p = new Process();
+                p.StartInfo = new ProcessStartInfo()
                 {
-                    Process p = new Process();
-                    p.StartInfo = new ProcessStartInfo()
-                    {
-                        CreateNoWindow = true,
-                        WindowStyle = ProcessWindowStyle.Hidden,
-                        FileName = app,
-                        Arguments = args
-                    };
-                    if (User.IsSystem())
-                    {
-                        p.StartInfo.UserName = Program.config.serviceLogin;
-                        p.StartInfo.Password = tools.secureString(tools.Decrypt(Program.config.servicePass));
-                        p.StartInfo.Domain = Program.config.serviceDomain;
-                        p.StartInfo.LoadUserProfile = true;
-                    }
-                    p.Start();
-                    //Process.Start(
-                    //    app, args,
-                    //    Program.config.serviceLogin,
-                    //    tools.secureString(tools.Decrypt(Program.config.servicePass)),
-                    //    Program.config.serviceDomain
-                    //);
-                }
-                else
-                {
-                    Process.Start(app, args);
-                }
+                    CreateNoWindow = true,
+                    WindowStyle = ProcessWindowStyle.Hidden,
+                    FileName = app,
+                    Arguments = args
+                };
+                //if (User.isNetworkService())
+                //{
+                //    p.StartInfo.UserName = Program.config.serviceLogin;
+                //    p.StartInfo.Password = tools.secureString(tools.Decrypt(Program.config.servicePass));
+                //    p.StartInfo.Domain = Program.config.serviceDomain;
+                //    p.StartInfo.LoadUserProfile = true;
+                //    p.StartInfo.UseShellExecute = false;
+                //}
+                p.Start();
                             
             })){};
 
@@ -86,35 +75,24 @@ namespace AutoPrintr
                 ;
                 string args = string.Format("/h /t \"{0}\" \"{1}\"", filePath, printerName);
 
-                if (User.IsSystem())
+                Process p = new Process();
+                p.StartInfo = new ProcessStartInfo()
                 {
-                    Process p = new Process();
-                    p.StartInfo = new ProcessStartInfo()
-                    {
-                        CreateNoWindow = true,
-                        WindowStyle = ProcessWindowStyle.Hidden,
-                        FileName = app,
-                        Arguments = args
-                    };
-                    if (User.IsSystem())
-                    {
-                        p.StartInfo.UserName = Program.config.serviceLogin;
-                        p.StartInfo.Password = tools.secureString(tools.Decrypt(Program.config.servicePass));
-                        p.StartInfo.Domain = Program.config.serviceDomain;
-                        p.StartInfo.LoadUserProfile = true;
-                    }
-                    p.Start();
-                    //Process.Start(
-                    //    app, args,
-                    //    Program.config.serviceLogin,
-                    //    tools.secureString(tools.Decrypt(Program.config.servicePass)),
-                    //    Program.config.serviceDomain
-                    //);
-                }
-                else
-                {
-                    Process.Start(app, args);
-                }
+                    CreateNoWindow = true,
+                    WindowStyle = ProcessWindowStyle.Hidden,
+                    FileName = app,
+                    Arguments = args
+                };
+                //if (User.isNetworkService())
+                //{
+                        
+                //    p.StartInfo.UserName = Program.config.serviceLogin;
+                //    p.StartInfo.Password = tools.secureString(tools.Decrypt(Program.config.servicePass));
+                //    p.StartInfo.Domain = Program.config.serviceDomain;
+                //    p.StartInfo.LoadUserProfile = true;
+                //    p.StartInfo.UseShellExecute = false;
+                //}
+                p.Start();
 
             })){};
 
@@ -133,13 +111,14 @@ namespace AutoPrintr
                     FileName = filePath,
                     Arguments = "\"" + printerName + "\""
                 };
-                if (User.IsSystem())
-                {
-                    p.StartInfo.UserName = Program.config.serviceLogin;
-                    p.StartInfo.Password = tools.secureString(tools.Decrypt(Program.config.servicePass));
-                    p.StartInfo.Domain = Program.config.serviceDomain;
-                    p.StartInfo.LoadUserProfile = true;
-                }
+                //if (User.isNetworkService())
+                //{
+                //    p.StartInfo.UserName = Program.config.serviceLogin;
+                //    p.StartInfo.Password = tools.secureString(tools.Decrypt(Program.config.servicePass));
+                //    p.StartInfo.Domain = Program.config.serviceDomain;
+                //    p.StartInfo.LoadUserProfile = true;
+                //    p.StartInfo.UseShellExecute = false;
+                //}
                 p.Start();
             })){};
 

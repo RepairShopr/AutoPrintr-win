@@ -7,6 +7,7 @@ using PusherClient;
 using Newtonsoft.Json;
 using NamedPipeWrapper;
 using System.Timers;
+using System.IO;
 
 namespace AutoPrintr
 {
@@ -40,7 +41,7 @@ namespace AutoPrintr
             //ConfigReload();
             //JobsServerState();
 
-            server = new NamedPipeServer<string>("AutoPrintr");
+            server = new NamedPipeServer<string>(Pipe.name);
             server.ClientConnected += server_ClientConnected;
             server.ClientMessage += server_ClientMessage;
             server.ClientDisconnected += server_ClientDisconnected;
@@ -55,6 +56,8 @@ namespace AutoPrintr
             msgTimer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
             msgTimer.Interval = 100;
             msgTimer.Enabled = true;
+
+            configWatch();
         }
 
 
@@ -64,6 +67,7 @@ namespace AutoPrintr
             msgTimer.Stop();
             server.Stop();
             server = null;
+            watcherStop();
         }
 
         /// <summary>
@@ -230,6 +234,61 @@ namespace AutoPrintr
         {
             //pushData();
             updateRequired = true;
+        }
+
+
+        /// <summary>
+        /// Log file name, shall be same as in NLog.config
+        /// </summary>
+        static string file = Config.file;
+        static FileSystemWatcher watcher = null;
+        static FileSystemEventHandler h1;
+        static FileSystemEventHandler h2;
+        static FileSystemEventHandler h3;
+        public static void configWatch()
+        {
+            // Create a new FileSystemWatcher and set its properties.
+            watcher = new FileSystemWatcher();
+            watcher.Path = Program.localPath;
+            /* Watch for changes in LastAccess and LastWrite times, and 
+                the renaming of files or directories. */
+            watcher.NotifyFilter = NotifyFilters.LastAccess | NotifyFilters.LastWrite;
+            // Only watch text files.
+            watcher.Filter = file;
+
+            // Add event handlers.
+            h1 = new FileSystemEventHandler(OnChanged);
+            h2 = new FileSystemEventHandler(OnChanged);
+            h3 = new FileSystemEventHandler(OnChanged);
+
+            watcher.Changed += h1;
+            watcher.Created += h2;
+            watcher.Deleted += h3;
+            //watcher.Renamed += new RenamedEventHandler(OnRenamed);
+
+            // Begin watching.
+            watcher.EnableRaisingEvents = true;
+            //watcher.
+        }
+
+        static void watcherStop()
+        {
+            if (watcher != null)
+            {
+                watcher.EnableRaisingEvents = false;
+                watcher.Changed -= h1;
+                watcher.Created -= h2;
+                watcher.Deleted -= h3;
+                watcher.Dispose();
+                watcher = null;
+            }
+        }
+
+        // Define the event handlers.
+        private static void OnChanged(object source, FileSystemEventArgs e)
+        {
+            log.Info("Config is changed");
+            Program.config.load();
         }
         
     }

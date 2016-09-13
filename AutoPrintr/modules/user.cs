@@ -53,5 +53,39 @@ namespace AutoPrintr
                 return false;
             }
         }
+
+        public static bool isNetworkService()
+        {
+            try
+            { 
+                WindowsIdentity user = WindowsIdentity.GetCurrent();
+                var u = user.Name.Split('\\');
+                return u[1] == "NETWORK SERVICE";
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return false;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+        public static string name()
+        {
+            try
+            {   
+                WindowsIdentity user = WindowsIdentity.GetCurrent();
+                return user.Name;
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return null;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
     }
 }

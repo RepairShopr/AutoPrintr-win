@@ -96,14 +96,18 @@ namespace AutoPrintr
         /// </summary>
         public void srvConnect(string channel)
         {
-            Console.WriteLine("srvConnect, Program.isService= {0} ", Program.isService);
-            log.Info("Connecting to jobs server...");
+            //Console.WriteLine("srvConnect, Program.isService= {0} ", Program.isService);
+            
             if (Program.isService)
             {
+                JobsServer.disconnect();
+                log.Info("Connecting to jobs server via service...");
                 srvConnectService(channel);
             }
             else
             {
+                Pipe.clientStop();
+                log.Info("Connecting to jobs server directly...");
                 srvConnectLocal(channel);
             }
         }
@@ -142,6 +146,7 @@ namespace AutoPrintr
                         break;
                 }
             };
+
             JobsServer.connect(msgWrokers, onError, onStateChanged);
         }
 
