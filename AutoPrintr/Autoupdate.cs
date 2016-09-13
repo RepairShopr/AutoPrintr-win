@@ -69,9 +69,8 @@ namespace AutoPrintr
                 log.Error(errMsg, installer);
                 return;
             }
-
-            Process.Start(installer, "/S /D " + Program.localPath);
-
+            log.Info("Starting installer: {0}{1}{2}", installer, " /S /D ", Program.localPath);
+            Process.Start(installer, " /S /D " + Program.localPath);
             System.Windows.Forms.Application.Exit();
         }
 
