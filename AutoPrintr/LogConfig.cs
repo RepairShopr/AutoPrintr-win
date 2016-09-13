@@ -83,6 +83,7 @@ namespace AutoPrintr
                 foreach (XmlNode node in nodes)
                 {
                     name = node.Attributes["name"];
+                    //if (name.Value == "AutoPrintrService.*" | name.Value == "AutoPrintr.*")
                     if (name.Value == "*")
                     {
                         minlevel = node.Attributes["minlevel"];

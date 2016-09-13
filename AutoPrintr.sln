@@ -5,13 +5,15 @@ VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoPrintr", "AutoPrintr\AutoPrintr.csproj", "{3BE80A7C-E89D-4F9B-A948-80F8AD075EAB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoPrintrService", "AutoPrintrService\AutoPrintrService.csproj", "{9CBCC237-BF87-4B16-8CDA-F0882741DD16}"
+EndProject
 Global
 	GlobalSection(AutomaticVersions) = postSolution
 		PrimaryVersionType = AssemblyVersionAttribute
 		UpdateAssemblyVersion = True
 		UpdateAssemblyFileVersion = False
 		UpdateAssemblyInfoVersion = False
-		AssemblyVersionSettings = None.None.None.Increment
+		AssemblyVersionSettings = None.None.Increment.None
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -22,6 +24,10 @@ Global
 		{3BE80A7C-E89D-4F9B-A948-80F8AD075EAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3BE80A7C-E89D-4F9B-A948-80F8AD075EAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3BE80A7C-E89D-4F9B-A948-80F8AD075EAB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9CBCC237-BF87-4B16-8CDA-F0882741DD16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9CBCC237-BF87-4B16-8CDA-F0882741DD16}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9CBCC237-BF87-4B16-8CDA-F0882741DD16}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9CBCC237-BF87-4B16-8CDA-F0882741DD16}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

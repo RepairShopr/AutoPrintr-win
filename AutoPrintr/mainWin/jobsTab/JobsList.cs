@@ -24,7 +24,7 @@ namespace AutoPrintr
         /// Update job in UI
         /// </summary>
         /// <param name="uiJob"></param>
-        /// <param name="j"></param>
+        /// <param name="job"></param>
         void update(UIJob uiJob, Job job)
         {
             uiJob.update(job);
@@ -107,6 +107,37 @@ namespace AutoPrintr
             };
 
             items.Add(row, uiJob);            
+        }
+
+        /// <summary>
+        /// Update job in UI
+        /// </summary>
+        /// <param name="job"></param>
+        public void update(Job job)
+        {
+            UIJob uijob;
+            foreach(var kv in items)
+            {
+                uijob = kv.Value;
+                if ( 
+                    (uijob.job.id == job.id) & 
+                    ( 
+                        (uijob.job.state != job.state) |
+                        (uijob.job.progress != job.progress) |
+                        (uijob.job.recived != job.recived)
+                    )
+                )
+                {                    
+                    if (InvokeRequired)
+                    {
+                        Invoke(new updateCb(this.update), new object[] { uijob, job });
+                    }
+                    else
+                    {
+                        update(uijob, job);
+                    }
+                }
+            }
         }
 
         /// <summary>

@@ -43,10 +43,9 @@ namespace AutoPrintr
 
             releaseFile = release.assets.Find(
                 (file) => file.name == "AutoPrintr_install.zip"
-                //(file) => file.name == "AutoPrintr_595.zip"
             );
 
-            if (releaseFile != null & release.name != Program.version)
+            if (releaseFile != null & tools.isNewerVersion(release.name) )
             {
                 if (onAvailable != null)
                 {
@@ -71,9 +70,9 @@ namespace AutoPrintr
                 return;
             }
 
-            Process.Start(installer, "/S");
-            //AutoPrintr.exe
-            //System.IO.
+            Process.Start(installer, "/S /D " + Program.localPath);
+
+            System.Windows.Forms.Application.Exit();
         }
 
         static public void download()

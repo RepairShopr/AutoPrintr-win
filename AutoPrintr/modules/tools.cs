@@ -1,12 +1,14 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Collections;
 using System.Collections.Generic;
-using System.Windows.Forms;
 using System.Drawing;
 using System.Net;
 using System.Reflection;
+using System.Security;
+using System.Security.Cryptography;
 
 namespace AutoPrintr
 {
@@ -16,12 +18,45 @@ namespace AutoPrintr
     public static class tools
     {
         private static NLog.Logger log = NLog.LogManager.GetCurrentClassLogger();
+
+        /// <summary>
+        /// Application full version
+        /// </summary>
+        public static Version version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
+        /// <summary>
+        /// Application short string version
+        /// </summary>
+        public static string shortVersion = version.ToString(3);
+        
         /// <summary>
         /// Log levels of NLog
         /// </summary>
         public enum logLevels : byte
         {
-            Fatal, Error, Warn, Info, Debug, Trace
+            /// <summary>
+            /// Fatal log level
+            /// </summary>
+            Fatal, 
+            /// <summary>
+            /// Error log level
+            /// </summary>
+            Error,
+            /// <summary>
+            /// Warning log level
+            /// </summary>
+            Warn, 
+            /// <summary>
+            /// Info log level
+            /// </summary>
+            Info,
+            /// <summary>
+            /// Debug log level
+            /// </summary>
+            Debug, 
+            /// <summary>
+            /// Trace log level
+            /// </summary>
+            Trace
         };
         
         /// <summary>
@@ -50,22 +85,7 @@ namespace AutoPrintr
             path = path.Replace(".", ""); // Remove period.
             return path.Substring(0, 8);  // Return 8 character string
         }
-
-        /// <summary>
-        /// Get all UI controls
-        /// </summary>
-        /// <param name="container"></param>
-        /// <returns></returns>
-        public static IEnumerable<Control> GetAllControls(Control container)
-        {
-            List<Control> controlList = new List<Control>();
-            foreach (Control c in container.Controls)
-            {
-                controlList.AddRange(GetAllControls(c));
-                controlList.Add(c); 
-            }
-            return controlList;
-        }
+               
 
         /// <summary>
         /// Convert RGB string to color
@@ -139,9 +159,12 @@ namespace AutoPrintr
         ///// <param name="?"></param>
         //public static void TableLayoutPanelUpdateItemsSizes(TableLayoutPanel p)
         //{
-
         //}
 
+        /// <summary>
+        /// Disable error trowing on http errors in Net module
+        /// </summary>
+        /// <returns></returns>
         public static bool SetAllowUnsafeHeaderParsing20()
         {
             //Get the assembly that contains the internal class
@@ -172,6 +195,82 @@ namespace AutoPrintr
                 }
             }
             return false;
+        }
+
+        /// <summary>
+        /// Check string version if it later, then current
+        /// </summary>
+        /// <param name="nver"></param>
+        /// <returns></returns>
+        public static bool isNewerVersion(string nver)
+        {
+            return (new Version(nver)).CompareTo(version) == 1;
+        }
+
+
+        /// <summary>
+        /// Encrypts a given password and returns the encrypted data
+        /// as a base64 string.
+        /// </summary>
+        /// <param name="plainText">An unencrypted string that needs
+        /// to be secured.</param>
+        /// <returns>A base64 encoded string that represents the encrypted
+        /// binary data.
+        /// </returns>
+        /// <remarks>This solution is not really secure as we are
+        /// keeping strings in memory. If runtime protection is essential,
+        /// <see cref="SecureString"/> should be used.</remarks>
+        /// <exception cref="ArgumentNullException">If <paramref name="plainText"/>
+        /// is a null reference.</exception>
+        public static string Encrypt(string plainText)
+        {
+            if (plainText == null) throw new ArgumentNullException("plainText");
+
+            //encrypt data
+            var data = Encoding.Unicode.GetBytes(plainText);
+            byte[] encrypted = ProtectedData.Protect(data, null, DataProtectionScope.LocalMachine);
+
+            //return as base64 string
+            return Convert.ToBase64String(encrypted);
+        }
+
+        /// <summary>
+        /// Decrypts a given string.
+        /// </summary>
+        /// <param name="cipher">A base64 encoded string that was created
+        /// through the <see cref="Encrypt(string)"/> or
+        /// <see cref="Encrypt(SecureString)"/> extension methods.</param>
+        /// <returns>The decrypted string.</returns>
+        /// <remarks>Keep in mind that the decrypted string remains in memory
+        /// and makes your application vulnerable per se. If runtime protection
+        /// is essential, <see cref="SecureString"/> should be used.</remarks>
+        /// <exception cref="ArgumentNullException">If <paramref name="cipher"/>
+        /// is a null reference.</exception>
+        public static string Decrypt(string cipher)
+        {
+            if (cipher == null) throw new ArgumentNullException("cipher");
+
+            //parse base64 string
+            byte[] data = Convert.FromBase64String(cipher);
+
+            //decrypt data
+            byte[] decrypted = ProtectedData.Unprotect(data, null, DataProtectionScope.LocalMachine);
+            return Encoding.Unicode.GetString(decrypted);
+        }
+
+        /// <summary>
+        /// Convert string to secure string
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static SecureString secureString(string str)
+        {
+            SecureString SecureStr = new SecureString();
+            foreach (char c in str)
+            {
+                SecureStr.AppendChar(c);
+            }
+            return SecureStr;
         }
     }
 }
