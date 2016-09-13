@@ -12,7 +12,7 @@
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <AssemblyVersion>0.9.875.0</AssemblyVersion>
+    <AssemblyVersion>0.9.892.0</AssemblyVersion>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>

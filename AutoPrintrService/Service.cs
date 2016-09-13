@@ -52,6 +52,7 @@ namespace AutoPrintr
         {
             //state = true;
             workerThread.Start();
+            log.Info("Service is started");
             //main();
         }
 
@@ -61,6 +62,7 @@ namespace AutoPrintr
             //state = false;
             Server.stop();
             workerThread.Abort();
+            log.Info("service is stopped");
         }
 
         protected override void OnStart(string[] args)

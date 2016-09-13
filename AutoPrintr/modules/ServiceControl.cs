@@ -41,6 +41,16 @@ namespace AutoPrintr
             //}
         }
 
+        public static void enable(string serviceName)
+        {
+            startType(serviceName, StartupTypes.Automatic);
+        }
+
+        public static void disable(string serviceName)
+        {
+            startType(serviceName, StartupTypes.Disabled);
+        }
+
         public static bool isInstalled(string name)
         {
             foreach (var c in ServiceController.GetServices())
