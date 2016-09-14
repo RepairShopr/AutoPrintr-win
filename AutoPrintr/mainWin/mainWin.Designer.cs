@@ -37,9 +37,9 @@
             this.printersTable = new System.Windows.Forms.TableLayoutPanel();
             this.loginTab = new System.Windows.Forms.TabPage();
             this.serviceSettings = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.autorunModeLabel = new System.Windows.Forms.Label();
             this.autorunModeDD = new System.Windows.Forms.ComboBox();
-            this.serviceSaveBtn = new System.Windows.Forms.Button();
+            this.autorunSaveBtn = new System.Windows.Forms.Button();
             this.serviceTestBtn = new System.Windows.Forms.Button();
             this.passwordInputService = new System.Windows.Forms.MaskedTextBox();
             this.usernameInput = new System.Windows.Forms.TextBox();
@@ -135,9 +135,9 @@
             // 
             // serviceSettings
             // 
-            this.serviceSettings.Controls.Add(this.label1);
+            this.serviceSettings.Controls.Add(this.autorunModeLabel);
             this.serviceSettings.Controls.Add(this.autorunModeDD);
-            this.serviceSettings.Controls.Add(this.serviceSaveBtn);
+            this.serviceSettings.Controls.Add(this.autorunSaveBtn);
             this.serviceSettings.Controls.Add(this.serviceTestBtn);
             this.serviceSettings.Controls.Add(this.passwordInputService);
             this.serviceSettings.Controls.Add(this.usernameInput);
@@ -149,10 +149,10 @@
             this.serviceSettings.Name = "serviceSettings";
             this.serviceSettings.TabStop = false;
             // 
-            // label1
+            // autorunModeLabel
             // 
-            resources.ApplyResources(this.label1, "label1");
-            this.label1.Name = "label1";
+            resources.ApplyResources(this.autorunModeLabel, "autorunModeLabel");
+            this.autorunModeLabel.Name = "autorunModeLabel";
             // 
             // autorunModeDD
             // 
@@ -161,11 +161,11 @@
             resources.ApplyResources(this.autorunModeDD, "autorunModeDD");
             this.autorunModeDD.Name = "autorunModeDD";
             // 
-            // serviceSaveBtn
+            // autorunSaveBtn
             // 
-            resources.ApplyResources(this.serviceSaveBtn, "serviceSaveBtn");
-            this.serviceSaveBtn.Name = "serviceSaveBtn";
-            this.serviceSaveBtn.UseVisualStyleBackColor = true;
+            resources.ApplyResources(this.autorunSaveBtn, "autorunSaveBtn");
+            this.autorunSaveBtn.Name = "autorunSaveBtn";
+            this.autorunSaveBtn.UseVisualStyleBackColor = true;
             // 
             // serviceTestBtn
             // 
@@ -464,8 +464,8 @@
         private System.Windows.Forms.Label serviceUserLoginLabel;
         private System.Windows.Forms.Label serviceUserPasswordLabel;
         private System.Windows.Forms.Label serviceUserDomainLabel;
-        private System.Windows.Forms.Button serviceSaveBtn;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button autorunSaveBtn;
+        private System.Windows.Forms.Label autorunModeLabel;
         private System.Windows.Forms.ComboBox autorunModeDD;
     }
 }
