@@ -245,6 +245,7 @@
   - [update(job)](#M-AutoPrintr-JobsList-UIJob-update-AutoPrintr-Job- 'AutoPrintr.JobsList.UIJob.update(AutoPrintr.Job)')
 - [updateCb](#T-AutoPrintr-JobsList-updateCb 'AutoPrintr.JobsList.updateCb')
 - [User](#T-AutoPrintr-User 'AutoPrintr.User')
+  - [isAdmin](#F-AutoPrintr-User-isAdmin 'AutoPrintr.User.isAdmin')
   - [IsAdministrator()](#M-AutoPrintr-User-IsAdministrator 'AutoPrintr.User.IsAdministrator')
   - [IsSystem()](#M-AutoPrintr-User-IsSystem 'AutoPrintr.User.IsSystem')
 - [WinAutoSize](#T-AutoPrintr-WinAutoSize 'AutoPrintr.WinAutoSize')
@@ -2889,6 +2890,13 @@ Delegate for updating job in UI
 ##### Namespace
 
 AutoPrintr
+
+<a name='F-AutoPrintr-User-isAdmin'></a>
+### isAdmin `constants` [#](#F-AutoPrintr-User-isAdmin 'Go To Here') [=](#contents 'Back To Contents')
+
+##### Summary
+
+Is user administrator or not
 
 <a name='M-AutoPrintr-User-IsAdministrator'></a>
 ### IsAdministrator() `method` [#](#M-AutoPrintr-User-IsAdministrator 'Go To Here') [=](#contents 'Back To Contents')
