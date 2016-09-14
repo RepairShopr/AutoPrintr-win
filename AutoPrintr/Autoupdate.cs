@@ -44,9 +44,18 @@ namespace AutoPrintr
             releaseFile = release.assets.Find(
                 (file) => file.name == "AutoPrintr_install.zip"
             );
-
+            
+            //log.Info(
+            //    "Checking versions: current version is {0}, new version is {1}, result is: {2}, release file ='{3}' ({4})", 
+            //    tools.version, 
+            //    release.name, 
+            //    tools.isNewerVersion(release.name), 
+            //    releaseFile,
+            //    releaseFile == null
+            //);
             if (releaseFile != null & tools.isNewerVersion(release.name) )
             {
+                log.Info("New version available!");
                 if (onAvailable != null)
                 {
                     onAvailable(null, new UpdateEventArgs(Autoupdate.release));

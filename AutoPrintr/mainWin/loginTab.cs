@@ -17,19 +17,16 @@ namespace AutoPrintr
         /// </summary>
         public void configTabInit()
         {
-            if (!ServiceControl.isInstalled(serviceName))
+            if (!User.isAdmin)
             {
-                Process p = Process.Start(new ProcessStartInfo() { 
-                    FileName = serviceExe,
-                    Arguments = "/i",                
-                    WindowStyle = ProcessWindowStyle.Hidden
-                });
-                p.WaitForExit(30000);
-                ServiceControl.startType(serviceName, ServiceControl.StartupTypes.Disabled);
+                autorunModeLabel.Text = "Unavailable for non-Admin users";
+                autorunModeDD.Visible = false;
+                autorunSaveBtn.Visible = false;
             }
+
             bool srvState = ServiceControl.isRunning(serviceName);
             //bool srvState = true;
-            Console.WriteLine("srvState " + srvState);
+            //Console.WriteLine("srvState " + srvState);
             Program.isService = srvState;
 
             //serviceEnabledCheckBox.Checked = srvState;
@@ -41,7 +38,7 @@ namespace AutoPrintr
             }
             autorunModeDD.TextChanged += autorunModeDD_TextChanged;
             autorunModeDD.Text = AutorunTypeString[getAutorunMode()];
-            serviceSaveBtn.Enabled = false;
+            autorunSaveBtn.Enabled = false;
 
             // Login section
             loginInput.TextChanged += loginPass_TextChanged;
@@ -74,14 +71,14 @@ namespace AutoPrintr
 
             locationsList.SelectedChanged += locationsList_SelectedChanged;
 
-            serviceSaveBtn.Click += serviceSaveBtn_Click;
+            autorunSaveBtn.Click += serviceSaveBtn_Click;
             //serviceTestBtn.Click += serviceTestBtn_Click;
             //loadUserProfileCheckBox.CheckedChanged += loadUserProfileCheckBox_CheckedChanged;
         }
 
         void credentials_TextChanged(object sender, EventArgs e)
         {
-            serviceSaveBtn.Enabled =
+            autorunSaveBtn.Enabled =
                 domainInput.Text.Length != 0 &
                 usernameInput.Text.Length != 0 &
                 passwordInputService.Text.Length != 0
@@ -152,7 +149,7 @@ namespace AutoPrintr
 
         void serviceOff()
         {
-            serviceSaveBtn.Enabled = true;
+            autorunSaveBtn.Enabled = true;
             serviceUserDomainLabel.Visible = false;
             serviceUserLoginLabel.Visible = false;
             serviceUserPasswordLabel.Visible = false;
@@ -164,7 +161,7 @@ namespace AutoPrintr
 
         public void setAutorunMode(AutorunTypes mode)
         {
-            serviceSaveBtn.Enabled = true;
+            autorunSaveBtn.Enabled = true;
             autorunModeDD.Text = AutorunTypeString[mode];
             switch (mode)
             {
@@ -211,9 +208,9 @@ namespace AutoPrintr
         void serviceSaveBtn_Click(object sender, EventArgs e)
         {
             configSaveStatus.Text = "Processing autorun command...";
-            serviceSaveBtn.Enabled = false;
+            autorunSaveBtn.Enabled = false;
             Thread.Sleep(10);
-            if (!User.IsAdministrator())
+            if (!User.isAdmin)
             {
                 MessageBox.Show("Can't activate autorun - you should be an Administrator.");
                 return;
@@ -504,6 +501,26 @@ namespace AutoPrintr
             {
                 try
                 {
+                    if (!ServiceControl.isInstalled(serviceName))
+                    {
+                        Process p = Process.Start(new ProcessStartInfo()
+                        {
+                            FileName = serviceExe,
+                            Arguments = "/i",
+                            WindowStyle = ProcessWindowStyle.Hidden
+                        });
+                        p.WaitForExit(30000);
+                        ServiceControl.startType(serviceName, ServiceControl.StartupTypes.Disabled);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    log.Error(ex, "Error while installing service");
+                    MessageBox.Show("Can't install service. Error is: {0}", ex.Message);
+                }
+
+                try
+                {
                     if (isRunning)
                     {
                         ServiceControl.stop(serviceName, 5000);
@@ -518,6 +535,7 @@ namespace AutoPrintr
                 catch (Exception ex)
                 {
                     log.Error(ex, "Error while starting service");
+                    MessageBox.Show("Can't run service. Error is: {0}", ex.Message);
                     //serviceEnabledCheckBox.Checked = false;
                 }
             }
@@ -534,6 +552,7 @@ namespace AutoPrintr
                 catch (Exception ex)
                 {
                     log.Error(ex, "Error while stopping service");
+                    MessageBox.Show("Can't stop service. Error is: {0}", ex.Message);
                     //serviceEnabledCheckBox.Checked = true;
                 }
             }
