@@ -9,6 +9,8 @@ namespace AutoPrintr
 {
     static class ServiceControl
     {
+        private static NLog.Logger log = NLog.LogManager.GetCurrentClassLogger();
+
         public static void start(string serviceName, int timeoutMilliseconds)
         {
             startType(serviceName, StartupTypes.Automatic);
@@ -68,8 +70,16 @@ namespace AutoPrintr
             bool installed = isInstalled(name);
             if (installed)
             {
-                ServiceController sc = new ServiceController(name);
-                return sc.Status == ServiceControllerStatus.Running;
+                try
+                {
+                    ServiceController sc = new ServiceController(name);
+                    return sc.Status == ServiceControllerStatus.Running;
+                }
+                catch (Exception ex)
+                {
+                    log.Error(ex, "Error while requesting service status");
+                    return false;
+                }
             }
             return false;
 

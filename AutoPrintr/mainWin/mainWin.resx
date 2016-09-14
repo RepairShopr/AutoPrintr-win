@@ -148,7 +148,7 @@
     <value>jobsTable</value>
   </data>
   <data name="&gt;&gt;jobsTable.Type" xml:space="preserve">
-    <value>AutoPrintr.JobsList, AutoPrintr, Version=0.9.877.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>AutoPrintr.JobsList, AutoPrintr, Version=0.9.896.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;jobsTable.Parent" xml:space="preserve">
     <value>jobsTab</value>
@@ -249,34 +249,34 @@
   <data name="&gt;&gt;printersTab.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="label1.AutoSize" type="System.Boolean, mscorlib">
+  <data name="autorunModeLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="label1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+  <data name="autorunModeLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="autorunModeLabel.Location" type="System.Drawing.Point, System.Drawing">
     <value>13, 22</value>
   </data>
-  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="autorunModeLabel.Size" type="System.Drawing.Size, System.Drawing">
     <value>73, 13</value>
   </data>
-  <data name="label1.TabIndex" type="System.Int32, mscorlib">
+  <data name="autorunModeLabel.TabIndex" type="System.Int32, mscorlib">
     <value>15</value>
   </data>
-  <data name="label1.Text" xml:space="preserve">
+  <data name="autorunModeLabel.Text" xml:space="preserve">
     <value>Autorun mode</value>
   </data>
-  <data name="&gt;&gt;label1.Name" xml:space="preserve">
-    <value>label1</value>
+  <data name="&gt;&gt;autorunModeLabel.Name" xml:space="preserve">
+    <value>autorunModeLabel</value>
   </data>
-  <data name="&gt;&gt;label1.Type" xml:space="preserve">
+  <data name="&gt;&gt;autorunModeLabel.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;label1.Parent" xml:space="preserve">
+  <data name="&gt;&gt;autorunModeLabel.Parent" xml:space="preserve">
     <value>serviceSettings</value>
   </data>
-  <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;autorunModeLabel.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <data name="autorunModeDD.Location" type="System.Drawing.Point, System.Drawing">
@@ -300,34 +300,34 @@
   <data name="&gt;&gt;autorunModeDD.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="serviceSaveBtn.Enabled" type="System.Boolean, mscorlib">
+  <data name="autorunSaveBtn.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
-  <data name="serviceSaveBtn.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+  <data name="autorunSaveBtn.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="serviceSaveBtn.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="autorunSaveBtn.Location" type="System.Drawing.Point, System.Drawing">
     <value>104, 131</value>
   </data>
-  <data name="serviceSaveBtn.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="autorunSaveBtn.Size" type="System.Drawing.Size, System.Drawing">
     <value>169, 23</value>
   </data>
-  <data name="serviceSaveBtn.TabIndex" type="System.Int32, mscorlib">
+  <data name="autorunSaveBtn.TabIndex" type="System.Int32, mscorlib">
     <value>9</value>
   </data>
-  <data name="serviceSaveBtn.Text" xml:space="preserve">
+  <data name="autorunSaveBtn.Text" xml:space="preserve">
     <value>Save</value>
   </data>
-  <data name="&gt;&gt;serviceSaveBtn.Name" xml:space="preserve">
-    <value>serviceSaveBtn</value>
+  <data name="&gt;&gt;autorunSaveBtn.Name" xml:space="preserve">
+    <value>autorunSaveBtn</value>
   </data>
-  <data name="&gt;&gt;serviceSaveBtn.Type" xml:space="preserve">
+  <data name="&gt;&gt;autorunSaveBtn.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;serviceSaveBtn.Parent" xml:space="preserve">
+  <data name="&gt;&gt;autorunSaveBtn.Parent" xml:space="preserve">
     <value>serviceSettings</value>
   </data>
-  <data name="&gt;&gt;serviceSaveBtn.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;autorunSaveBtn.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
   <data name="serviceTestBtn.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
@@ -586,7 +586,7 @@
     <value>locationsList</value>
   </data>
   <data name="&gt;&gt;locationsList.Type" xml:space="preserve">
-    <value>AutoPrintr.CheckBoxList, AutoPrintr, Version=0.9.877.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>AutoPrintr.CheckBoxList, AutoPrintr, Version=0.9.896.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;locationsList.Parent" xml:space="preserve">
     <value>locationGroupBox</value>
@@ -2067,7 +2067,7 @@
     <value>checkBoxList1</value>
   </data>
   <data name="&gt;&gt;checkBoxList1.Type" xml:space="preserve">
-    <value>AutoPrintr.CheckBoxList, AutoPrintr, Version=0.9.877.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>AutoPrintr.CheckBoxList, AutoPrintr, Version=0.9.896.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>

@@ -7,10 +7,15 @@ namespace AutoPrintr
     public static class User
     {
         /// <summary>
+        /// Is user administrator or not
+        /// </summary>
+        public static bool isAdmin = IsAdministrator();
+
+        /// <summary>
         /// Check if user admin
         /// </summary>
         /// <returns></returns>
-        public static bool IsAdministrator()
+        private static bool IsAdministrator()
         {
             //bool value to hold our return value
             
