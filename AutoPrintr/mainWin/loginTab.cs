@@ -11,7 +11,7 @@ namespace AutoPrintr
     {
         const string serviceName = "AutoPrintrService";
         const string serviceExe = "AutoPrintrService.exe";
-        
+        const string nonAdminWarning = "Please “run-as Administrator” to enable these options";
         /// <summary>
         /// Configuration tab initialization
         /// </summary>
@@ -19,7 +19,7 @@ namespace AutoPrintr
         {
             if (!User.isAdmin)
             {
-                autorunModeLabel.Text = "Unavailable for non-Admin users";
+                autorunModeLabel.Text = nonAdminWarning;
                 autorunModeDD.Visible = false;
                 autorunSaveBtn.Visible = false;
             }
