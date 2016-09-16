@@ -204,7 +204,16 @@ namespace AutoPrintr
         /// <returns></returns>
         public static bool isNewerVersion(string nver)
         {
-            return (new Version(nver)).CompareTo(version) == 1;
+            try
+            {
+                return (new Version(nver)).CompareTo(version) == 1;
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex, "Wrong release name in latest release at GitHub");
+                return false;
+            }
+            
         }
 
 

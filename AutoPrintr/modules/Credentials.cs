@@ -3,11 +3,11 @@
     /// <summary>
     /// Class for credentials storing
     /// </summary>
-    class Credentials
+    class Credentials 
     {
         /// <summary>
         /// Pusher API key
         /// </summary>
-        public const string SrvXT = "";
+        public const string SrvXT = "4a12d53c136a2d3dade7";
     }
 }

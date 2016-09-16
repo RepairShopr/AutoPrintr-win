@@ -38,14 +38,16 @@ namespace AutoPrintr
         {
             statusSeparatorUpdate.Visible = true;
             updateStatus.Visible = true;
-            updateStatus.Text = "Update available " + e.release.name + " - click here to install";
+            updateStatus.Text = "Update available " + e.release.tag_name + " - click here to install";
         }
 
         void updateStatus_Click(object sender, EventArgs e)
         {
             string caption = "AutoPrintr update";
             string msg =
-                "AutoPrintr new version available: " + Autoupdate.release.name +
+                "AutoPrintr new version available:\n" + 
+                "Release name: " + Autoupdate.release.name +
+                "\nVersion: " + Autoupdate.release.tag_name +
                 "\n\n " + Autoupdate.release.body +
                 "\n\nDownload (" + tools.BytesToString(Autoupdate.releaseFile.size) +
                 ") and install new version?"

@@ -13,7 +13,7 @@ Global
 		UpdateAssemblyVersion = True
 		UpdateAssemblyFileVersion = False
 		UpdateAssemblyInfoVersion = False
-		AssemblyVersionSettings = None.None.Increment.None
+		AssemblyVersionSettings = None.None.None.Increment
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

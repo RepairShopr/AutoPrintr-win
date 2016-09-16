@@ -15,6 +15,8 @@ namespace AutoPrintr
         private static NLog.Logger log = NLog.LogManager.GetCurrentClassLogger();
 
         const string url = "https://api.github.com/repos/RepairShopr/AutoPrintr-win/releases/latest";
+        const string zipFile = "AutoPrintr_install.zip";
+        
         public static string localPath;
         public static GHRelease release;
         public static GHRelease.Asset releaseFile = null;
@@ -32,35 +34,57 @@ namespace AutoPrintr
 
         public static void check()
         {
-            string apiStringRes = tools.GET(url);
-            Autoupdate.release = JsonConvert.DeserializeObject<GHRelease>(
-                apiStringRes,
-                new JsonSerializerSettings
-                { // allow null values
-                    NullValueHandling = NullValueHandling.Ignore
-                }
-            );
-
-            releaseFile = release.assets.Find(
-                (file) => file.name == "AutoPrintr_install.zip"
-            );
-            
-            //log.Info(
-            //    "Checking versions: current version is {0}, new version is {1}, result is: {2}, release file ='{3}' ({4})", 
-            //    tools.version, 
-            //    release.name, 
-            //    tools.isNewerVersion(release.name), 
-            //    releaseFile,
-            //    releaseFile == null
-            //);
-            if (releaseFile != null & tools.isNewerVersion(release.name) )
+            try
             {
-                log.Info("New version available!");
-                if (onAvailable != null)
+
+                string apiStringRes = tools.GET(url);
+                release = JsonConvert.DeserializeObject<GHRelease>(
+                    apiStringRes,
+                    new JsonSerializerSettings
+                    { // allow null values
+                        NullValueHandling = NullValueHandling.Ignore
+                    }
+                );
+
+                string relName = release.name;
+                string tagName = release.tag_name;
+                List<GHRelease.Asset> assets = release.assets;
+
+                if (relName == null)
                 {
-                    onAvailable(null, new UpdateEventArgs(Autoupdate.release));
-                }            
+                    log.Error("GitHub API Error! release.name is null");
+                    return;
+                }
+
+                if (tagName == null)
+                {
+                    log.Error("GitHub API Error! release.tag_name is null");
+                    return;
+                }
+
+                if (assets == null)
+                {
+                    log.Error("GitHub API Error! release.assets is null");
+                    return;
+                }
+
+                releaseFile = release.assets.Find(
+                    (file) => file.name == zipFile
+                );
+
+                if (releaseFile != null & tools.isNewerVersion(tagName))
+                {
+                    log.Info("New version available!");
+                    if (onAvailable != null)
+                    {
+                        onAvailable(null, new UpdateEventArgs(Autoupdate.release));
+                    }
+                }
             }
+            catch (Exception ex)
+            {
+                log.Error(ex, "Error while checking update");
+            }            
         }
 
         static public void install()
